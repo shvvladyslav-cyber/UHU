@@ -8,179 +8,312 @@
   <meta name="description" content="UHU Kassel: уборка, переезды, сборка мебели, мелкий ремонт. Telegram @UHU_help" />
   <style>
     :root{
-      --bg:#0b1220;
-      --card:#0f1a2f;
-      --text:#e9eefc;
-      --muted:#b8c2e6;
-      --accent:#ffd400;
-      --primary:#4aa3ff;
-      --primary2:#2b76ff;
-      --border:rgba(255,255,255,.12);
-      --shadow: 0 10px 30px rgba(0,0,0,.35);
-      --radius:18px;
+      /* Background */
+      --bg0:#070a14;
+      --bg1:#0a0f22;
+      --bg2:#081a33;
+
+      /* Text */
+      --text:#f4f7ff;
+      --muted:#c8d2f4;
+
+      /* Brand (UA + DE) */
+      --ua:#ffd400;
+      --ua2:#fff2a8;
+      --de:#111827;
+      --blue:#4aa3ff;
+      --blue2:#2b76ff;
+      --pink:#ff4fd8;
+      --mint:#22c55e;
+      --orange:#fb923c;
+
+      /* UI */
+      --line:rgba(255,255,255,.12);
+      --glass:rgba(255,255,255,.06);
+      --glass2:rgba(255,255,255,.04);
+      --shadow:0 18px 55px rgba(0,0,0,.50);
+      --radius:24px;
     }
+
     *{box-sizing:border-box}
     html{scroll-behavior:smooth}
     body{
       margin:0;
       font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
-      background: radial-gradient(1200px 800px at 20% -10%, rgba(74,163,255,.25), transparent 55%),
-                  radial-gradient(900px 600px at 90% 10%, rgba(255,212,0,.18), transparent 55%),
-                  linear-gradient(180deg, #070b14, var(--bg));
       color:var(--text);
+      background:
+        radial-gradient(1200px 800px at 18% -10%, rgba(74,163,255,.35), transparent 60%),
+        radial-gradient(900px 700px at 90% 10%, rgba(255,212,0,.25), transparent 62%),
+        radial-gradient(900px 650px at 70% 115%, rgba(255,79,216,.18), transparent 62%),
+        radial-gradient(850px 650px at 5% 120%, rgba(34,197,94,.12), transparent 60%),
+        linear-gradient(180deg, var(--bg0), var(--bg1) 35%, var(--bg2));
+      overflow-x:hidden;
     }
     a{color:inherit; text-decoration:none}
-    .container{max-width:1100px; margin:0 auto; padding:0 16px}
+    .container{max-width:1180px; margin:0 auto; padding:0 16px}
+
+    /* Topbar */
     .topbar{
-      position:sticky; top:0; z-index:50;
-      backdrop-filter:saturate(180%) blur(10px);
-      background:rgba(7,11,20,.65);
-      border-bottom:1px solid var(--border);
+      position:sticky; top:0; z-index:100;
+      backdrop-filter:saturate(160%) blur(14px);
+      background:rgba(8,18,39,.66);
+      border-bottom:1px solid var(--line);
     }
-    .topbar-inner{display:flex; align-items:center; justify-content:space-between; gap:12px; padding:12px 0}
-    .brand{display:flex; align-items:center; gap:10px; font-weight:800; letter-spacing:.4px}
-    .logo{
-      width:38px; height:38px; border-radius:12px;
-      background:linear-gradient(135deg, var(--accent), #fff 55%, #4aa3ff);
-      box-shadow: 0 8px 20px rgba(0,0,0,.35);
-      display:grid; place-items:center; color:#0b1220; font-weight:900;
+    .topbar-inner{
+      display:flex; align-items:center; justify-content:space-between; gap:12px;
+      padding:12px 0;
     }
-    .brand small{display:block; color:var(--muted); font-weight:600; margin-top:2px}
+
+    /* Logo block */
+    .brand{display:flex; align-items:center; gap:12px; font-weight:950; letter-spacing:.2px}
+    .brand small{display:block; color:var(--muted); font-weight:800; margin-top:2px}
+    .logo-wrap{
+      width:44px; height:44px; border-radius:14px;
+      background:linear-gradient(135deg, rgba(255,212,0,.25), rgba(74,163,255,.20));
+      border:1px solid rgba(255,255,255,.16);
+      box-shadow:0 10px 28px rgba(0,0,0,.45);
+      display:grid; place-items:center;
+      overflow:hidden;
+    }
+    .logo-img{
+      width:100%; height:100%;
+      object-fit:cover;
+      display:block;
+    }
+
     .nav{display:flex; align-items:center; gap:10px; flex-wrap:wrap; justify-content:flex-end}
     .chip{
-      padding:8px 10px; border:1px solid var(--border); border-radius:999px;
+      padding:8px 10px;
+      border:1px solid var(--line);
+      border-radius:999px;
       background:rgba(255,255,255,.04);
       color:var(--muted);
-      font-weight:650; font-size:13px;
+      font-weight:800;
+      font-size:13px;
       transition:.2s ease;
     }
     .chip:hover{transform:translateY(-1px); border-color:rgba(255,255,255,.22); color:var(--text)}
+
+    /* Buttons */
     .btn{
       display:inline-flex; align-items:center; justify-content:center; gap:10px;
-      padding:12px 14px; border-radius:12px; font-weight:800;
-      border:1px solid var(--border);
-      background:rgba(255,255,255,.05);
+      padding:12px 14px; border-radius:16px; font-weight:950;
+      border:1px solid var(--line);
+      background:rgba(255,255,255,.06);
       transition:.2s ease;
       cursor:pointer;
       user-select:none;
+      line-height:1;
     }
     .btn:hover{transform:translateY(-1px); border-color:rgba(255,255,255,.22)}
     .btn.primary{
-      background:linear-gradient(135deg, var(--primary), var(--primary2));
-      border-color:transparent; color:white;
+      background:linear-gradient(135deg, var(--blue), var(--blue2));
+      border-color:transparent;
+      color:white;
+      box-shadow:0 16px 40px rgba(43,118,255,.28);
     }
     .btn.accent{
-      background:linear-gradient(135deg, #ffe25d, var(--accent));
-      border-color:transparent; color:#0b1220;
+      background:linear-gradient(135deg, var(--ua2), var(--ua));
+      border-color:transparent;
+      color:#0b1220;
+      box-shadow:0 18px 40px rgba(255,212,0,.20);
     }
-    .btn.ghost{background:rgba(255,255,255,.03)}
+    .btn.pink{
+      background:linear-gradient(135deg, #ff7ae8, var(--pink));
+      border-color:transparent;
+      color:#160616;
+      box-shadow:0 18px 40px rgba(255,79,216,.18);
+    }
+    .btn.ghost{background:rgba(255,255,255,.04)}
     .btn.block{width:100%}
-    .hero{padding:26px 0 10px}
-    .hero-grid{display:grid; grid-template-columns: 1.2fr .8fr; gap:16px; align-items:stretch}
-    @media (max-width: 900px){.hero-grid{grid-template-columns:1fr}}
+
+    /* Hero */
+    .hero{padding:28px 0 10px}
+    .hero-grid{
+      display:grid;
+      grid-template-columns: 1.15fr .85fr;
+      gap:16px;
+      align-items:stretch;
+    }
+    @media (max-width: 920px){
+      .hero-grid{grid-template-columns:1fr}
+    }
     .panel{
-      border:1px solid var(--border);
+      border:1px solid var(--line);
       border-radius:var(--radius);
-      background:linear-gradient(180deg, rgba(255,255,255,.05), rgba(255,255,255,.02));
+      background:linear-gradient(180deg, rgba(255,255,255,.07), rgba(255,255,255,.03));
       box-shadow:var(--shadow);
       overflow:hidden;
+      position:relative;
     }
     .panel.pad{padding:18px}
+    .glow{
+      position:absolute; inset:-40px -60px auto auto;
+      width:260px; height:260px; border-radius:999px;
+      background:radial-gradient(circle at 30% 30%, rgba(255,212,0,.35), transparent 55%),
+                 radial-gradient(circle at 70% 70%, rgba(74,163,255,.35), transparent 55%);
+      filter: blur(12px);
+      opacity:.75;
+      pointer-events:none;
+    }
     .kicker{
       display:inline-flex; gap:8px; align-items:center;
       padding:7px 10px; border-radius:999px;
-      background:rgba(255,212,0,.10);
-      border:1px solid rgba(255,212,0,.25);
-      color:#ffeaa0;
-      font-weight:800; font-size:12px;
+      background:rgba(255,212,0,.12);
+      border:1px solid rgba(255,212,0,.26);
+      color:#fff1b8;
+      font-weight:950;
+      font-size:12px;
     }
-    h1{margin:12px 0 10px; font-size:34px; line-height:1.08}
-    @media (max-width: 500px){h1{font-size:30px}}
-    .lead{color:var(--muted); font-size:15.5px; line-height:1.5; margin:0 0 16px}
+    h1{margin:12px 0 10px; font-size:36px; line-height:1.06}
+    @media (max-width: 520px){h1{font-size:31px}}
+    .lead{color:var(--muted); font-size:15.8px; line-height:1.55; margin:0 0 16px}
     .hero-actions{display:flex; gap:10px; flex-wrap:wrap}
+
     .stats{display:grid; grid-template-columns: repeat(3, 1fr); gap:10px; margin-top:14px}
-    @media (max-width: 520px){.stats{grid-template-columns:1fr}}
-    .stat{border:1px solid var(--border); border-radius:14px; background:rgba(255,255,255,.03); padding:12px}
+    @media (max-width: 560px){.stats{grid-template-columns:1fr}}
+    .stat{
+      border:1px solid var(--line);
+      border-radius:18px;
+      background:rgba(255,255,255,.04);
+      padding:12px;
+    }
     .stat b{display:block; font-size:18px}
-    .stat span{color:var(--muted); font-size:13px}
+    .stat span{color:var(--muted); font-size:13px; font-weight:800}
+
+    /* Side cards */
     .side{display:grid; gap:12px}
     .side-card{
-      border:1px solid var(--border);
+      border:1px solid var(--line);
       border-radius:var(--radius);
-      background:linear-gradient(180deg, rgba(15,26,47,.85), rgba(15,26,47,.55));
+      background:linear-gradient(180deg, rgba(255,255,255,.06), rgba(255,255,255,.03));
       padding:14px;
       box-shadow:var(--shadow);
+      position:relative;
+      overflow:hidden;
     }
-    .side-card h3{margin:6px 0 8px; font-size:16px}
-    .side-card p{margin:0; color:var(--muted); font-size:13.5px; line-height:1.45}
-    .mini-actions{display:flex; gap:10px; margin-top:10px; flex-wrap:wrap}
+    .badge{
+      display:inline-flex; align-items:center; gap:8px;
+      padding:8px 10px; border-radius:999px;
+      border:1px solid rgba(34,197,94,.25);
+      background:rgba(34,197,94,.12);
+      color:#c9fbd8;
+      font-weight:950;
+      font-size:12px;
+    }
+    .side-card h3{margin:10px 0 8px; font-size:16px}
+    .side-card p{margin:0; color:var(--muted); font-size:13.8px; line-height:1.5}
+    .mini-actions{display:flex; gap:10px; margin-top:12px; flex-wrap:wrap}
+
+    /* Sections */
+    .section{padding:18px 0 0}
+    .section-title{
+      display:flex; align-items:flex-end; justify-content:space-between; gap:10px; flex-wrap:wrap;
+      margin:0 0 10px;
+    }
+    .section-title h2{margin:0; font-size:20px}
+    .section-title span{color:var(--muted); font-size:13px; font-weight:800}
+
+    /* Service cards */
     .grid{display:grid; grid-template-columns: repeat(4, 1fr); gap:12px; padding:16px 0 0}
     @media (max-width: 980px){.grid{grid-template-columns: repeat(2, 1fr)}}
     @media (max-width: 520px){.grid{grid-template-columns:1fr}}
+
     .card{
-      border:1px solid var(--border);
+      border:1px solid var(--line);
       border-radius:var(--radius);
-      background:linear-gradient(180deg, rgba(255,255,255,.05), rgba(255,255,255,.02));
+      background:linear-gradient(180deg, rgba(255,255,255,.07), rgba(255,255,255,.03));
       box-shadow:var(--shadow);
       overflow:hidden;
       transition:.2s ease;
       cursor:pointer;
+      position:relative;
     }
-    .card:hover{transform:translateY(-2px); border-color:rgba(255,255,255,.22)}
+    .card:hover{transform:translateY(-2px); border-color:rgba(255,255,255,.24)}
     .card .img{
-      height:120px;
-      background:linear-gradient(135deg, rgba(74,163,255,.22), rgba(255,212,0,.16));
-      display:grid; place-items:center;
-      border-bottom:1px solid var(--border);
+      height:128px;
+      border-bottom:1px solid var(--line);
+      display:flex; align-items:center; justify-content:center;
+      position:relative;
+      overflow:hidden;
     }
+    .card .img::before{
+      content:"";
+      position:absolute; inset:-20px;
+      background: radial-gradient(300px 180px at 25% 20%, rgba(255,212,0,.28), transparent 60%),
+                  radial-gradient(280px 200px at 80% 30%, rgba(74,163,255,.30), transparent 62%),
+                  radial-gradient(260px 220px at 70% 120%, rgba(255,79,216,.16), transparent 62%);
+      filter: blur(10px);
+      opacity:.95;
+    }
+    .icon{width:54px; height:54px; position:relative; z-index:1; filter: drop-shadow(0 8px 18px rgba(0,0,0,.35));}
     .card .content{padding:14px}
     .card h3{margin:0 0 6px; font-size:16px}
-    .card p{margin:0; color:var(--muted); font-size:13.5px; line-height:1.45}
+    .card p{margin:0; color:var(--muted); font-size:13.6px; line-height:1.45; font-weight:700}
     .tagrow{display:flex; gap:8px; flex-wrap:wrap; margin-top:10px}
-    .tag{padding:6px 8px; border-radius:999px; background:rgba(255,255,255,.04); border:1px solid var(--border); color:var(--muted); font-weight:700; font-size:12px}
-    .section{padding:18px 0 0}
-    .section-title{display:flex; align-items:flex-end; justify-content:space-between; gap:10px; flex-wrap:wrap; margin:0 0 10px}
-    .section-title h2{margin:0; font-size:20px}
-    .section-title span{color:var(--muted); font-size:13px}
+    .tag{
+      padding:6px 8px; border-radius:999px;
+      background:rgba(255,255,255,.05);
+      border:1px solid var(--line);
+      color:var(--muted);
+      font-weight:900;
+      font-size:12px;
+    }
+
+    /* Boxes */
     .twocol{display:grid; grid-template-columns: 1fr 1fr; gap:12px}
-    @media (max-width: 900px){.twocol{grid-template-columns:1fr}}
-    .box{border:1px solid var(--border); border-radius:var(--radius); background:rgba(255,255,255,.03); padding:14px; box-shadow:var(--shadow)}
+    @media (max-width: 920px){.twocol{grid-template-columns:1fr}}
+    .box{
+      border:1px solid var(--line);
+      border-radius:var(--radius);
+      background:rgba(255,255,255,.04);
+      padding:14px;
+      box-shadow:var(--shadow);
+    }
     .box h3{margin:0 0 8px; font-size:16px}
-    .list{margin:0; padding-left:18px; color:var(--muted); line-height:1.6}
+    .list{margin:0; padding-left:18px; color:var(--muted); line-height:1.7; font-weight:750}
+
+    /* Form */
     .formgrid{display:grid; grid-template-columns:1fr 1fr; gap:10px}
     @media (max-width: 700px){.formgrid{grid-template-columns:1fr}}
     .input, select, textarea{
       width:100%;
       padding:12px 12px;
-      border-radius:12px;
-      border:1px solid var(--border);
-      background:rgba(255,255,255,.03);
+      border-radius:16px;
+      border:1px solid var(--line);
+      background:rgba(255,255,255,.04);
       color:var(--text);
       outline:none;
       font-size:14px;
+      font-weight:750;
     }
-    textarea{min-height:96px; resize:vertical}
-    label{display:block; margin:10px 0 6px; color:var(--muted); font-weight:700; font-size:13px}
-    .hint{color:var(--muted); font-size:12.5px; line-height:1.4; margin-top:8px}
-    .footer{padding:30px 0 40px; color:var(--muted); font-size:13px; text-align:center}
-    .divider{height:1px; background:var(--border); margin:16px 0}
-    .icon{width:44px; height:44px}
-    .pill-ok{
-      display:inline-flex; align-items:center; gap:8px;
-      padding:8px 10px; border-radius:999px;
-      border:1px solid rgba(34,197,94,.25);
-      background:rgba(34,197,94,.10);
-      color:#bff7d0; font-weight:800; font-size:12px;
+    textarea{min-height:104px; resize:vertical}
+    label{display:block; margin:10px 0 6px; color:var(--muted); font-weight:950; font-size:13px}
+    .hint{color:var(--muted); font-size:12.8px; line-height:1.45; margin-top:8px; font-weight:750}
+    .divider{height:1px; background:var(--line); margin:16px 0}
+    .footer{padding:32px 0 44px; color:var(--muted); font-size:13px; text-align:center; font-weight:800}
+
+    /* Floating CTA (mobile) */
+    .fab{
+      position:fixed; right:16px; bottom:16px; z-index:200;
+      display:none;
+    }
+    @media (max-width: 720px){
+      .fab{display:block}
     }
   </style>
 </head>
 <body>
 
+<!-- TOPBAR -->
 <div class="topbar">
   <div class="container">
     <div class="topbar-inner">
       <a class="brand" href="#top" aria-label="UHU Kassel">
-        <div class="logo">U</div>
+        <div class="logo-wrap" title="Логотип UHU">
+          <!-- IMPORTANT: upload logo.png to the same folder as index.html -->
+          <img class="logo-img" src="logo.png" alt="UHU logo" onerror="this.style.display='none'; this.parentElement.innerHTML='UHU'; this.parentElement.style.fontWeight='950'; this.parentElement.style.color='#0b1220'; this.parentElement.style.background='linear-gradient(135deg, var(--ua), #fff 60%, var(--blue))';"/>
+        </div>
         <div>
           UHU Kassel
           <small>Услуги рядом · Kassel</small>
@@ -199,20 +332,22 @@
   </div>
 </div>
 
+<!-- HERO -->
 <div id="top" class="hero">
   <div class="container">
     <div class="hero-grid">
       <div class="panel pad">
+        <div class="glow"></div>
         <div class="kicker">🇺🇦 + 🇩🇪 Kassel · Быстро и надёжно</div>
-        <h1>UHU Kassel — уборка, переезды, сборка мебели и мелкий ремонт</h1>
+        <h1>UHU Kassel — услуги по дому в 1 клиk</h1>
         <p class="lead">
-          Один контакт — много услуг. Пиши в Telegram или оставляй заявку на сайте.
-          Можно внести предоплату через Revolut для брони времени.
+          Уборка • Переезды • Сборка мебели • Мелкий ремонт.
+          Нажимай на услугу — заявка сама заполнится и откроет Telegram с готовым текстом.
         </p>
         <div class="hero-actions">
           <a class="btn primary" href="https://t.me/UHU_help" target="_blank" rel="noopener">Написать в Telegram</a>
           <a class="btn accent" href="#pay">Оплатить Revolut</a>
-          <a class="btn" href="#services">Выбрать услугу</a>
+          <a class="btn pink" href="#services">Выбрать услугу</a>
         </div>
 
         <div class="stats">
@@ -224,11 +359,12 @@
 
       <div class="side">
         <div class="side-card">
-          <div class="pill-ok">✅ Сейчас онлайн · @UHU_help</div>
+          <div class="badge">✅ Сейчас онлайн · @UHU_help</div>
           <h3>Нужна помощь сегодня?</h3>
           <p>Напиши задачу, район, время и бюджет — мы ответим и предложим решение.</p>
           <div class="mini-actions">
             <a class="btn block primary" href="https://t.me/UHU_help" target="_blank" rel="noopener">Открыть Telegram</a>
+            <a class="btn block ghost" href="#order">Оставить заявку</a>
           </div>
         </div>
 
@@ -242,19 +378,21 @@
       </div>
     </div>
 
+    <!-- SERVICES -->
     <div id="services" class="section">
       <div class="section-title">
-        <h2>Услуги (кликабельно)</h2>
-        <span>Нажми на карточку — услуга подставится в заявку</span>
+        <h2>Услуги (всё кликабельно)</h2>
+        <span>Нажми карточку — услуга подставится в заявку</span>
       </div>
 
       <div class="grid">
         <div class="card" onclick="quickOrder('Уборка')">
           <div class="img">
+            <!-- broom -->
             <svg class="icon" viewBox="0 0 24 24" fill="none" aria-hidden="true">
-              <path d="M10 3l2 2-7 7-2-2 7-7Z" stroke="white" stroke-width="1.6" opacity=".9"/>
-              <path d="M12 5l7 7c1.2 1.2 1.2 3.1 0 4.3l-1.7 1.7c-1.2 1.2-3.1 1.2-4.3 0l-7-7 7-7Z" stroke="white" stroke-width="1.6"/>
-              <path d="M7.2 12.8l4 4" stroke="white" stroke-width="1.6" opacity=".8"/>
+              <path d="M10 3l2 2-7 7-2-2 7-7Z" stroke="white" stroke-width="1.8" opacity=".95"/>
+              <path d="M12 5l7 7c1.2 1.2 1.2 3.1 0 4.3l-1.7 1.7c-1.2 1.2-3.1 1.2-4.3 0l-7-7 7-7Z" stroke="white" stroke-width="1.8"/>
+              <path d="M7.2 12.8l4 4" stroke="white" stroke-width="1.8" opacity=".85"/>
             </svg>
           </div>
           <div class="content">
@@ -266,10 +404,11 @@
 
         <div class="card" onclick="quickOrder('Переезд')">
           <div class="img">
+            <!-- truck -->
             <svg class="icon" viewBox="0 0 24 24" fill="none" aria-hidden="true">
-              <path d="M3 7h11v9H3V7Z" stroke="white" stroke-width="1.6"/>
-              <path d="M14 10h4l3 3v3h-7v-6Z" stroke="white" stroke-width="1.6"/>
-              <path d="M7 18a2 2 0 1 0 0 .01V18Zm11 0a2 2 0 1 0 0 .01V18Z" stroke="white" stroke-width="1.6"/>
+              <path d="M3 7h11v9H3V7Z" stroke="white" stroke-width="1.8"/>
+              <path d="M14 10h4l3 3v3h-7v-6Z" stroke="white" stroke-width="1.8"/>
+              <path d="M7 18a2 2 0 1 0 0 .01V18Zm11 0a2 2 0 1 0 0 .01V18Z" stroke="white" stroke-width="1.8"/>
             </svg>
           </div>
           <div class="content">
@@ -281,10 +420,11 @@
 
         <div class="card" onclick="quickOrder('Сборка мебели')">
           <div class="img">
+            <!-- chair -->
             <svg class="icon" viewBox="0 0 24 24" fill="none" aria-hidden="true">
-              <path d="M7 11h10l-1 5H8l-1-5Z" stroke="white" stroke-width="1.6"/>
-              <path d="M8 11V6h8v5" stroke="white" stroke-width="1.6"/>
-              <path d="M9 16v4M15 16v4" stroke="white" stroke-width="1.6"/>
+              <path d="M7 11h10l-1 5H8l-1-5Z" stroke="white" stroke-width="1.8"/>
+              <path d="M8 11V6h8v5" stroke="white" stroke-width="1.8"/>
+              <path d="M9 16v4M15 16v4" stroke="white" stroke-width="1.8"/>
             </svg>
           </div>
           <div class="content">
@@ -296,8 +436,9 @@
 
         <div class="card" onclick="quickOrder('Мелкий ремонт')">
           <div class="img">
+            <!-- wrench -->
             <svg class="icon" viewBox="0 0 24 24" fill="none" aria-hidden="true">
-              <path d="M14 7a4 4 0 0 0-5 5L3 18l3 3 6-6a4 4 0 0 0 5-5l-2 2-3-3 2-2Z" stroke="white" stroke-width="1.6"/>
+              <path d="M14 7a4 4 0 0 0-5 5L3 18l3 3 6-6a4 4 0 0 0 5-5l-2 2-3-3 2-2Z" stroke="white" stroke-width="1.8"/>
             </svg>
           </div>
           <div class="content">
@@ -309,33 +450,37 @@
       </div>
     </div>
 
+    <!-- HOW -->
     <div id="how" class="section">
       <div class="section-title"><h2>Как это работает</h2><span>3 простых шага</span></div>
       <div class="twocol">
         <div class="box">
           <h3>1) Заявка</h3>
-          <ul class="list"><li>Выберите услугу</li><li>Опишите задачу и район</li><li>Укажите время и бюджет</li></ul>
+          <ul class="list"><li>Нажмите на услугу</li><li>Заполните район/время/бюджет</li><li>Откроется Telegram с текстом</li></ul>
         </div>
         <div class="box">
           <h3>2) Подбор</h3>
-          <ul class="list"><li>Подбираем исполнителя</li><li>Согласуем детали</li><li>Подтверждаем время</li></ul>
+          <ul class="list"><li>Мы подбираем исполнителя</li><li>Согласуем детали и цену</li><li>Подтверждаем время</li></ul>
         </div>
         <div class="box">
           <h3>3) Выполнение</h3>
           <ul class="list"><li>Работа выполняется на месте</li><li>Предоплата через Revolut (по желанию)</li><li>Контроль качества</li></ul>
         </div>
         <div class="box">
-          <h3>Быстрые контакты</h3>
-          <p style="color:var(--muted); margin:0 0 10px; line-height:1.45">Самый быстрый способ — Telegram.</p>
-          <div class="mini-actions">
+          <h3>Быстрые кнопки</h3>
+          <p style="color:var(--muted); margin:0 0 10px; line-height:1.45; font-weight:800">
+            Самый быстрый контакт — Telegram. Для брони времени возможна предоплата.
+          </p>
+          <div style="display:flex; gap:10px; flex-wrap:wrap">
             <a class="btn primary" href="https://t.me/UHU_help" target="_blank" rel="noopener">Telegram</a>
             <a class="btn accent" href="#pay">Revolut</a>
-            <a class="btn" href="#order">Заявка</a>
+            <a class="btn ghost" href="#order">Заявка</a>
           </div>
         </div>
       </div>
     </div>
 
+    <!-- PAYMENT -->
     <div id="pay" class="section">
       <div class="section-title"><h2>Оплата Revolut</h2><span>Предоплата для брони времени</span></div>
       <div class="twocol">
@@ -354,7 +499,7 @@
           </div>
           <div style="margin-top:12px; display:flex; gap:10px; flex-wrap:wrap">
             <button class="btn accent" onclick="payWithRevolut()">Оплатить через Revolut</button>
-            <a class="btn" href="https://revolut.me/vladshvachko" target="_blank" rel="noopener">Открыть ссылку</a>
+            <a class="btn ghost" href="https://revolut.me/vladshvachko" target="_blank" rel="noopener">Открыть ссылку</a>
           </div>
           <p class="hint">После оплаты напишите в Telegram: <b>@UHU_help</b> (имя + услуга).</p>
         </div>
@@ -362,13 +507,14 @@
           <h3>Как оплатить</h3>
           <ol class="list"><li>Нажмите «Оплатить»</li><li>Подтвердите сумму</li><li>Оплатите картой/в Revolut</li><li>Напишите в Telegram</li></ol>
           <div class="divider"></div>
-          <p style="margin:0; color:var(--muted); line-height:1.45">
+          <p style="margin:0; color:var(--muted); line-height:1.45; font-weight:850">
             Revolut: <b>https://revolut.me/vladshvachko</b><br/>Telegram: <b>@UHU_help</b>
           </p>
         </div>
       </div>
     </div>
 
+    <!-- ORDER -->
     <div id="order" class="section" style="padding-bottom:14px">
       <div class="section-title"><h2>Оставить заявку</h2><span>Откроется Telegram с готовым текстом</span></div>
       <div class="box">
@@ -402,7 +548,7 @@
 
         <div style="display:flex; gap:10px; flex-wrap:wrap; margin-top:12px">
           <button class="btn primary" onclick="openTelegram()">Отправить в Telegram</button>
-          <button class="btn" onclick="copyText()">Скопировать текст</button>
+          <button class="btn pink" onclick="copyText()">Скопировать текст</button>
           <a class="btn ghost" href="https://t.me/UHU_help" target="_blank" rel="noopener">Открыть чат</a>
         </div>
 
@@ -417,6 +563,11 @@
   </div>
 </div>
 
+<!-- Floating button on mobile -->
+<div class="fab">
+  <a class="btn primary" href="https://t.me/UHU_help" target="_blank" rel="noopener">Telegram</a>
+</div>
+
 <script>
   const TELEGRAM_USERNAME = "UHU_help";
   const REVOLUT_LINK = "https://revolut.me/vladshvachko";
@@ -424,7 +575,7 @@
   const revSelect = document.getElementById("rev-amount");
   const revCustomWrap = document.getElementById("rev-custom-wrap");
   revSelect.addEventListener("change", () => {
-    revCustomWrap.style.display = revSelect.value === "custom" ? "block" : "none";
+    revCustomWrap.style.display = (revSelect.value === "custom") ? "block" : "none";
   });
 
   function payWithRevolut(){
