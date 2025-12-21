@@ -1,4 +1,6 @@
-
+========================
+/index.html
+========================
 <!DOCTYPE html>
 <html lang="ru">
 <head>
@@ -7,22 +9,26 @@
   <title>UHU Kassel — услуги рядом (RU/UA/DE)</title>
   <meta name="description" content="UHU Kassel: уборка, переезды, сборка мебели, мелкий ремонт. Заявка в Telegram в 1 клик + оплата Revolut." />
   <meta name="theme-color" content="#0a0f22" />
+
   <meta property="og:title" content="UHU Kassel — услуги рядом" />
   <meta property="og:description" content="Нажмите услугу → заявка заполняется → открывается Telegram. Оплата Revolut." />
   <meta property="og:type" content="website" />
 
+  <!-- PWA -->
+  <link rel="manifest" href="/manifest.webmanifest">
+  <link rel="apple-touch-icon" href="/icons/icon-192.png">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+
   <style>
     :root{
-      /* Background */
       --bg0:#070a14;
       --bg1:#0a0f22;
       --bg2:#081a33;
 
-      /* Text */
       --text:#f4f7ff;
       --muted:#c8d2f4;
 
-      /* Brand (UA + DE) */
       --ua:#ffd400;
       --ua2:#fff2a8;
       --de:#111827;
@@ -32,14 +38,12 @@
       --mint:#22c55e;
       --orange:#fb923c;
 
-      /* UI */
       --line:rgba(255,255,255,.12);
       --glass:rgba(255,255,255,.06);
       --glass2:rgba(255,255,255,.04);
       --shadow:0 18px 55px rgba(0,0,0,.50);
       --radius:26px;
 
-      /* focus */
       --focus:rgba(255,212,0,.45);
     }
 
@@ -72,18 +76,39 @@
       padding:12px 0;
     }
 
-    /* Logo block */
-    .brand{display:flex; align-items:center; gap:12px; font-weight:950; letter-spacing:.2px}
-    .brand small{display:block; color:var(--muted); font-weight:800; margin-top:2px}
+    .brand{display:flex; align-items:center; gap:12px; font-weight:950; letter-spacing:.2px; min-width:0}
+    .brand small{display:block; color:var(--muted); font-weight:800; margin-top:2px; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; max-width:44vw}
+
     .logo-wrap{
       width:44px; height:44px; border-radius:14px;
-      background:linear-gradient(135deg, rgba(255,212,0,.25), rgba(74,163,255,.20));
+      background:rgba(255,255,255,.10);
       border:1px solid rgba(255,255,255,.16);
       box-shadow:0 10px 28px rgba(0,0,0,.45);
       display:grid; place-items:center;
       overflow:hidden;
+      flex:0 0 auto;
+      position:relative;
+      isolation:isolate;
     }
-    .logo-img{width:100%; height:100%; object-fit:cover; display:block}
+    .logo-mark{
+      width:100%;
+      height:100%;
+      display:block;
+      position:absolute;
+      inset:0;
+      z-index:1;
+    }
+    .logo-img{
+      position:relative;
+      z-index:2;
+      width:100%;
+      height:100%;
+      object-fit:cover;
+      display:block;
+      opacity:0;
+      transition:opacity .18s ease;
+    }
+    .logo-img.loaded{opacity:1}
 
     .nav{display:flex; align-items:center; gap:10px; flex-wrap:wrap; justify-content:flex-end}
 
@@ -100,7 +125,6 @@
     }
     .chip:hover{transform:translateY(-1px); border-color:rgba(255,255,255,.22); color:var(--text)}
 
-    /* Buttons */
     .btn{
       display:inline-flex; align-items:center; justify-content:center; gap:10px;
       padding:12px 14px; border-radius:16px; font-weight:950;
@@ -134,7 +158,6 @@
     .btn.ghost{background:rgba(255,255,255,.04)}
     .btn.block{width:100%}
 
-    /* Language pill */
     .lang{
       display:inline-flex;
       border:1px solid var(--line);
@@ -150,14 +173,52 @@
       padding:9px 10px;
       cursor:pointer;
       font-size:12.5px;
+      min-width:44px;
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      gap:6px;
     }
     .lang button.active{
       color:#071022;
       background:linear-gradient(135deg, rgba(255,212,0,.95), rgba(74,163,255,.55));
     }
+    .lang .dot{
+      width:14px;height:14px;border-radius:999px;
+      display:inline-block;
+      box-shadow:0 6px 14px rgba(0,0,0,.35);
+    }
+    .lang .dot.ua{background:linear-gradient(180deg,#2b76ff 0 50%, #ffd400 50% 100%)}
+    .lang .dot.de{background:linear-gradient(180deg,#111827 0 34%, #e5e7eb 34% 66%, #ef4444 66% 100%)}
+    .lang .dot.ru{background:linear-gradient(180deg,#ffffff 0 34%, #2b76ff 34% 66%, #ef4444 66% 100%)}
 
-    /* Hero */
-    .hero{padding:28px 0 10px}
+    .hero{
+      position:relative;
+      padding:22px 0 10px;
+    }
+    .hero::before{
+      content:"";
+      position:absolute; inset:-120px 0 auto 0;
+      height:520px;
+      background:
+        radial-gradient(900px 520px at 18% 20%, rgba(74,163,255,.75), transparent 65%),
+        radial-gradient(900px 520px at 78% 35%, rgba(255,212,0,.55), transparent 70%),
+        radial-gradient(900px 520px at 50% 95%, rgba(255,79,216,.18), transparent 70%),
+        linear-gradient(180deg, rgba(8,26,64,.0), rgba(8,26,64,.0));
+      pointer-events:none;
+      z-index:0;
+    }
+    .hero::after{
+      content:"";
+      position:absolute; left:0; right:0; bottom:-2px;
+      height:54px;
+      background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1440 140'%3E%3Cpath fill='%23ffffff' fill-opacity='0.06' d='M0 64c120 22 240 33 360 33s240-11 360-33 240-33 360-33 240 11 360 33v76H0z'/%3E%3C/svg%3E") center/cover no-repeat;
+      pointer-events:none;
+      z-index:1;
+      opacity:.9;
+    }
+    .hero .container{position:relative; z-index:2}
+
     .hero-grid{
       display:grid;
       grid-template-columns: 1.15fr .85fr;
@@ -165,6 +226,7 @@
       align-items:stretch;
     }
     @media (max-width: 920px){ .hero-grid{grid-template-columns:1fr} }
+
     .panel{
       border:1px solid var(--line);
       border-radius:var(--radius);
@@ -208,7 +270,6 @@
     .stat b{display:block; font-size:18px}
     .stat span{color:var(--muted); font-size:13px; font-weight:850}
 
-    /* Side cards */
     .side{display:grid; gap:12px}
     .side-card{
       border:1px solid var(--line);
@@ -232,7 +293,6 @@
     .side-card p{margin:0; color:var(--muted); font-size:13.8px; line-height:1.5}
     .mini-actions{display:flex; gap:10px; margin-top:12px; flex-wrap:wrap}
 
-    /* Sections */
     .section{padding:18px 0 0}
     .section-title{
       display:flex; align-items:flex-end; justify-content:space-between; gap:10px; flex-wrap:wrap;
@@ -241,7 +301,6 @@
     .section-title h2{margin:0; font-size:20px}
     .section-title span{color:var(--muted); font-size:13px; font-weight:850}
 
-    /* Service cards */
     .grid{display:grid; grid-template-columns: repeat(4, 1fr); gap:12px; padding:16px 0 0}
     @media (max-width: 980px){.grid{grid-template-columns: repeat(2, 1fr)}}
     @media (max-width: 520px){.grid{grid-template-columns:1fr}}
@@ -291,7 +350,6 @@
       font-size:12px;
     }
 
-    /* Boxes */
     .twocol{display:grid; grid-template-columns: 1fr 1fr; gap:12px}
     @media (max-width: 920px){.twocol{grid-template-columns:1fr}}
     .box{
@@ -304,7 +362,6 @@
     .box h3{margin:0 0 8px; font-size:16px}
     .list{margin:0; padding-left:18px; color:var(--muted); line-height:1.7; font-weight:750}
 
-    /* Form */
     .formgrid{display:grid; grid-template-columns:1fr 1fr; gap:10px}
     @media (max-width: 700px){.formgrid{grid-template-columns:1fr}}
     .input, select, textarea{
@@ -325,7 +382,6 @@
     .divider{height:1px; background:var(--line); margin:16px 0}
     .footer{padding:32px 0 44px; color:var(--muted); font-size:13px; text-align:center; font-weight:850}
 
-    /* Toast */
     .toast{
       position:fixed; left:50%; bottom:18px; transform:translateX(-50%);
       background:rgba(8,18,39,.85);
@@ -340,16 +396,7 @@
       max-width:min(680px, calc(100vw - 32px));
     }
 
-    /* Floating CTA (mobile) */
-    .fab{
-      position:fixed; right:16px; bottom:16px; z-index:200;
-      display:none;
-    }
-    @media (max-width: 720px){
-      .fab{display:flex; gap:10px; flex-direction:column}
-    }
-
-    /* FAQ */
+    .fab{position:fixed; right:16px; bottom:16px; z-index:200; display:none;}
     details{
       border:1px solid var(--line);
       border-radius:20px;
@@ -357,17 +404,11 @@
       padding:12px 14px;
       box-shadow:var(--shadow);
     }
-    details summary{
-      cursor:pointer;
-      font-weight:950;
-      color:var(--text);
-      list-style:none;
-    }
+    details summary{cursor:pointer; font-weight:950; color:var(--text); list-style:none;}
     details summary::-webkit-details-marker{display:none}
     details p{margin:10px 0 0; color:var(--muted); line-height:1.55; font-weight:750}
     .faq{display:grid; gap:10px; padding-top:12px}
-  
-    /* Mobile nav */
+
     .menu-btn{
       display:none;
       width:44px; height:44px;
@@ -411,7 +452,6 @@
     .drawer .chip, .drawer .btn{width:100%}
     .drawer .chip{justify-content:flex-start}
 
-    /* Bottom action bar on mobile */
     .bottom-bar{
       position:fixed; left:0; right:0; bottom:0;
       padding:10px 12px calc(10px + env(safe-area-inset-bottom));
@@ -427,12 +467,7 @@
       gap:10px;
     }
 
-    /* Mobile tweaks */
     @media (max-width: 720px){
-      .topbar-inner{gap:10px}
-      .nav{gap:8px}
-      .navlinks{display:none}
-      .menu-btn{display:flex}
       h1{font-size:30px}
       .hero{padding:18px 0 6px}
       .panel.pad{padding:14px}
@@ -442,438 +477,24 @@
       .card .content{padding:12px}
       .btn{padding:13px 14px; border-radius:18px}
       .section{padding-top:14px}
-      .footer{padding-bottom:88px} /* room for bottom bar */
-      .fab{display:none} /* replace with bottom bar */
+      .footer{padding-bottom:88px}
+      .fab{display:none}
       .bottom-bar{display:block}
     }
 
-  
-    /* Mobile header refinements */
-    @media (max-width: 720px){
-      .topbar-inner{
-        padding:10px 0;
-      }
-      .brand{
-        gap:10px;
-      }
-      .brand small{
-        display:none; /* hide subtitle on mobile */
-      }
-      .logo-wrap{
-        width:40px;
-        height:40px;
-        border-radius:12px;
-      }
-      .logo-img{
-        object-fit:contain;
-      }
-    }
-
-
-    /* Reference-like hero (brighter blue + wave) */
-    .hero{
-      position:relative;
-      padding:22px 0 10px;
-    }
-    .hero::before{
-      content:"";
-      position:absolute; inset:-120px 0 auto 0;
-      height:520px;
-      background:
-        radial-gradient(900px 520px at 18% 20%, rgba(74,163,255,.75), transparent 65%),
-        radial-gradient(900px 520px at 78% 35%, rgba(255,212,0,.55), transparent 70%),
-        radial-gradient(900px 520px at 50% 95%, rgba(255,79,216,.18), transparent 70%),
-        linear-gradient(180deg, rgba(8,26,64,.0), rgba(8,26,64,.0));
-      pointer-events:none;
-      z-index:0;
-    }
-    .hero::after{
-      content:"";
-      position:absolute; left:0; right:0; bottom:-2px;
-      height:54px;
-      background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1440 140'%3E%3Cpath fill='%23ffffff' fill-opacity='0.06' d='M0 64c120 22 240 33 360 33s240-11 360-33 240-33 360-33 240 11 360 33v76H0z'/%3E%3C/svg%3E") center/cover no-repeat;
-      pointer-events:none;
-      z-index:1;
-      opacity:.9;
-    }
-    .hero .container{position:relative; z-index:2}
-
-
-    /* Flag-like language buttons (compact) */
-    .lang button{
-      min-width:44px;
-      display:inline-flex;
-      align-items:center;
-      justify-content:center;
-      gap:6px;
-    }
-    .lang .dot{
-      width:14px;height:14px;border-radius:999px;
-      display:inline-block;
-      box-shadow:0 6px 14px rgba(0,0,0,.35);
-    }
-    .lang .dot.ua{background:linear-gradient(180deg,#2b76ff 0 50%, #ffd400 50% 100%)}
-    .lang .dot.de{background:linear-gradient(180deg,#111827 0 34%, #e5e7eb 34% 66%, #ef4444 66% 100%)}
-    .lang .dot.ru{background:linear-gradient(180deg,#ffffff 0 34%, #2b76ff 34% 66%, #ef4444 66% 100%)}
-
-    @media (max-width: 720px){
-      .topbar-inner{
-        justify-content:space-between;
-      }
-      .brand{
-        min-width:0;
-      }
-      .brand > div:last-child{
-        display:none; /* hide title text, keep only logo on very small screens */
-      }
-      .lang button{
-        padding:9px 10px;
-      }
-    }
-
-
-    @media (max-width: 720px){
-      .topbar{
-        background:rgba(8,18,39,.78);
-      }
-      .logo-wrap{
-        background:rgba(255,255,255,.10);
-        border-color:rgba(255,255,255,.18);
-      }
-      .menu-btn{
-        width:42px;height:42px;border-radius:14px;
-      }
-    }
-
-
-    /* Mobile logo as app-avatar */
-    @media (max-width: 720px){
-      .logo-wrap{
-        width:44px;
-        height:44px;
-        border-radius:50%;
-        background:linear-gradient(135deg,#ffd400 0%, #2b76ff 100%);
-        display:flex;
-        align-items:center;
-        justify-content:center;
-        box-shadow:0 10px 28px rgba(0,0,0,.45);
-      }
-      .logo-img{
-        width:70%;
-        height:70%;
-        object-fit:contain;
-        filter: drop-shadow(0 2px 6px rgba(0,0,0,.35));
-      }
-    }
-
-
-    /* Telegram-like centered header on mobile */
-    @media (max-width: 720px){
-      .topbar-inner{
-        position:relative;
-        justify-content:center;
-      }
-      .brand{
-        position:absolute;
-        left:50%;
-        transform:translateX(-50%);
-        z-index:2;
-      }
-      .nav{
-        width:100%;
-        justify-content:space-between;
-      }
-      .lang{
-        margin-left:0;
-      }
-      .menu-btn{
-        margin-left:auto;
-      }
-    }
-
-
-    /* OPTION 3: clean mobile header (logo+name left, menu right) */
-    @media (max-width: 720px){
-      /* override option2 centering */
-      .topbar-inner{justify-content:space-between;}
-      .brand{position:static; transform:none;}
-      .nav{width:auto; justify-content:flex-end; gap:10px;}
-      
-      /* show brand title but clamp to one line */
-      .brand > div:last-child{display:block;}
-      .brand span[data-i18n="brand"]{
-        display:block;
-        max-width:54vw;
-        white-space:nowrap;
-        overflow:hidden;
-        text-overflow:ellipsis;
-        font-size:15.5px;
-        letter-spacing:.2px;
-      }
-      .brand small{display:none;}
-      
-      /* hide language pill on mobile (it will appear in drawer) */
-      .lang{display:none;}
-      .menu-btn{display:flex;}
-    }
-
-
-    /* ===== FINAL HEADER + LOGO FIX (desktop + mobile) ===== */
-    .topbar-inner{
-      display:flex;
-      align-items:center;
-      justify-content:space-between;
-      gap:12px;
-    }
-
-    .brand{
-      display:flex;
-      align-items:center;
-      gap:12px;
-      min-width:0;
-    }
-
-    .brand > div:last-child{
-      display:block;
-      min-width:0;
-    }
-
-    .brand span[data-i18n="brand"]{
-      display:block;
-      font-size:16px;
-      line-height:1.1;
-      white-space:nowrap;
-      overflow:hidden;
-      text-overflow:ellipsis;
-      max-width:44vw;
-    }
-
-    .brand small{
-      display:block;
-      margin-top:2px;
-      white-space:nowrap;
-      overflow:hidden;
-      text-overflow:ellipsis;
-      max-width:44vw;
-    }
-
-    .logo-wrap{
-      width:44px;
-      height:44px;
-      border-radius:14px;
-      display:flex;
-      align-items:center;
-      justify-content:center;
-      background:rgba(255,255,255,.10);
-      border:1px solid rgba(255,255,255,.16);
-      overflow:hidden;
-      flex:0 0 auto;
-    }
-
-    .logo-img{
-      width:100%;
-      height:100%;
-      object-fit:cover;
-      display:block;
-    }
-
-    /* Desktop: show language pill + inline nav links */
-    .lang{display:inline-flex}
-    .navlinks{display:flex}
-    .menu-btn{display:none}
-
-    /* Mobile: keep header stable, hide inline links & lang pill, use drawer */
-    @media (max-width: 720px){
-      .topbar-inner{gap:10px}
-      .brand span[data-i18n="brand"]{max-width:58vw; font-size:15.5px}
-      .brand small{display:none}
-
-      /* App-like logo on mobile (but still rectangular, not breaking desktop) */
-      .logo-wrap{
-        width:42px; height:42px; border-radius:16px;
-        background:linear-gradient(135deg,#ffd400 0%, #2b76ff 100%);
-        border-color:rgba(255,255,255,.18);
-      }
-      .logo-img{
-        width:72%;
-        height:72%;
-        object-fit:contain;
-        filter: drop-shadow(0 2px 6px rgba(0,0,0,.35));
-      }
-
-      .navlinks{display:none}
-      .lang{display:none}          /* language switch is inside drawer */
-      .menu-btn{display:flex}
-    }
-
-
-    /* ===== Robust logo rendering (no missing file issues) ===== */
-    .logo-wrap{
-      position:relative;
-      overflow:hidden;
-      isolation:isolate;
-    }
-    .logo-mark{
-      width:100%;
-      height:100%;
-      display:block;
-      position:absolute;
-      inset:0;
-      z-index:1;
-    }
-    /* If logo.png exists, show it above the SVG */
-    .logo-img{
-      position:relative;
-      z-index:2;
-      width:100%;
-      height:100%;
-      object-fit:cover;
-      display:block;
-      opacity:0;              /* hidden until loaded */
-      transition:opacity .18s ease;
-      background:transparent;
-    }
-    .logo-img.loaded{opacity:1}
-    /* Mobile: keep png contained if it's not square */
-    @media (max-width: 720px){
-      .logo-img{object-fit:contain}
-    }
-
-
-    /* ===== MOBILE APP HEADER (VARIANT A) ===== */
-    @media (max-width: 720px){
-      .topbar{
-        height:56px;
-      }
-      .topbar-inner{
-        height:56px;
-        justify-content:center;
-        position:relative;
-      }
-
-      /* hide all header text */
-      .brand > div:last-child{display:none !important;}
-      .lang{display:none !important;}
-      .navlinks{display:none !important;}
-
-      /* center logo */
-      .brand{
-        position:absolute;
-        left:50%;
-        transform:translateX(-50%);
-        gap:0;
-      }
-
-      .logo-wrap{
-        width:42px;
-        height:42px;
-        border-radius:50%;
-        background:linear-gradient(135deg,#ffd400 0%, #2b76ff 100%);
-      }
-
-      /* burger right */
-      .menu-btn{
-        position:absolute;
-        right:12px;
-        top:7px;
-        display:flex;
-      }
-    }
-
-
-    /* ===== FIX: logo overlapping burger on mobile ===== */
-    @media (max-width: 720px){
-      .topbar-inner{
-        padding:0 56px; /* reserve space for burger */
-      }
-      .brand{
-        max-width:calc(100% - 112px);
-        pointer-events:none; /* avoid accidental taps overlap */
-      }
-      .logo-wrap{
-        pointer-events:auto;
-      }
-      .menu-btn{
-        right:10px;
-        top:7px;
-      }
-    }
-
-
-    /* ===== MOBILE HEADER REDESIGN (GRID, NO OVERLAP) ===== */
-    @media (max-width: 720px){
-      .topbar{
-        height:56px;
-      }
-      .topbar-inner{
-        height:56px;
-        display:grid;
-        grid-template-columns: 56px 1fr 56px;
-        align-items:center;
-        padding:0;
-      }
-
-      /* Left slot */
-      .topbar-inner::before{
-        content:"";
-      }
-
-      /* Center logo */
-      .brand{
-        grid-column:2;
-        justify-content:center;
-        position:static;
-        transform:none;
-        pointer-events:auto;
-      }
-      .brand > div:last-child{display:none !important;}
-
-      .logo-wrap{
-        width:40px;
-        height:40px;
-        border-radius:50%;
-      }
-
-      /* Right burger */
-      .menu-btn{
-        grid-column:3;
-        justify-self:end;
-        margin-right:8px;
-        position:static;
-      }
-
-      /* Hide other header elements */
-      .lang,
-      .navlinks{
-        display:none !important;
-      }
-    }
-
-
-    /* ===== FINAL MOBILE HEADER (works with existing DOM: brand + nav) ===== */
+    /* Mobile header: center logo only + burger right */
     @media (max-width: 720px){
       .topbar{height:56px}
       .topbar-inner{
         height:56px;
         position:relative;
-        justify-content:center;          /* center brand */
-        padding:0 64px;                 /* reserve space for right menu button */
+        justify-content:center;
+        padding:0 64px;
       }
-
-      /* Brand: centered logo only */
-      .brand{
-        margin:0 auto;
-        gap:0;
-      }
+      .brand{margin:0 auto; gap:0}
       .brand > div:last-child{display:none !important;}
-
-      .logo-wrap{
-        width:40px;
-        height:40px;
-        border-radius:50%;
-      }
-
-      /* Nav: only burger on the right */
+      .logo-wrap{width:40px;height:40px;border-radius:50%; background:linear-gradient(135deg,#ffd400 0%, #2b76ff 100%);}
+      .logo-img{width:72%;height:72%;object-fit:contain;filter: drop-shadow(0 2px 6px rgba(0,0,0,.35));}
       .nav{
         position:absolute;
         right:10px;
@@ -884,16 +505,9 @@
       }
       .navlinks{display:none !important;}
       .lang{display:none !important;}
-      .menu-btn{
-        position:static;
-        display:flex;
-        width:42px;
-        height:42px;
-        border-radius:14px;
-      }
+      .menu-btn{display:flex; width:42px;height:42px;border-radius:14px;}
     }
-
-</style>
+  </style>
 </head>
 <body>
 
@@ -903,7 +517,6 @@
     <div class="topbar-inner">
       <a class="brand" href="#top" aria-label="UHU Kassel">
         <div class="logo-wrap" title="UHU" aria-label="UHU logo">
-          <!-- Robust logo: inline SVG always works; if logo.png exists, it overlays -->
           <svg class="logo-mark" viewBox="0 0 64 64" role="img" aria-hidden="true">
             <defs>
               <linearGradient id="g1" x1="0" y1="0" x2="1" y2="1">
@@ -925,30 +538,31 @@
           <small data-i18n="brand_sub">Услуги рядом · Kassel</small>
         </div>
       </a>
+
       <div class="nav">
-        
         <div class="navlinks">
           <div class="lang" aria-label="Language switch">
-          <button type="button" id="lang-ua" class="active"><span class="dot ua"></span>UA</button>
-          <button type="button" id="lang-de"><span class="dot de"></span>DE</button>
-          <button type="button" id="lang-ru"><span class="dot ru"></span>RU</button>
+            <button type="button" id="lang-ua" class="active"><span class="dot ua"></span>UA</button>
+            <button type="button" id="lang-de"><span class="dot de"></span>DE</button>
+            <button type="button" id="lang-ru"><span class="dot ru"></span>RU</button>
+          </div>
+          <a class="chip" href="#services" data-i18n="nav_services">Услуги</a>
+          <a class="chip" href="#how" data-i18n="nav_how">Как это работает</a>
+          <a class="chip" href="#pay" data-i18n="nav_pay">Оплата</a>
+          <a class="chip" href="#order" data-i18n="nav_order">Заявка</a>
+          <a class="btn ghost" href="https://t.me/UHU_help" target="_blank" rel="noopener">Telegram</a>
+          <a class="btn primary" href="#order" data-i18n="cta_leave">Оставить заявку</a>
         </div>
+
         <button class="menu-btn" type="button" aria-label="Menu" onclick="toggleDrawer(true)">
           <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
             <path d="M4 7h16M4 12h16M4 17h16" stroke="white" stroke-width="2" stroke-linecap="round" opacity=".92"/>
           </svg>
         </button>
-      </div><a class="chip" href="#services" data-i18n="nav_services">Услуги</a>
-        <a class="chip" href="#how" data-i18n="nav_how">Как это работает</a>
-        <a class="chip" href="#pay" data-i18n="nav_pay">Оплата</a>
-        <a class="chip" href="#order" data-i18n="nav_order">Заявка</a>
-        <a class="btn ghost" href="https://t.me/UHU_help" target="_blank" rel="noopener">Telegram</a>
-        <a class="btn primary" href="#order" data-i18n="cta_leave">Оставить заявку</a>
       </div>
     </div>
   </div>
 </div>
-
 
 <!-- Mobile Drawer -->
 <div id="drawerBackdrop" class="drawer-backdrop" onclick="toggleDrawer(false)"></div>
@@ -982,7 +596,6 @@
     Revolut: <b>@vladshvachko</b>
   </div>
 </aside>
-
 
 <!-- HERO -->
 <div id="top" class="hero">
@@ -1048,7 +661,6 @@
       <div class="grid">
         <div class="card" role="button" tabindex="0" onclick="quickOrder('cleaning')" onkeydown="cardKey(event,'cleaning')">
           <div class="img">
-            <!-- broom -->
             <svg class="icon" viewBox="0 0 24 24" fill="none" aria-hidden="true">
               <path d="M10 3l2 2-7 7-2-2 7-7Z" stroke="white" stroke-width="1.8" opacity=".95"/>
               <path d="M12 5l7 7c1.2 1.2 1.2 3.1 0 4.3l-1.7 1.7c-1.2 1.2-3.1 1.2-4.3 0l-7-7 7-7Z" stroke="white" stroke-width="1.8"/>
@@ -1064,7 +676,6 @@
 
         <div class="card" role="button" tabindex="0" onclick="quickOrder('moving')" onkeydown="cardKey(event,'moving')">
           <div class="img">
-            <!-- truck -->
             <svg class="icon" viewBox="0 0 24 24" fill="none" aria-hidden="true">
               <path d="M3 7h11v9H3V7Z" stroke="white" stroke-width="1.8"/>
               <path d="M14 10h4l3 3v3h-7v-6Z" stroke="white" stroke-width="1.8"/>
@@ -1080,7 +691,6 @@
 
         <div class="card" role="button" tabindex="0" onclick="quickOrder('furniture')" onkeydown="cardKey(event,'furniture')">
           <div class="img">
-            <!-- chair -->
             <svg class="icon" viewBox="0 0 24 24" fill="none" aria-hidden="true">
               <path d="M7 11h10l-1 5H8l-1-5Z" stroke="white" stroke-width="1.8"/>
               <path d="M8 11V6h8v5" stroke="white" stroke-width="1.8"/>
@@ -1096,7 +706,6 @@
 
         <div class="card" role="button" tabindex="0" onclick="quickOrder('repair')" onkeydown="cardKey(event,'repair')">
           <div class="img">
-            <!-- wrench -->
             <svg class="icon" viewBox="0 0 24 24" fill="none" aria-hidden="true">
               <path d="M14 7a4 4 0 0 0-5 5L3 18l3 3 6-6a4 4 0 0 0 5-5l-2 2-3-3 2-2Z" stroke="white" stroke-width="1.8"/>
             </svg>
@@ -1263,13 +872,6 @@
   </div>
 </div>
 
-<!-- Floating buttons on mobile -->
-<div class="fab">
-  <a class="btn primary" href="https://t.me/UHU_help" target="_blank" rel="noopener">Telegram</a>
-  <a class="btn accent" href="#order" data-i18n="cta_leave">Оставить заявку</a>
-</div>
-
-
 <!-- Bottom action bar (mobile) -->
 <div class="bottom-bar">
   <div class="inner">
@@ -1284,7 +886,6 @@
   const TELEGRAM_USERNAME = "UHU_help";
   const REVOLUT_LINK = "https://revolut.me/vladshvachko";
 
-  // i18n dictionary
   const I18N = {
     ru: {
       brand:"UHU Kassel",
@@ -1517,7 +1118,6 @@
     de: { cleaning:"Reinigung", moving:"Umzug", furniture:"Möbelmontage", repair:"Kleine Reparaturen", other:"Sonstiges" }
   };
 
-  // State
   let currentLang = localStorage.getItem("uhu_lang") || "ua";
 
   const toastEl = document.getElementById("toast");
@@ -1528,7 +1128,6 @@
     toastEl._t = setTimeout(()=>{ toastEl.style.display="none"; }, 2100);
   }
 
-  // Populate service select based on lang
   function populateServiceSelect(){
     const sel = document.getElementById("service");
     sel.innerHTML = "";
@@ -1540,30 +1139,25 @@
     });
   }
 
-  // Apply translations
   function applyLang(lang){
     currentLang = lang;
     localStorage.setItem("uhu_lang", lang);
-
     document.documentElement.lang = (lang === "ua") ? "uk" : lang;
 
-    // buttons active state
     ["ua","de","ru"].forEach(l=>{
-      document.getElementById("lang-"+l).classList.toggle("active", l === lang);
+      const topBtn = document.getElementById("lang-"+l);
+      if (topBtn) topBtn.classList.toggle("active", l === lang);
     });
 
-    // translate nodes
     document.querySelectorAll("[data-i18n]").forEach(el=>{
       const key = el.getAttribute("data-i18n");
       const val = I18N[lang] && I18N[lang][key];
       if (typeof val === "string") el.innerHTML = val;
     });
 
-    // translate the option label for "custom"
     const customOpt = document.querySelector("#rev-amount option[value='custom']");
     if (customOpt) customOpt.textContent = I18N[lang].pay_custom;
 
-    // placeholders
     const ph = {
       district: { ru:"Напр.: Mitte, Nord, Südstadt...", ua:"Напр.: Mitte, Nord, Südstadt...", de:"z.B.: Mitte, Nord, Südstadt..." },
       when:     { ru:"Напр.: сегодня 18:00 / завтра утром", ua:"Напр.: сьогодні 18:00 / завтра зранку", de:"z.B.: heute 18:00 / morgen früh" },
@@ -1578,9 +1172,13 @@
     populateServiceSelect();
   }
 
-  document.getElementById("lang-ua").addEventListener("click", ()=>applyLang("ua"));
-  document.getElementById("lang-de").addEventListener("click", ()=>applyLang("de"));
-  document.getElementById("lang-ru").addEventListener("click", ()=>applyLang("ru"));
+  // Top language buttons
+  const topUA = document.getElementById("lang-ua");
+  const topDE = document.getElementById("lang-de");
+  const topRU = document.getElementById("lang-ru");
+  if (topUA) topUA.addEventListener("click", ()=>applyLang("ua"));
+  if (topDE) topDE.addEventListener("click", ()=>applyLang("de"));
+  if (topRU) topRU.addEventListener("click", ()=>applyLang("ru"));
 
   // Revolut amount toggle
   const revSelect = document.getElementById("rev-amount");
@@ -1663,8 +1261,7 @@
     const msg = buildMessage();
     try{
       await navigator.clipboard.writeText(msg);
-      if(!silent) toast(I18N[currentLang].toast_copied);
-      else toast(I18N[currentLang].toast_copied);
+      toast(I18N[currentLang].toast_copied);
     } catch(e){
       const ta=document.createElement("textarea");
       ta.value=msg; document.body.appendChild(ta); ta.select(); document.execCommand("copy");
@@ -1673,14 +1270,12 @@
     }
   }
 
-  // Expose functions for inline handlers
   window.payWithRevolut = payWithRevolut;
   window.quickOrder = quickOrder;
   window.openTelegram = openTelegram;
   window.copyText = copyText;
   window.cardKey = cardKey;
 
-  // Drawer
   function toggleDrawer(open){
     const d = document.getElementById("drawer");
     const b = document.getElementById("drawerBackdrop");
@@ -1696,8 +1291,6 @@
   }
   window.toggleDrawer = toggleDrawer;
 
-
-  // Drawer language buttons
   function syncDrawerLangButtons(){
     ["ua","de","ru"].forEach(l=>{
       const b = document.getElementById("dlang-"+l);
@@ -1715,26 +1308,162 @@
     });
   });
 
-
-  // Close drawer when switching to desktop
   window.addEventListener("resize", ()=>{
     if(window.innerWidth > 720) toggleDrawer(false);
   });
 
-
-  // Quick contact copy (reliable on mobile)
   const quickBtn = document.getElementById("quickCopyBtn");
   if(quickBtn){
     quickBtn.addEventListener("click", (e)=>{
       e.preventDefault();
-      try{ copyText(true); }catch(err){ console.error(err); }
+      copyText(true);
     });
   }
 
-
-  // init
+  // Init i18n
   applyLang(currentLang);
+  syncDrawerLangButtons();
+
+  // Register Service Worker (PWA)
+  if ("serviceWorker" in navigator) {
+    window.addEventListener("load", () => {
+      navigator.serviceWorker.register("/sw.js").catch(()=>{});
+    });
+  }
 </script>
 
 </body>
 </html>
+
+========================
+/manifest.webmanifest
+========================
+{
+  "name": "UHU Kassel",
+  "short_name": "UHU",
+  "description": "UHU Kassel: уборка, переезды, сборка мебели, мелкий ремонт. Заявка в Telegram + оплата Revolut.",
+  "start_url": "/?source=pwa",
+  "scope": "/",
+  "display": "standalone",
+  "background_color": "#0a0f22",
+  "theme_color": "#0a0f22",
+  "lang": "uk",
+  "icons": [
+    { "src": "/icons/icon-192.png", "sizes": "192x192", "type": "image/png", "purpose": "any maskable" },
+    { "src": "/icons/icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "any maskable" }
+  ]
+}
+
+========================
+/sw.js
+========================
+/* UHU Kassel PWA Service Worker */
+const CACHE_NAME = "uhu-kassel-v1";
+const CORE_ASSETS = [
+  "/",
+  "/index.html",
+  "/manifest.webmanifest",
+  "/sw.js",
+  "/icons/icon-192.png",
+  "/icons/icon-512.png"
+];
+
+// Install: cache core
+self.addEventListener("install", (event) => {
+  event.waitUntil(
+    caches.open(CACHE_NAME).then((cache) => cache.addAll(CORE_ASSETS))
+  );
+  self.skipWaiting();
+});
+
+// Activate: cleanup old caches
+self.addEventListener("activate", (event) => {
+  event.waitUntil(
+    caches.keys().then((keys) =>
+      Promise.all(keys.map((k) => (k !== CACHE_NAME ? caches.delete(k) : null)))
+    )
+  );
+  self.clients.claim();
+});
+
+// Fetch strategy:
+// - HTML: network-first (always fresh)
+// - Others: cache-first
+self.addEventListener("fetch", (event) => {
+  const req = event.request;
+  const url = new URL(req.url);
+
+  // Only handle same-origin
+  if (url.origin !== self.location.origin) return;
+
+  const accept = req.headers.get("accept") || "";
+  const isHTML = accept.includes("text/html") || url.pathname === "/" || url.pathname.endsWith(".html");
+
+  if (isHTML) {
+    event.respondWith(
+      fetch(req)
+        .then((res) => {
+          const copy = res.clone();
+          caches.open(CACHE_NAME).then((cache) => cache.put(req, copy));
+          return res;
+        })
+        .catch(() => caches.match(req).then((r) => r || caches.match("/index.html")))
+    );
+    return;
+  }
+
+  event.respondWith(
+    caches.match(req).then((cached) => {
+      if (cached) return cached;
+      return fetch(req)
+        .then((res) => {
+          const copy = res.clone();
+          caches.open(CACHE_NAME).then((cache) => cache.put(req, copy));
+          return res;
+        })
+        .catch(() => cached);
+    })
+  );
+});
+
+========================
+/.htaccess
+========================
+# --- UHU Kassel (Hostinger / Apache) ---
+
+# 1) Force HTTPS
+RewriteEngine On
+RewriteCond %{HTTPS} !=on
+RewriteRule ^ https://%{HTTP_HOST}%{REQUEST_URI} [R=301,L]
+
+# 2) Optional: choose ONE canonical domain (uncomment ONE block)
+#    A) Force NON-WWW (recommended if www sometimes fails)
+#RewriteCond %{HTTP_HOST} ^www\.(.+)$ [NC]
+#RewriteRule ^ https://%1%{REQUEST_URI} [R=301,L]
+
+#    B) Force WWW
+#RewriteCond %{HTTP_HOST} !^www\. [NC]
+#RewriteRule ^ https://www.%{HTTP_HOST}%{REQUEST_URI} [R=301,L]
+
+# 3) Correct MIME types
+AddType application/manifest+json .webmanifest
+AddType application/javascript .js
+
+# 4) Cache policy (safe defaults)
+<IfModule mod_expires.c>
+  ExpiresActive On
+  ExpiresByType text/html "access plus 0 seconds"
+  ExpiresByType application/manifest+json "access plus 1 day"
+  ExpiresByType application/javascript "access plus 7 days"
+  ExpiresByType text/css "access plus 7 days"
+  ExpiresByType image/png "access plus 30 days"
+  ExpiresByType image/svg+xml "access plus 30 days"
+</IfModule>
+
+# 5) Security headers (light)
+<IfModule mod_headers.c>
+  Header always set X-Content-Type-Options "nosniff"
+  Header always set X-Frame-Options "SAMEORIGIN"
+  Header always set Referrer-Policy "strict-origin-when-cross-origin"
+  Header always set Permissions-Policy "geolocation=(), microphone=(), camera=()"
+</IfModule>
