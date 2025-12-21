@@ -739,6 +739,47 @@
       .logo-img{object-fit:contain}
     }
 
+
+    /* ===== MOBILE APP HEADER (VARIANT A) ===== */
+    @media (max-width: 720px){
+      .topbar{
+        height:56px;
+      }
+      .topbar-inner{
+        height:56px;
+        justify-content:center;
+        position:relative;
+      }
+
+      /* hide all header text */
+      .brand > div:last-child{display:none !important;}
+      .lang{display:none !important;}
+      .navlinks{display:none !important;}
+
+      /* center logo */
+      .brand{
+        position:absolute;
+        left:50%;
+        transform:translateX(-50%);
+        gap:0;
+      }
+
+      .logo-wrap{
+        width:42px;
+        height:42px;
+        border-radius:50%;
+        background:linear-gradient(135deg,#ffd400 0%, #2b76ff 100%);
+      }
+
+      /* burger right */
+      .menu-btn{
+        position:absolute;
+        right:12px;
+        top:7px;
+        display:flex;
+      }
+    }
+
 </style>
 </head>
 <body>
