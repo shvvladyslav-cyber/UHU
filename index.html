@@ -849,6 +849,50 @@
       }
     }
 
+
+    /* ===== FINAL MOBILE HEADER (works with existing DOM: brand + nav) ===== */
+    @media (max-width: 720px){
+      .topbar{height:56px}
+      .topbar-inner{
+        height:56px;
+        position:relative;
+        justify-content:center;          /* center brand */
+        padding:0 64px;                 /* reserve space for right menu button */
+      }
+
+      /* Brand: centered logo only */
+      .brand{
+        margin:0 auto;
+        gap:0;
+      }
+      .brand > div:last-child{display:none !important;}
+
+      .logo-wrap{
+        width:40px;
+        height:40px;
+        border-radius:50%;
+      }
+
+      /* Nav: only burger on the right */
+      .nav{
+        position:absolute;
+        right:10px;
+        top:50%;
+        transform:translateY(-50%);
+        width:auto;
+        justify-content:flex-end;
+      }
+      .navlinks{display:none !important;}
+      .lang{display:none !important;}
+      .menu-btn{
+        position:static;
+        display:flex;
+        width:42px;
+        height:42px;
+        border-radius:14px;
+      }
+    }
+
 </style>
 </head>
 <body>
@@ -982,7 +1026,7 @@
           <h3 data-i18n="fast_contact">Быстрый контакт</h3>
           <p data-i18n="fast_contact_p">Если Telegram не установлен — можно скопировать текст заявки и отправить куда удобно.</p>
           <div class="mini-actions">
-            <button class="btn block" type="button" onclick="copyText(true)" data-i18n="copy_btn">Скопировать заявку</button>
+            <button class="btn block" type="button" id="quickCopyBtn" data-i18n="copy_btn">Скопировать заявку</button>
           </div>
         </div>
       </div>
@@ -1670,6 +1714,16 @@
   window.addEventListener("resize", ()=>{
     if(window.innerWidth > 720) toggleDrawer(false);
   });
+
+
+  // Quick contact copy (reliable on mobile)
+  const quickBtn = document.getElementById("quickCopyBtn");
+  if(quickBtn){
+    quickBtn.addEventListener("click", (e)=>{
+      e.preventDefault();
+      try{ copyText(true); }catch(err){ console.error(err); }
+    });
+  }
 
 
   // init
