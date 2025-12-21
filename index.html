@@ -545,6 +545,27 @@
       }
     }
 
+
+    /* Mobile logo as app-avatar */
+    @media (max-width: 720px){
+      .logo-wrap{
+        width:44px;
+        height:44px;
+        border-radius:50%;
+        background:linear-gradient(135deg,#ffd400 0%, #2b76ff 100%);
+        display:flex;
+        align-items:center;
+        justify-content:center;
+        box-shadow:0 10px 28px rgba(0,0,0,.45);
+      }
+      .logo-img{
+        width:70%;
+        height:70%;
+        object-fit:contain;
+        filter: drop-shadow(0 2px 6px rgba(0,0,0,.35));
+      }
+    }
+
 </style>
 </head>
 <body>
@@ -1333,4 +1354,3 @@
 
 </body>
 </html>
-
