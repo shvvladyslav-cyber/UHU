@@ -617,6 +617,128 @@
       .menu-btn{display:flex;}
     }
 
+
+    /* ===== FINAL HEADER + LOGO FIX (desktop + mobile) ===== */
+    .topbar-inner{
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:12px;
+    }
+
+    .brand{
+      display:flex;
+      align-items:center;
+      gap:12px;
+      min-width:0;
+    }
+
+    .brand > div:last-child{
+      display:block;
+      min-width:0;
+    }
+
+    .brand span[data-i18n="brand"]{
+      display:block;
+      font-size:16px;
+      line-height:1.1;
+      white-space:nowrap;
+      overflow:hidden;
+      text-overflow:ellipsis;
+      max-width:44vw;
+    }
+
+    .brand small{
+      display:block;
+      margin-top:2px;
+      white-space:nowrap;
+      overflow:hidden;
+      text-overflow:ellipsis;
+      max-width:44vw;
+    }
+
+    .logo-wrap{
+      width:44px;
+      height:44px;
+      border-radius:14px;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      background:rgba(255,255,255,.10);
+      border:1px solid rgba(255,255,255,.16);
+      overflow:hidden;
+      flex:0 0 auto;
+    }
+
+    .logo-img{
+      width:100%;
+      height:100%;
+      object-fit:cover;
+      display:block;
+    }
+
+    /* Desktop: show language pill + inline nav links */
+    .lang{display:inline-flex}
+    .navlinks{display:flex}
+    .menu-btn{display:none}
+
+    /* Mobile: keep header stable, hide inline links & lang pill, use drawer */
+    @media (max-width: 720px){
+      .topbar-inner{gap:10px}
+      .brand span[data-i18n="brand"]{max-width:58vw; font-size:15.5px}
+      .brand small{display:none}
+
+      /* App-like logo on mobile (but still rectangular, not breaking desktop) */
+      .logo-wrap{
+        width:42px; height:42px; border-radius:16px;
+        background:linear-gradient(135deg,#ffd400 0%, #2b76ff 100%);
+        border-color:rgba(255,255,255,.18);
+      }
+      .logo-img{
+        width:72%;
+        height:72%;
+        object-fit:contain;
+        filter: drop-shadow(0 2px 6px rgba(0,0,0,.35));
+      }
+
+      .navlinks{display:none}
+      .lang{display:none}          /* language switch is inside drawer */
+      .menu-btn{display:flex}
+    }
+
+
+    /* ===== Robust logo rendering (no missing file issues) ===== */
+    .logo-wrap{
+      position:relative;
+      overflow:hidden;
+      isolation:isolate;
+    }
+    .logo-mark{
+      width:100%;
+      height:100%;
+      display:block;
+      position:absolute;
+      inset:0;
+      z-index:1;
+    }
+    /* If logo.png exists, show it above the SVG */
+    .logo-img{
+      position:relative;
+      z-index:2;
+      width:100%;
+      height:100%;
+      object-fit:cover;
+      display:block;
+      opacity:0;              /* hidden until loaded */
+      transition:opacity .18s ease;
+      background:transparent;
+    }
+    .logo-img.loaded{opacity:1}
+    /* Mobile: keep png contained if it's not square */
+    @media (max-width: 720px){
+      .logo-img{object-fit:contain}
+    }
+
 </style>
 </head>
 <body>
@@ -624,12 +746,25 @@
 <!-- TOPBAR -->
 <div class="topbar">
   <div class="container">
-    <div class="topbar-inner" style="align-items:center;">
+    <div class="topbar-inner">
       <a class="brand" href="#top" aria-label="UHU Kassel">
-        <div class="logo-wrap" title="UHU">
-          <!-- Put logo.png next to this file (same folder) -->
-          <img class="logo-img" src="logo.png" alt="UHU logo"
-               onerror="this.style.display='none'; this.parentElement.innerHTML='<span style=\"font-weight:1000; letter-spacing:.5px; font-size:18px;\">U<span style=\"color:#2b76ff\">H</span><span style=\"color:#ffd400\">U</span></span>'; this.parentElement.style.background='rgba(255,255,255,.10)';"/>
+        <div class="logo-wrap" title="UHU" aria-label="UHU logo">
+          <!-- Robust logo: inline SVG always works; if logo.png exists, it overlays -->
+          <svg class="logo-mark" viewBox="0 0 64 64" role="img" aria-hidden="true">
+            <defs>
+              <linearGradient id="g1" x1="0" y1="0" x2="1" y2="1">
+                <stop offset="0" stop-color="#ffd400"/>
+                <stop offset="1" stop-color="#2b76ff"/>
+              </linearGradient>
+            </defs>
+            <rect x="6" y="6" width="52" height="52" rx="16" fill="url(#g1)" opacity="0.22"/>
+            <path d="M12 24c0-7 5-12 12-12h0v8h0c-2 0-4 2-4 4v16c0 2 2 4 4 4h0v8h0c-7 0-12-5-12-12V24Z" fill="#ffffff" opacity="0.92"/>
+            <path d="M40 12h0c7 0 12 5 12 12v16c0 7-5 12-12 12h0v-8h0c2 0 4-2 4-4V24c0-2-2-4-4-4h0v-8Z" fill="#ffffff" opacity="0.92"/>
+            <path d="M24 12h8v40h-8z" fill="#ffffff" opacity="0.92"/>
+            <path d="M32 12h8v40h-8z" fill="#ffffff" opacity="0.92"/>
+            <text x="32" y="40" text-anchor="middle" font-family="system-ui,Segoe UI,Roboto,Arial" font-weight="1000" font-size="20" fill="#ffffff" opacity="0.95" style="letter-spacing:1px">UHU</text>
+          </svg>
+          <img class="logo-img" src="logo.png" alt="UHU logo" onload="this.classList.add('loaded')" onerror="this.remove();"/>
         </div>
         <div>
           <span data-i18n="brand">UHU Kassel</span>
