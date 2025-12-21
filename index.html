@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="ru">
 <head>
@@ -14,34 +13,26 @@
 
   <!-- PWA -->
   <link rel="manifest" href="/manifest.webmanifest">
-  <link rel="apple-touch-icon" href="/icons/icon-192.png">
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <link rel="icon" href="/icons/icon-192.png">
+  <link rel="apple-touch-icon" href="/icons/icon-192.png">
 
   <style>
     :root{
-      --bg0:#070a14;
-      --bg1:#0a0f22;
-      --bg2:#081a33;
+      --bg0:#070a14; --bg1:#0a0f22; --bg2:#081a33;
+      --text:#f4f7ff; --muted:#c8d2f4;
 
-      --text:#f4f7ff;
-      --muted:#c8d2f4;
-
-      --ua:#ffd400;
-      --ua2:#fff2a8;
+      --ua:#ffd400; --ua2:#fff2a8;
       --de:#111827;
-      --blue:#4aa3ff;
-      --blue2:#2b76ff;
-      --pink:#ff4fd8;
-      --mint:#22c55e;
-      --orange:#fb923c;
+      --blue:#4aa3ff; --blue2:#2b76ff;
+      --pink:#ff4fd8; --mint:#22c55e; --orange:#fb923c;
 
       --line:rgba(255,255,255,.12);
       --glass:rgba(255,255,255,.06);
       --glass2:rgba(255,255,255,.04);
       --shadow:0 18px 55px rgba(0,0,0,.50);
       --radius:26px;
-
       --focus:rgba(255,212,0,.45);
     }
 
@@ -62,7 +53,6 @@
     a{color:inherit; text-decoration:none}
     .container{max-width:1180px; margin:0 auto; padding:0 16px}
 
-    /* Topbar */
     .topbar{
       position:sticky; top:0; z-index:100;
       backdrop-filter:saturate(160%) blur(14px);
@@ -75,32 +65,24 @@
     }
 
     .brand{display:flex; align-items:center; gap:12px; font-weight:950; letter-spacing:.2px; min-width:0}
-    .brand small{display:block; color:var(--muted); font-weight:800; margin-top:2px; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; max-width:44vw}
+    .brand small{display:block; color:var(--muted); font-weight:800; margin-top:2px; max-width:44vw; white-space:nowrap; overflow:hidden; text-overflow:ellipsis}
+    .brand span[data-i18n="brand"]{display:block; font-size:16px; line-height:1.1; max-width:44vw; white-space:nowrap; overflow:hidden; text-overflow:ellipsis}
 
     .logo-wrap{
       width:44px; height:44px; border-radius:14px;
-      background:rgba(255,255,255,.10);
+      background:linear-gradient(135deg, rgba(255,212,0,.25), rgba(74,163,255,.20));
       border:1px solid rgba(255,255,255,.16);
       box-shadow:0 10px 28px rgba(0,0,0,.45);
       display:grid; place-items:center;
       overflow:hidden;
-      flex:0 0 auto;
       position:relative;
       isolation:isolate;
+      flex:0 0 auto;
     }
-    .logo-mark{
-      width:100%;
-      height:100%;
-      display:block;
-      position:absolute;
-      inset:0;
-      z-index:1;
-    }
+    .logo-mark{position:absolute; inset:0; width:100%; height:100%; z-index:1}
     .logo-img{
-      position:relative;
-      z-index:2;
-      width:100%;
-      height:100%;
+      position:relative; z-index:2;
+      width:100%; height:100%;
       object-fit:cover;
       display:block;
       opacity:0;
@@ -109,6 +91,7 @@
     .logo-img.loaded{opacity:1}
 
     .nav{display:flex; align-items:center; gap:10px; flex-wrap:wrap; justify-content:flex-end}
+    .navlinks{display:flex; align-items:center; gap:10px; flex-wrap:wrap; justify-content:flex-end}
 
     .chip{
       padding:8px 10px;
@@ -190,10 +173,7 @@
     .lang .dot.de{background:linear-gradient(180deg,#111827 0 34%, #e5e7eb 34% 66%, #ef4444 66% 100%)}
     .lang .dot.ru{background:linear-gradient(180deg,#ffffff 0 34%, #2b76ff 34% 66%, #ef4444 66% 100%)}
 
-    .hero{
-      position:relative;
-      padding:22px 0 10px;
-    }
+    .hero{position:relative; padding:22px 0 10px}
     .hero::before{
       content:"";
       position:absolute; inset:-120px 0 auto 0;
@@ -394,32 +374,6 @@
       max-width:min(680px, calc(100vw - 32px));
     }
 
-    .fab{position:fixed; right:16px; bottom:16px; z-index:200; display:none;}
-    details{
-      border:1px solid var(--line);
-      border-radius:20px;
-      background:rgba(255,255,255,.04);
-      padding:12px 14px;
-      box-shadow:var(--shadow);
-    }
-    details summary{cursor:pointer; font-weight:950; color:var(--text); list-style:none;}
-    details summary::-webkit-details-marker{display:none}
-    details p{margin:10px 0 0; color:var(--muted); line-height:1.55; font-weight:750}
-    .faq{display:grid; gap:10px; padding-top:12px}
-
-    .menu-btn{
-      display:none;
-      width:44px; height:44px;
-      border-radius:14px;
-      border:1px solid var(--line);
-      background:rgba(255,255,255,.06);
-      align-items:center; justify-content:center;
-      box-shadow:0 10px 26px rgba(0,0,0,.35);
-      cursor:pointer;
-    }
-    .menu-btn svg{width:22px; height:22px}
-    .navlinks{display:flex; align-items:center; gap:10px; flex-wrap:wrap; justify-content:flex-end}
-
     .drawer-backdrop{
       position:fixed; inset:0;
       background:rgba(0,0,0,.45);
@@ -450,6 +404,35 @@
     .drawer .chip, .drawer .btn{width:100%}
     .drawer .chip{justify-content:flex-start}
 
+    details{
+      border:1px solid var(--line);
+      border-radius:20px;
+      background:rgba(255,255,255,.04);
+      padding:12px 14px;
+      box-shadow:var(--shadow);
+    }
+    details summary{
+      cursor:pointer;
+      font-weight:950;
+      color:var(--text);
+      list-style:none;
+    }
+    details summary::-webkit-details-marker{display:none}
+    details p{margin:10px 0 0; color:var(--muted); line-height:1.55; font-weight:750}
+    .faq{display:grid; gap:10px; padding-top:12px}
+
+    .menu-btn{
+      width:44px; height:44px;
+      border-radius:14px;
+      border:1px solid var(--line);
+      background:rgba(255,255,255,.06);
+      align-items:center; justify-content:center;
+      box-shadow:0 10px 26px rgba(0,0,0,.35);
+      cursor:pointer;
+      display:none;
+    }
+    .menu-btn svg{width:22px; height:22px}
+
     .bottom-bar{
       position:fixed; left:0; right:0; bottom:0;
       padding:10px 12px calc(10px + env(safe-area-inset-bottom));
@@ -466,44 +449,21 @@
     }
 
     @media (max-width: 720px){
-      h1{font-size:30px}
-      .hero{padding:18px 0 6px}
-      .panel.pad{padding:14px}
-      .lead{font-size:15px}
-      .grid{gap:10px}
-      .card .img{height:118px}
-      .card .content{padding:12px}
-      .btn{padding:13px 14px; border-radius:18px}
-      .section{padding-top:14px}
-      .footer{padding-bottom:88px}
-      .fab{display:none}
-      .bottom-bar{display:block}
-    }
-
-    /* Mobile header: center logo only + burger right */
-    @media (max-width: 720px){
+      .menu-btn{display:flex}
+      .navlinks{display:none}
+      .lang{display:none}
       .topbar{height:56px}
-      .topbar-inner{
-        height:56px;
-        position:relative;
-        justify-content:center;
-        padding:0 64px;
-      }
+      .topbar-inner{height:56px; position:relative; justify-content:center; padding:0 64px}
       .brand{margin:0 auto; gap:0}
-      .brand > div:last-child{display:none !important;}
-      .logo-wrap{width:40px;height:40px;border-radius:50%; background:linear-gradient(135deg,#ffd400 0%, #2b76ff 100%);}
-      .logo-img{width:72%;height:72%;object-fit:contain;filter: drop-shadow(0 2px 6px rgba(0,0,0,.35));}
-      .nav{
-        position:absolute;
-        right:10px;
-        top:50%;
-        transform:translateY(-50%);
-        width:auto;
-        justify-content:flex-end;
-      }
-      .navlinks{display:none !important;}
-      .lang{display:none !important;}
-      .menu-btn{display:flex; width:42px;height:42px;border-radius:14px;}
+      .brand > div:last-child{display:none !important}
+      .logo-wrap{width:40px; height:40px; border-radius:50%}
+      .nav{position:absolute; right:10px; top:50%; transform:translateY(-50%); width:auto}
+      .menu-btn{width:42px; height:42px; border-radius:14px}
+      .panel.pad{padding:14px}
+      .footer{padding-bottom:88px}
+      .bottom-bar{display:block}
+      .logo-img{width:72%; height:72%; object-fit:contain; filter: drop-shadow(0 2px 6px rgba(0,0,0,.35))}
+      .logo-wrap{background:linear-gradient(135deg,#ffd400 0%, #2b76ff 100%); border-color:rgba(255,255,255,.18)}
     }
   </style>
 </head>
@@ -544,10 +504,12 @@
             <button type="button" id="lang-de"><span class="dot de"></span>DE</button>
             <button type="button" id="lang-ru"><span class="dot ru"></span>RU</button>
           </div>
+
           <a class="chip" href="#services" data-i18n="nav_services">Услуги</a>
           <a class="chip" href="#how" data-i18n="nav_how">Как это работает</a>
           <a class="chip" href="#pay" data-i18n="nav_pay">Оплата</a>
           <a class="chip" href="#order" data-i18n="nav_order">Заявка</a>
+
           <a class="btn ghost" href="https://t.me/UHU_help" target="_blank" rel="noopener">Telegram</a>
           <a class="btn primary" href="#order" data-i18n="cta_leave">Оставить заявку</a>
         </div>
@@ -881,6 +843,20 @@
 <div id="toast" class="toast" role="status" aria-live="polite"></div>
 
 <script>
+  // ===== PWA (Hostinger) =====
+  // Register Service Worker
+  (function(){
+    if ("serviceWorker" in navigator) {
+      window.addEventListener("load", async () => {
+        try {
+          await navigator.serviceWorker.register("/sw.js", { scope: "/" });
+        } catch (e) {
+          // ignore
+        }
+      });
+    }
+  })();
+
   const TELEGRAM_USERNAME = "UHU_help";
   const REVOLUT_LINK = "https://revolut.me/vladshvachko";
 
@@ -1143,8 +1119,8 @@
     document.documentElement.lang = (lang === "ua") ? "uk" : lang;
 
     ["ua","de","ru"].forEach(l=>{
-      const topBtn = document.getElementById("lang-"+l);
-      if (topBtn) topBtn.classList.toggle("active", l === lang);
+      const btn = document.getElementById("lang-"+l);
+      if (btn) btn.classList.toggle("active", l === lang);
     });
 
     document.querySelectorAll("[data-i18n]").forEach(el=>{
@@ -1170,15 +1146,13 @@
     populateServiceSelect();
   }
 
-  // Top language buttons
-  const topUA = document.getElementById("lang-ua");
-  const topDE = document.getElementById("lang-de");
-  const topRU = document.getElementById("lang-ru");
-  if (topUA) topUA.addEventListener("click", ()=>applyLang("ua"));
-  if (topDE) topDE.addEventListener("click", ()=>applyLang("de"));
-  if (topRU) topRU.addEventListener("click", ()=>applyLang("ru"));
+  const bUA = document.getElementById("lang-ua");
+  const bDE = document.getElementById("lang-de");
+  const bRU = document.getElementById("lang-ru");
+  if (bUA) bUA.addEventListener("click", ()=>applyLang("ua"));
+  if (bDE) bDE.addEventListener("click", ()=>applyLang("de"));
+  if (bRU) bRU.addEventListener("click", ()=>applyLang("ru"));
 
-  // Revolut amount toggle
   const revSelect = document.getElementById("rev-amount");
   const revCustomWrap = document.getElementById("rev-custom-wrap");
   revSelect.addEventListener("change", () => {
@@ -1255,7 +1229,7 @@
     window.open(`https://t.me/${TELEGRAM_USERNAME}?text=${encodeURIComponent(msg)}`, "_blank");
   }
 
-  async function copyText(silent=false){
+  async function copyText(){
     const msg = buildMessage();
     try{
       await navigator.clipboard.writeText(msg);
@@ -1314,20 +1288,12 @@
   if(quickBtn){
     quickBtn.addEventListener("click", (e)=>{
       e.preventDefault();
-      copyText(true);
+      copyText();
     });
   }
 
-  // Init i18n
   applyLang(currentLang);
   syncDrawerLangButtons();
-
-  // Register Service Worker (PWA)
-  if ("serviceWorker" in navigator) {
-    window.addEventListener("load", () => {
-      navigator.serviceWorker.register("/sw.js").catch(()=>{});
-    });
-  }
 </script>
 
 </body>
@@ -1345,19 +1311,19 @@
   "display": "standalone",
   "background_color": "#0a0f22",
   "theme_color": "#0a0f22",
-  "lang": "uk",
+  "lang": "ru",
   "icons": [
-    { "src": "/icons/icon-192.png", "sizes": "192x192", "type": "image/png", "purpose": "any maskable" },
-    { "src": "/icons/icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "any maskable" }
+    { "src": "/icons/icon-192.png", "sizes": "192x192", "type": "image/png" },
+    { "src": "/icons/icon-512.png", "sizes": "512x512", "type": "image/png" }
   ]
 }
 
 ========================
 /sw.js
 ========================
-/* UHU Kassel PWA Service Worker */
+/* Simple cache-first SW for static Hostinger site */
 const CACHE_NAME = "uhu-kassel-v1";
-const CORE_ASSETS = [
+const ASSETS = [
   "/",
   "/index.html",
   "/manifest.webmanifest",
@@ -1366,102 +1332,87 @@ const CORE_ASSETS = [
   "/icons/icon-512.png"
 ];
 
-// Install: cache core
+// Install
 self.addEventListener("install", (event) => {
-  event.waitUntil(
-    caches.open(CACHE_NAME).then((cache) => cache.addAll(CORE_ASSETS))
-  );
-  self.skipWaiting();
+  event.waitUntil((async () => {
+    const cache = await caches.open(CACHE_NAME);
+    await cache.addAll(ASSETS);
+    self.skipWaiting();
+  })());
 });
 
-// Activate: cleanup old caches
+// Activate
 self.addEventListener("activate", (event) => {
-  event.waitUntil(
-    caches.keys().then((keys) =>
-      Promise.all(keys.map((k) => (k !== CACHE_NAME ? caches.delete(k) : null)))
-    )
-  );
-  self.clients.claim();
+  event.waitUntil((async () => {
+    const keys = await caches.keys();
+    await Promise.all(keys.map((k) => (k !== CACHE_NAME ? caches.delete(k) : Promise.resolve())));
+    self.clients.claim();
+  })());
 });
 
-// Fetch strategy:
-// - HTML: network-first (always fresh)
-// - Others: cache-first
+// Fetch
 self.addEventListener("fetch", (event) => {
   const req = event.request;
-  const url = new URL(req.url);
+  if (req.method !== "GET") return;
 
-  // Only handle same-origin
-  if (url.origin !== self.location.origin) return;
+  event.respondWith((async () => {
+    const cached = await caches.match(req, { ignoreSearch: true });
+    if (cached) return cached;
 
-  const accept = req.headers.get("accept") || "";
-  const isHTML = accept.includes("text/html") || url.pathname === "/" || url.pathname.endsWith(".html");
-
-  if (isHTML) {
-    event.respondWith(
-      fetch(req)
-        .then((res) => {
-          const copy = res.clone();
-          caches.open(CACHE_NAME).then((cache) => cache.put(req, copy));
-          return res;
-        })
-        .catch(() => caches.match(req).then((r) => r || caches.match("/index.html")))
-    );
-    return;
-  }
-
-  event.respondWith(
-    caches.match(req).then((cached) => {
-      if (cached) return cached;
-      return fetch(req)
-        .then((res) => {
-          const copy = res.clone();
-          caches.open(CACHE_NAME).then((cache) => cache.put(req, copy));
-          return res;
-        })
-        .catch(() => cached);
-    })
-  );
+    try {
+      const fresh = await fetch(req);
+      // Cache same-origin basic responses
+      if (fresh && fresh.status === 200 && fresh.type === "basic") {
+        const cache = await caches.open(CACHE_NAME);
+        cache.put(req, fresh.clone());
+      }
+      return fresh;
+    } catch (e) {
+      // Fallback to cached homepage
+      const fallback = await caches.match("/index.html");
+      return fallback || new Response("Offline", { status: 503, headers: { "Content-Type": "text/plain" } });
+    }
+  })());
 });
 
 ========================
 /.htaccess
 ========================
-# --- UHU Kassel (Hostinger / Apache) ---
+# Hostinger (Apache/LiteSpeed) basic hardening + canonical redirects
 
 # 1) Force HTTPS
 RewriteEngine On
 RewriteCond %{HTTPS} !=on
 RewriteRule ^ https://%{HTTP_HOST}%{REQUEST_URI} [R=301,L]
 
-# 2) Optional: choose ONE canonical domain (uncomment ONE block)
-#    A) Force NON-WWW (recommended if www sometimes fails)
-#RewriteCond %{HTTP_HOST} ^www\.(.+)$ [NC]
-#RewriteRule ^ https://%1%{REQUEST_URI} [R=301,L]
+# 2) Redirect www -> non-www (keep as uhu.digital)
+RewriteCond %{HTTP_HOST} ^www\.(.+)$ [NC]
+RewriteRule ^ https://%1%{REQUEST_URI} [R=301,L]
 
-#    B) Force WWW
-#RewriteCond %{HTTP_HOST} !^www\. [NC]
-#RewriteRule ^ https://www.%{HTTP_HOST}%{REQUEST_URI} [R=301,L]
-
-# 3) Correct MIME types
+# 3) Correct MIME for manifest
 AddType application/manifest+json .webmanifest
-AddType application/javascript .js
+AddType application/manifest+json .manifest
 
-# 4) Cache policy (safe defaults)
+# 4) Cache static assets (safe)
 <IfModule mod_expires.c>
   ExpiresActive On
-  ExpiresByType text/html "access plus 0 seconds"
-  ExpiresByType application/manifest+json "access plus 1 day"
-  ExpiresByType application/javascript "access plus 7 days"
   ExpiresByType text/css "access plus 7 days"
+  ExpiresByType application/javascript "access plus 7 days"
   ExpiresByType image/png "access plus 30 days"
   ExpiresByType image/svg+xml "access plus 30 days"
+  ExpiresByType application/manifest+json "access plus 7 days"
 </IfModule>
 
-# 5) Security headers (light)
+# 5) Security headers (if allowed)
 <IfModule mod_headers.c>
   Header always set X-Content-Type-Options "nosniff"
-  Header always set X-Frame-Options "SAMEORIGIN"
   Header always set Referrer-Policy "strict-origin-when-cross-origin"
+  Header always set X-Frame-Options "SAMEORIGIN"
   Header always set Permissions-Policy "geolocation=(), microphone=(), camera=()"
 </IfModule>
+
+# NOTE:
+# Put files into /public_html/ :
+#   index.html, manifest.webmanifest, sw.js, .htaccess
+# And create /public_html/icons/ with:
+#   icon-192.png, icon-512.png
