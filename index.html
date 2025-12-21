@@ -799,6 +799,56 @@
       }
     }
 
+
+    /* ===== MOBILE HEADER REDESIGN (GRID, NO OVERLAP) ===== */
+    @media (max-width: 720px){
+      .topbar{
+        height:56px;
+      }
+      .topbar-inner{
+        height:56px;
+        display:grid;
+        grid-template-columns: 56px 1fr 56px;
+        align-items:center;
+        padding:0;
+      }
+
+      /* Left slot */
+      .topbar-inner::before{
+        content:"";
+      }
+
+      /* Center logo */
+      .brand{
+        grid-column:2;
+        justify-content:center;
+        position:static;
+        transform:none;
+        pointer-events:auto;
+      }
+      .brand > div:last-child{display:none !important;}
+
+      .logo-wrap{
+        width:40px;
+        height:40px;
+        border-radius:50%;
+      }
+
+      /* Right burger */
+      .menu-btn{
+        grid-column:3;
+        justify-self:end;
+        margin-right:8px;
+        position:static;
+      }
+
+      /* Hide other header elements */
+      .lang,
+      .navlinks{
+        display:none !important;
+      }
+    }
+
 </style>
 </head>
 <body>
