@@ -1,0 +1,15 @@
+{
+  "name": "UHU Kassel",
+  "short_name": "UHU",
+  "description": "UHU Kassel: уборка, переезды, сборка мебели, мелкий ремонт",
+  "start_url": "/?source=pwa",
+  "scope": "/",
+  "display": "standalone",
+  "background_color": "#0a0f22",
+  "theme_color": "#0a0f22",
+  "lang": "ru",
+  "icons": [
+    { "src": "/icons/icon-192.png", "sizes": "192x192", "type": "image/png" },
+    { "src": "/icons/icon-512.png", "sizes": "512x512", "type": "image/png" }
+  ]
+}
