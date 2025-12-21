@@ -566,6 +566,31 @@
       }
     }
 
+
+    /* Telegram-like centered header on mobile */
+    @media (max-width: 720px){
+      .topbar-inner{
+        position:relative;
+        justify-content:center;
+      }
+      .brand{
+        position:absolute;
+        left:50%;
+        transform:translateX(-50%);
+        z-index:2;
+      }
+      .nav{
+        width:100%;
+        justify-content:space-between;
+      }
+      .lang{
+        margin-left:0;
+      }
+      .menu-btn{
+        margin-left:auto;
+      }
+    }
+
 </style>
 </head>
 <body>
