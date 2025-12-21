@@ -925,14 +925,20 @@
           <small data-i18n="brand_sub">Услуги рядом · Kassel</small>
         </div>
       </a>
-
       <div class="nav">
-        <div class="lang" aria-label="Language switch">
+        
+        <div class="navlinks">
+          <div class="lang" aria-label="Language switch">
           <button type="button" id="lang-ua" class="active"><span class="dot ua"></span>UA</button>
           <button type="button" id="lang-de"><span class="dot de"></span>DE</button>
           <button type="button" id="lang-ru"><span class="dot ru"></span>RU</button>
         </div>
-        <a class="chip" href="#services" data-i18n="nav_services">Услуги</a>
+        <button class="menu-btn" type="button" aria-label="Menu" onclick="toggleDrawer(true)">
+          <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
+            <path d="M4 7h16M4 12h16M4 17h16" stroke="white" stroke-width="2" stroke-linecap="round" opacity=".92"/>
+          </svg>
+        </button>
+      </div><a class="chip" href="#services" data-i18n="nav_services">Услуги</a>
         <a class="chip" href="#how" data-i18n="nav_how">Как это работает</a>
         <a class="chip" href="#pay" data-i18n="nav_pay">Оплата</a>
         <a class="chip" href="#order" data-i18n="nav_order">Заявка</a>
