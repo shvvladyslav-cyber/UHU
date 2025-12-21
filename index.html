@@ -780,6 +780,25 @@
       }
     }
 
+
+    /* ===== FIX: logo overlapping burger on mobile ===== */
+    @media (max-width: 720px){
+      .topbar-inner{
+        padding:0 56px; /* reserve space for burger */
+      }
+      .brand{
+        max-width:calc(100% - 112px);
+        pointer-events:none; /* avoid accidental taps overlap */
+      }
+      .logo-wrap{
+        pointer-events:auto;
+      }
+      .menu-btn{
+        right:10px;
+        top:7px;
+      }
+    }
+
 </style>
 </head>
 <body>
