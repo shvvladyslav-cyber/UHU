@@ -444,14 +444,36 @@
       .bottom-bar{display:block}
     }
 
-  </style>
+  
+    /* Mobile header refinements */
+    @media (max-width: 720px){
+      .topbar-inner{
+        padding:10px 0;
+      }
+      .brand{
+        gap:10px;
+      }
+      .brand small{
+        display:none; /* hide subtitle on mobile */
+      }
+      .logo-wrap{
+        width:40px;
+        height:40px;
+        border-radius:12px;
+      }
+      .logo-img{
+        object-fit:contain;
+      }
+    }
+
+</style>
 </head>
 <body>
 
 <!-- TOPBAR -->
 <div class="topbar">
   <div class="container">
-    <div class="topbar-inner">
+    <div class="topbar-inner" style="align-items:center;">
       <a class="brand" href="#top" aria-label="UHU Kassel">
         <div class="logo-wrap" title="UHU">
           <!-- Put logo.png next to this file (same folder) -->
