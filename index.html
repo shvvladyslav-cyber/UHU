@@ -6,6 +6,7 @@
   <title>UHU Kassel — услуги рядом (RU/UA/DE)</title>
   <meta name="description" content="UHU Kassel: уборка, переезды, сборка мебели, мелкий ремонт. Заявка в Telegram в 1 клик + оплата Revolut." />
   <meta name="theme-color" content="#0a0f22" />
+
   <meta property="og:title" content="UHU Kassel — услуги рядом" />
   <meta property="og:description" content="Нажмите услугу → заявка заполняется → открывается Telegram. Оплата Revolut." />
   <meta property="og:type" content="website" />
@@ -14,17 +15,19 @@
   <link rel="manifest" href="/manifest.webmanifest">
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <link rel="icon" href="/icons/icon-192.png">
+  <link rel="apple-touch-icon" href="/icons/icon-192.png">
 
   <style>
     :root{
       --bg0:#070a14; --bg1:#0a0f22; --bg2:#081a33;
       --text:#f4f7ff; --muted:#c8d2f4;
-      --ua:#ffd400; --ua2:#fff2a8; --de:#111827;
-      --blue:#4aa3ff; --blue2:#2b76ff; --pink:#ff4fd8;
-      --mint:#22c55e; --orange:#fb923c;
+
+      --ua:#ffd400; --ua2:#fff2a8;
+      --blue:#4aa3ff; --blue2:#2b76ff;
+      --pink:#ff4fd8; --mint:#22c55e;
+
       --line:rgba(255,255,255,.12);
-      --glass:rgba(255,255,255,.06);
-      --glass2:rgba(255,255,255,.04);
       --shadow:0 18px 55px rgba(0,0,0,.50);
       --radius:26px;
       --focus:rgba(255,212,0,.45);
@@ -53,26 +56,24 @@
       border-bottom:1px solid var(--line);
     }
     .topbar-inner{
-      display:flex;
-      align-items:center;
-      justify-content:space-between;
-      gap:12px;
+      display:flex; align-items:center; justify-content:space-between; gap:12px;
       padding:12px 0;
     }
 
     .brand{display:flex; align-items:center; gap:12px; font-weight:950; letter-spacing:.2px; min-width:0}
-    .brand small{display:block; color:var(--muted); font-weight:800; margin-top:2px}
+    .brand small{display:block; color:var(--muted); font-weight:800; margin-top:2px; max-width:44vw; white-space:nowrap; overflow:hidden; text-overflow:ellipsis}
+    .brand span[data-i18n="brand"]{display:block; font-size:16px; line-height:1.1; max-width:44vw; white-space:nowrap; overflow:hidden; text-overflow:ellipsis}
 
     .logo-wrap{
       width:44px; height:44px; border-radius:14px;
-      background:rgba(255,255,255,.10);
+      background:linear-gradient(135deg, rgba(255,212,0,.25), rgba(74,163,255,.20));
       border:1px solid rgba(255,255,255,.16);
       box-shadow:0 10px 28px rgba(0,0,0,.45);
-      display:flex; align-items:center; justify-content:center;
+      display:grid; place-items:center;
       overflow:hidden;
-      flex:0 0 auto;
       position:relative;
       isolation:isolate;
+      flex:0 0 auto;
     }
     .logo-mark{position:absolute; inset:0; width:100%; height:100%; z-index:1}
     .logo-img{
@@ -82,11 +83,11 @@
       display:block;
       opacity:0;
       transition:opacity .18s ease;
-      background:transparent;
     }
     .logo-img.loaded{opacity:1}
 
     .nav{display:flex; align-items:center; gap:10px; flex-wrap:wrap; justify-content:flex-end}
+    .navlinks{display:flex; align-items:center; gap:10px; flex-wrap:wrap; justify-content:flex-end}
 
     .chip{
       padding:8px 10px;
@@ -131,6 +132,16 @@
       color:#160616;
       box-shadow:0 18px 40px rgba(255,79,216,.18);
     }
+
+    /* ✅ КРАСИВАЯ КНОПКА УСТАНОВКИ (наша, внутри сайта) */
+    .btn.install{
+      background:linear-gradient(135deg, rgba(34,197,94,1), rgba(74,163,255,1));
+      border-color:transparent;
+      color:#061021;
+      box-shadow:0 18px 45px rgba(34,197,94,.18);
+    }
+    .btn.install svg{width:18px;height:18px}
+
     .btn.ghost{background:rgba(255,255,255,.04)}
     .btn.block{width:100%}
 
@@ -168,31 +179,7 @@
     .lang .dot.de{background:linear-gradient(180deg,#111827 0 34%, #e5e7eb 34% 66%, #ef4444 66% 100%)}
     .lang .dot.ru{background:linear-gradient(180deg,#ffffff 0 34%, #2b76ff 34% 66%, #ef4444 66% 100%)}
 
-    .hero{
-      position:relative;
-      padding:22px 0 10px;
-    }
-    .hero::before{
-      content:"";
-      position:absolute; inset:-120px 0 auto 0;
-      height:520px;
-      background:
-        radial-gradient(900px 520px at 18% 20%, rgba(74,163,255,.75), transparent 65%),
-        radial-gradient(900px 520px at 78% 35%, rgba(255,212,0,.55), transparent 70%),
-        radial-gradient(900px 520px at 50% 95%, rgba(255,79,216,.18), transparent 70%),
-        linear-gradient(180deg, rgba(8,26,64,.0), rgba(8,26,64,.0));
-      pointer-events:none;
-      z-index:0;
-    }
-    .hero::after{
-      content:"";
-      position:absolute; left:0; right:0; bottom:-2px;
-      height:54px;
-      background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1440 140'%3E%3Cpath fill='%23ffffff' fill-opacity='0.06' d='M0 64c120 22 240 33 360 33s240-11 360-33 240-33 360-33 240 11 360 33v76H0z'/%3E%3C/svg%3E") center/cover no-repeat;
-      pointer-events:none;
-      z-index:1;
-      opacity:.9;
-    }
+    .hero{position:relative; padding:22px 0 10px}
     .hero .container{position:relative; z-index:2}
 
     .hero-grid{
@@ -212,17 +199,6 @@
       position:relative;
     }
     .panel.pad{padding:18px}
-
-    .glow{
-      position:absolute; inset:-40px -60px auto auto;
-      width:260px; height:260px; border-radius:999px;
-      background:radial-gradient(circle at 30% 30%, rgba(255,212,0,.35), transparent 55%),
-                 radial-gradient(circle at 70% 70%, rgba(74,163,255,.35), transparent 55%);
-      filter: blur(12px);
-      opacity:.75;
-      pointer-events:none;
-    }
-
     .kicker{
       display:inline-flex; gap:8px; align-items:center;
       padding:7px 10px; border-radius:999px;
@@ -307,13 +283,6 @@
         linear-gradient(135deg, rgba(255,255,255,.10), rgba(255,255,255,.03));
       display:flex; align-items:center; justify-content:center;
     }
-    .card .img::before{
-      content:"";
-      position:absolute; inset:0;
-      background:linear-gradient(180deg, rgba(0,0,0,.05), rgba(0,0,0,.45));
-      opacity:.45;
-      pointer-events:none;
-    }
     .icon{width:56px; height:56px; position:relative; z-index:1; filter: drop-shadow(0 8px 18px rgba(0,0,0,.35));}
     .card .content{padding:14px}
     .card h3{margin:0 0 6px; font-size:16px}
@@ -374,52 +343,6 @@
       max-width:min(680px, calc(100vw - 32px));
     }
 
-    .fab{position:fixed; right:16px; bottom:16px; z-index:200; display:none;}
-    .bottom-bar{
-      position:fixed; left:0; right:0; bottom:0;
-      padding:10px 12px calc(10px + env(safe-area-inset-bottom));
-      background:rgba(8,18,39,.82);
-      border-top:1px solid rgba(255,255,255,.14);
-      backdrop-filter:saturate(160%) blur(14px);
-      display:none;
-      z-index:220;
-    }
-    .bottom-bar .inner{
-      max-width:1180px; margin:0 auto;
-      display:grid; grid-template-columns: 1.2fr .8fr;
-      gap:10px;
-    }
-
-    details{
-      border:1px solid var(--line);
-      border-radius:20px;
-      background:rgba(255,255,255,.04);
-      padding:12px 14px;
-      box-shadow:var(--shadow);
-    }
-    details summary{
-      cursor:pointer;
-      font-weight:950;
-      color:var(--text);
-      list-style:none;
-    }
-    details summary::-webkit-details-marker{display:none}
-    details p{margin:10px 0 0; color:var(--muted); line-height:1.55; font-weight:750}
-    .faq{display:grid; gap:10px; padding-top:12px}
-
-    .menu-btn{
-      display:none;
-      width:44px; height:44px;
-      border-radius:14px;
-      border:1px solid var(--line);
-      background:rgba(255,255,255,.06);
-      align-items:center; justify-content:center;
-      box-shadow:0 10px 26px rgba(0,0,0,.35);
-      cursor:pointer;
-    }
-    .menu-btn svg{width:22px; height:22px}
-    .navlinks{display:flex; align-items:center; gap:10px; flex-wrap:wrap; justify-content:flex-end}
-
     .drawer-backdrop{
       position:fixed; inset:0;
       background:rgba(0,0,0,.45);
@@ -450,52 +373,70 @@
     .drawer .chip, .drawer .btn{width:100%}
     .drawer .chip{justify-content:flex-start}
 
-    @media (max-width: 720px){
-      .hero{padding:18px 0 6px}
-      .panel.pad{padding:14px}
-      .lead{font-size:15px}
-      .grid{gap:10px}
-      .card .img{height:118px}
-      .card .content{padding:12px}
-      .btn{padding:13px 14px; border-radius:18px}
-      .section{padding-top:14px}
-      .footer{padding-bottom:88px}
-      .bottom-bar{display:block}
-
-      /* Mobile header: centered logo, burger on right */
-      .topbar{height:56px}
-      .topbar-inner{
-        height:56px;
-        position:relative;
-        justify-content:center;
-        padding:0 64px; /* reserve space for burger */
-      }
-      .brand{margin:0 auto; gap:0}
-      .brand > div:last-child{display:none !important;}
-      .logo-wrap{
-        width:40px; height:40px; border-radius:50%;
-        background:linear-gradient(135deg,#ffd400 0%, #2b76ff 100%);
-        border-color:rgba(255,255,255,.18);
-      }
-      .logo-img{width:72%; height:72%; object-fit:contain; filter: drop-shadow(0 2px 6px rgba(0,0,0,.35));}
-      .nav{
-        position:absolute;
-        right:10px;
-        top:50%;
-        transform:translateY(-50%);
-        width:auto;
-        justify-content:flex-end;
-      }
-      .navlinks{display:none !important;}
-      .lang{display:none !important;}
-      .menu-btn{
-        position:static;
-        display:flex;
-        width:42px;
-        height:42px;
-        border-radius:14px;
-      }
+    details{
+      border:1px solid var(--line);
+      border-radius:20px;
+      background:rgba(255,255,255,.04);
+      padding:12px 14px;
+      box-shadow:var(--shadow);
     }
+    details summary{
+      cursor:pointer;
+      font-weight:950;
+      color:var(--text);
+      list-style:none;
+    }
+    details summary::-webkit-details-marker{display:none}
+    details p{margin:10px 0 0; color:var(--muted); line-height:1.55; font-weight:750}
+    .faq{display:grid; gap:10px; padding-top:12px}
+
+    .menu-btn{
+      width:44px; height:44px;
+      border-radius:14px;
+      border:1px solid var(--line);
+      background:rgba(255,255,255,.06);
+      align-items:center; justify-content:center;
+      box-shadow:0 10px 26px rgba(0,0,0,.35);
+      cursor:pointer;
+      display:none;
+    }
+    .menu-btn svg{width:22px; height:22px}
+
+    .bottom-bar{
+      position:fixed; left:0; right:0; bottom:0;
+      padding:10px 12px calc(10px + env(safe-area-inset-bottom));
+      background:rgba(8,18,39,.82);
+      border-top:1px solid rgba(255,255,255,.14);
+      backdrop-filter:saturate(160%) blur(14px);
+      display:none;
+      z-index:220;
+    }
+    .bottom-bar .inner{
+      max-width:1180px; margin:0 auto;
+      display:grid; grid-template-columns: 1fr 1fr;
+      gap:10px;
+    }
+
+    @media (max-width: 720px){
+      .menu-btn{display:flex}
+      .navlinks{display:none}
+      .lang{display:none}
+      .topbar{height:56px}
+      .topbar-inner{height:56px; position:relative; justify-content:center; padding:0 64px}
+      .brand{margin:0 auto; gap:0}
+      .brand > div:last-child{display:none !important}
+      .logo-wrap{width:40px; height:40px; border-radius:50%}
+      .nav{position:absolute; right:10px; top:50%; transform:translateY(-50%); width:auto}
+      .menu-btn{width:42px; height:42px; border-radius:14px}
+      .panel.pad{padding:14px}
+      .footer{padding-bottom:96px}
+      .bottom-bar{display:block}
+      .logo-img{width:72%; height:72%; object-fit:contain; filter: drop-shadow(0 2px 6px rgba(0,0,0,.35))}
+      .logo-wrap{background:linear-gradient(135deg,#ffd400 0%, #2b76ff 100%); border-color:rgba(255,255,255,.18)}
+    }
+
+    /* Скрываем install-кнопки, пока установка недоступна */
+    .hidden{display:none !important;}
   </style>
 </head>
 <body>
@@ -506,7 +447,6 @@
     <div class="topbar-inner">
       <a class="brand" href="#top" aria-label="UHU Kassel">
         <div class="logo-wrap" title="UHU" aria-label="UHU logo">
-          <!-- Robust logo: inline SVG always works; if logo.png exists, it overlays -->
           <svg class="logo-mark" viewBox="0 0 64 64" role="img" aria-hidden="true">
             <defs>
               <linearGradient id="g1" x1="0" y1="0" x2="1" y2="1">
@@ -541,6 +481,16 @@
           <a class="chip" href="#how" data-i18n="nav_how">Как это работает</a>
           <a class="chip" href="#pay" data-i18n="nav_pay">Оплата</a>
           <a class="chip" href="#order" data-i18n="nav_order">Заявка</a>
+
+          <!-- ✅ НАША КНОПКА УСТАНОВКИ -->
+          <button id="installBtnTop" class="btn install hidden" type="button">
+            <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
+              <path d="M12 3v10m0 0 4-4m-4 4-4-4" stroke="#061021" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+              <path d="M4 15v4h16v-4" stroke="#061021" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+            <span data-i18n="install_btn">Установить</span>
+          </button>
+
           <a class="btn ghost" href="https://t.me/UHU_help" target="_blank" rel="noopener">Telegram</a>
           <a class="btn primary" href="#order" data-i18n="cta_leave">Оставить заявку</a>
         </div>
@@ -578,6 +528,10 @@
 
   <div style="height:1px;background:rgba(255,255,255,.12);margin:8px 0"></div>
 
+  <button id="installBtnDrawer" class="btn install hidden" type="button">
+    <span data-i18n="install_btn">Установить</span>
+  </button>
+
   <a class="btn primary" href="#order" onclick="toggleDrawer(false)" data-i18n="cta_leave">Оставить заявку</a>
   <a class="btn ghost" href="https://t.me/UHU_help" target="_blank" rel="noopener">Telegram</a>
   <a class="btn accent" href="#pay" onclick="toggleDrawer(false)" data-i18n="cta_pay">Оплатить Revolut</a>
@@ -593,7 +547,6 @@
   <div class="container">
     <div class="hero-grid">
       <div class="panel pad">
-        <div class="glow"></div>
         <div class="kicker" data-i18n="kicker">🇺🇦 + 🇩🇪 Kassel · Быстро и надёжно</div>
         <h1 data-i18n="hero_title">UHU Kassel — услуги по дому в 1 клик</h1>
         <p class="lead" data-i18n="hero_lead">
@@ -775,14 +728,6 @@
             <a class="btn ghost" href="https://revolut.me/vladshvachko" target="_blank" rel="noopener" data-i18n="pay_open">Открыть ссылку</a>
           </div>
 
-          <div style="margin-top:12px; display:flex; align-items:center; gap:10px; flex-wrap:wrap; opacity:.95">
-            <span class="tag" style="border-radius:14px; padding:8px 10px; font-weight:950; color:rgba(244,247,255,.92)">Revolut</span>
-            <span class="tag" style="border-radius:14px; padding:8px 10px; font-weight:950; color:rgba(244,247,255,.92)">Mastercard</span>
-            <span class="tag" style="border-radius:14px; padding:8px 10px; font-weight:950; color:rgba(244,247,255,.92)">Visa</span>
-            <span class="tag" style="border-radius:14px; padding:8px 10px; font-weight:950; color:rgba(244,247,255,.92)">PayPal*</span>
-          </div>
-          <p class="hint" style="margin-top:8px; opacity:.9">*PayPal — как вариант по договорённости.</p>
-
           <p class="hint" data-i18n="pay_hint">После оплаты напишите в Telegram: <b>@UHU_help</b> (имя + услуга).</p>
         </div>
         <div class="box">
@@ -793,10 +738,6 @@
             <li data-i18n="pay_how_3">Оплатите картой/в Revolut</li>
             <li data-i18n="pay_how_4">Напишите в Telegram</li>
           </ol>
-          <div class="divider"></div>
-          <p style="margin:0; color:var(--muted); line-height:1.45; font-weight:850">
-            Revolut: <b>https://revolut.me/vladshvachko</b><br/>Telegram: <b>@UHU_help</b>
-          </p>
         </div>
       </div>
     </div>
@@ -835,25 +776,6 @@
 
         <p class="hint" data-i18n="order_hint">Если Telegram не установлен — скопируйте текст и отправьте вручную.</p>
       </div>
-
-      <div class="section-title" style="margin-top:14px">
-        <h2 data-i18n="faq_title">FAQ</h2>
-        <span data-i18n="faq_sub">Частые вопросы</span>
-      </div>
-      <div class="faq">
-        <details>
-          <summary data-i18n="faq1_q">Сколько стоит?</summary>
-          <p data-i18n="faq1_a">Цена зависит от объёма и времени. Напишите детали — мы предложим стоимость до начала работ.</p>
-        </details>
-        <details>
-          <summary data-i18n="faq2_q">Можно срочно сегодня?</summary>
-          <p data-i18n="faq2_a">Да, если есть свободный исполнитель. Укажите район, время и задачу — ответим быстро.</p>
-        </details>
-        <details>
-          <summary data-i18n="faq3_q">Зачем предоплата?</summary>
-          <p data-i18n="faq3_a">Предоплата — чтобы забронировать время (по желанию). Можно оплатить и на месте.</p>
-        </details>
-      </div>
     </div>
 
     <div class="footer">
@@ -867,17 +789,70 @@
 <div class="bottom-bar">
   <div class="inner">
     <a class="btn primary" href="https://t.me/UHU_help" target="_blank" rel="noopener">Telegram</a>
-    <a class="btn accent" href="#order" data-i18n="cta_leave">Оставить заявку</a>
+    <button id="installBtnBottom" class="btn install hidden" type="button"><span data-i18n="install_btn">Установить</span></button>
   </div>
 </div>
 
 <div id="toast" class="toast" role="status" aria-live="polite"></div>
 
 <script>
+  // ===== Service Worker (ОДИН раз) =====
+  (function(){
+    if ("serviceWorker" in navigator) {
+      window.addEventListener("load", () => {
+        navigator.serviceWorker.register("/sw.js", { scope: "/" }).catch(()=>{});
+      });
+    }
+  })();
+
+  // ===== КРАСИВАЯ УСТАНОВКА PWA (custom install button) =====
+  let deferredPrompt = null;
+
+  const installTop = document.getElementById("installBtnTop");
+  const installDrawer = document.getElementById("installBtnDrawer");
+  const installBottom = document.getElementById("installBtnBottom");
+
+  function showInstallButtons(show){
+    [installTop, installDrawer, installBottom].forEach(btn=>{
+      if(!btn) return;
+      btn.classList.toggle("hidden", !show);
+    });
+  }
+
+  // Когда браузер говорит: "можно установить"
+  window.addEventListener("beforeinstallprompt", (e) => {
+    e.preventDefault();
+    deferredPrompt = e;
+    showInstallButtons(true);
+  });
+
+  // Если приложение уже установлено
+  window.addEventListener("appinstalled", () => {
+    deferredPrompt = null;
+    showInstallButtons(false);
+  });
+
+  async function doInstall(){
+    if(!deferredPrompt){
+      toast(I18N[currentLang]?.install_na || "Установка недоступна. Откройте меню браузера → Установить приложение.");
+      return;
+    }
+    deferredPrompt.prompt();
+    const choice = await deferredPrompt.userChoice.catch(()=>({outcome:"dismissed"}));
+    deferredPrompt = null;
+    showInstallButtons(false);
+    if(choice && choice.outcome === "accepted"){
+      toast(I18N[currentLang]?.install_ok || "Установлено ✅");
+    }
+  }
+
+  [installTop, installDrawer, installBottom].forEach(btn=>{
+    if(btn) btn.addEventListener("click", doInstall);
+  });
+
   const TELEGRAM_USERNAME = "UHU_help";
   const REVOLUT_LINK = "https://revolut.me/vladshvachko";
 
-  // i18n dictionary
   const I18N = {
     ru: {
       brand:"UHU Kassel",
@@ -887,6 +862,10 @@
       nav_pay:"Оплата",
       nav_order:"Заявка",
       cta_leave:"Оставить заявку",
+      install_btn:"Установить",
+      install_na:"Установка недоступна. Обновите страницу и попробуйте снова.",
+      install_ok:"Установлено ✅",
+
       kicker:"🇺🇦 + 🇩🇪 Kassel · Быстро и надёжно",
       hero_title:"UHU Kassel — услуги по дому в 1 клик",
       hero_lead:"Уборка • Переезды • Сборка мебели • Мелкий ремонт. Нажимай на услугу — заявка заполнится и откроет Telegram с готовым текстом.",
@@ -961,6 +940,10 @@
       nav_pay:"Оплата",
       nav_order:"Заявка",
       cta_leave:"Залишити заявку",
+      install_btn:"Встановити",
+      install_na:"Встановлення недоступне. Оновіть сторінку та спробуйте ще раз.",
+      install_ok:"Встановлено ✅",
+
       kicker:"🇺🇦 + 🇩🇪 Kassel · Швидко та надійно",
       hero_title:"UHU Kassel — домашні послуги в 1 клік",
       hero_lead:"Прибирання • Переїзди • Збірка меблів • Дрібний ремонт. Обери послугу — заявка заповниться і відкриє Telegram з готовим текстом.",
@@ -1035,6 +1018,10 @@
       nav_pay:"Zahlung",
       nav_order:"Anfrage",
       cta_leave:"Anfrage senden",
+      install_btn:"Installieren",
+      install_na:"Installation nicht verfügbar. Seite neu laden und erneut versuchen.",
+      install_ok:"Installiert ✅",
+
       kicker:"🇺🇦 + 🇩🇪 Kassel · Schnell & zuverlässig",
       hero_title:"UHU Kassel — Hilfe im Haushalt mit 1 Klick",
       hero_lead:"Reinigung • Umzug • Möbelmontage • Kleine Reparaturen. Service auswählen — Anfrage wird ausgefüllt und Telegram öffnet sich mit fertigem Text.",
@@ -1138,7 +1125,7 @@
 
     ["ua","de","ru"].forEach(l=>{
       const btn = document.getElementById("lang-"+l);
-      if(btn) btn.classList.toggle("active", l === lang);
+      if (btn) btn.classList.toggle("active", l === lang);
     });
 
     document.querySelectorAll("[data-i18n]").forEach(el=>{
@@ -1164,9 +1151,12 @@
     populateServiceSelect();
   }
 
-  document.getElementById("lang-ua")?.addEventListener("click", ()=>applyLang("ua"));
-  document.getElementById("lang-de")?.addEventListener("click", ()=>applyLang("de"));
-  document.getElementById("lang-ru")?.addEventListener("click", ()=>applyLang("ru"));
+  const bUA = document.getElementById("lang-ua");
+  const bDE = document.getElementById("lang-de");
+  const bRU = document.getElementById("lang-ru");
+  if (bUA) bUA.addEventListener("click", ()=>applyLang("ua"));
+  if (bDE) bDE.addEventListener("click", ()=>applyLang("de"));
+  if (bRU) bRU.addEventListener("click", ()=>applyLang("ru"));
 
   const revSelect = document.getElementById("rev-amount");
   const revCustomWrap = document.getElementById("rev-custom-wrap");
@@ -1244,7 +1234,7 @@
     window.open(`https://t.me/${TELEGRAM_USERNAME}?text=${encodeURIComponent(msg)}`, "_blank");
   }
 
-  async function copyText(silent=false){
+  async function copyText(){
     const msg = buildMessage();
     try{
       await navigator.clipboard.writeText(msg);
@@ -1285,6 +1275,7 @@
       b.classList.toggle("active", l === currentLang);
     });
   }
+
   ["ua","de","ru"].forEach(l=>{
     const b = document.getElementById("dlang-"+l);
     if(!b) return;
@@ -1302,21 +1293,13 @@
   if(quickBtn){
     quickBtn.addEventListener("click", (e)=>{
       e.preventDefault();
-      copyText(true);
-    });
-  }
-
-  // PWA: register service worker
-  if ("serviceWorker" in navigator) {
-    window.addEventListener("load", () => {
-      navigator.serviceWorker.register("/sw.js").catch(()=>{});
+      copyText();
     });
   }
 
   applyLang(currentLang);
+  syncDrawerLangButtons();
 </script>
 
 </body>
 </html>
-
-
