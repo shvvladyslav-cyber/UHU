@@ -1,57 +1,81 @@
-/* UHU Kassel SW (GitHub Pages / Hostinger) */
-const CACHE_NAME = "uhu-kassel-v3"; // <- меняй версию при каждом обновлении
-const ASSETS = [
-  "/",
+/* sw.js — UHU Kassel PWA */
+const CACHE_VERSION = "uhu-v7";
+const CACHE_NAME = `uhu-cache-${CACHE_VERSION}`;
+
+const CORE_ASSETS = [
+  "/",                 // for root navigation
   "/index.html",
   "/manifest.webmanifest",
-  "/sw.js",
   "/icons/icon-192.png",
   "/icons/icon-512.png",
   "/logo.png"
 ];
 
+// Install: cache core
 self.addEventListener("install", (event) => {
-  event.waitUntil(
-    (async () => {
-      const cache = await caches.open(CACHE_NAME);
-      await cache.addAll(ASSETS);
-      self.skipWaiting();
-    })()
-  );
+  event.waitUntil((async () => {
+    const cache = await caches.open(CACHE_NAME);
+    // cache what exists; if logo.png not present, ignore errors
+    await Promise.all(CORE_ASSETS.map(async (url) => {
+      try { await cache.add(url); } catch (e) {}
+    }));
+    self.skipWaiting();
+  })());
 });
 
+// Activate: cleanup old caches
 self.addEventListener("activate", (event) => {
-  event.waitUntil(
-    (async () => {
-      const keys = await caches.keys();
-      await Promise.all(keys.filter((k) => k !== CACHE_NAME).map((k) => caches.delete(k)));
-      self.clients.claim();
-    })()
-  );
+  event.waitUntil((async () => {
+    const keys = await caches.keys();
+    await Promise.all(keys.map((k) => {
+      if (k.startsWith("uhu-cache-") && k !== CACHE_NAME) return caches.delete(k);
+    }));
+    self.clients.claim();
+  })());
 });
 
+// Fetch strategy:
+// - HTML/navigation: Network First (fresh updates), fallback to cache
+// - others: Cache First, fallback to network
 self.addEventListener("fetch", (event) => {
   const req = event.request;
-  if (req.method !== "GET") return;
+  const url = new URL(req.url);
 
-  event.respondWith(
-    (async () => {
-      const cached = await caches.match(req, { ignoreSearch: true });
-      if (cached) return cached;
+  // Only handle same-origin
+  if (url.origin !== self.location.origin) return;
 
+  const isNavigation = req.mode === "navigate" ||
+    (req.method === "GET" && req.headers.get("accept")?.includes("text/html"));
+
+  if (isNavigation) {
+    event.respondWith((async () => {
       try {
         const fresh = await fetch(req);
-        // кэшируем только успешные "basic" ответы (твои файлы)
-        if (fresh && fresh.status === 200 && fresh.type === "basic") {
-          const cache = await caches.open(CACHE_NAME);
-          cache.put(req, fresh.clone());
-        }
+        const cache = await caches.open(CACHE_NAME);
+        cache.put("/index.html", fresh.clone());
         return fresh;
       } catch (e) {
-        // оффлайн-фоллбек на главную
-        const fallback = await caches.match("/index.html", { ignoreSearch: true });
-        return fallback || new Response("Offline", { status: 503, headers: { "Content-Type": "text/plain" } });
+        const cache = await caches.open(CACHE_NAME);
+        return (await cache.match("/index.html")) || new Response("Offline", { status: 503 });
       }
-    })()
-  );
+    })());
+    return;
+  }
+
+  event.respondWith((async () => {
+    const cache = await caches.open(CACHE_NAME);
+    const cached = await cache.match(req);
+    if (cached) return cached;
+
+    try {
+      const fresh = await fetch(req);
+      // cache static GET only
+      if (req.method === "GET" && fresh && fresh.status === 200) {
+        cache.put(req, fresh.clone());
+      }
+      return fresh;
+    } catch (e) {
+      return cached || new Response("", { status: 504 });
+    }
+  })());
 });
