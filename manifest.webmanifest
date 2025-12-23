@@ -6,11 +6,12 @@
   "start_url": "/?source=pwa",
   "scope": "/",
   "display": "standalone",
-  "orientation": "any",
+  "display_override": ["standalone", "minimal-ui", "browser"],
   "background_color": "#0a0f22",
   "theme_color": "#0a0f22",
   "lang": "ru",
-
+  "orientation": "any",
+  "categories": ["business", "productivity", "utilities"],
   "icons": [
     {
       "src": "/icons/icon-192.png",
@@ -25,21 +26,18 @@
       "purpose": "any"
     }
   ],
-
   "screenshots": [
     {
-      "src": "/screenshots/wide-1.png",
+      "src": "/screenshots/screen-wide-1280x720.png",
       "sizes": "1280x720",
       "type": "image/png",
-      "form_factor": "wide",
-      "label": "UHU Kassel — Desktop"
+      "form_factor": "wide"
     },
     {
-      "src": "/screenshots/narrow-1.png",
+      "src": "/screenshots/screen-narrow-750x1334.png",
       "sizes": "750x1334",
       "type": "image/png",
-      "form_factor": "narrow",
-      "label": "UHU Kassel — Mobile"
+      "form_factor": "narrow"
     }
   ]
 }
