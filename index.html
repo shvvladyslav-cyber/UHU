@@ -6,1300 +6,197 @@
   <title>UHU Kassel — услуги рядом (RU/UA/DE)</title>
   <meta name="description" content="UHU Kassel: уборка, переезды, сборка мебели, мелкий ремонт. Заявка в Telegram в 1 клик + оплата Revolut." />
   <meta name="theme-color" content="#0a0f22" />
-
-  <meta property="og:title" content="UHU Kassel — услуги рядом" />
-  <meta property="og:description" content="Нажмите услугу → заявка заполняется → открывается Telegram. Оплата Revolut." />
-  <meta property="og:type" content="website" />
-
-  <!-- PWA -->
   <link rel="manifest" href="/manifest.webmanifest">
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
   <link rel="icon" href="/icons/icon-192.png">
   <link rel="apple-touch-icon" href="/icons/icon-192.png">
-
   <style>
-    :root{
-      --bg0:#070a14; --bg1:#0a0f22; --bg2:#081a33;
-      --text:#f4f7ff; --muted:#c8d2f4;
-
-      --ua:#ffd400; --ua2:#fff2a8;
-      --blue:#4aa3ff; --blue2:#2b76ff;
-      --pink:#ff4fd8; --mint:#22c55e;
-
-      --line:rgba(255,255,255,.12);
-      --shadow:0 18px 55px rgba(0,0,0,.50);
-      --radius:26px;
-      --focus:rgba(255,212,0,.45);
-    }
-    *{box-sizing:border-box}
-    html{scroll-behavior:smooth}
-    body{
-      margin:0;
-      font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
-      color:var(--text);
-      background:
-        radial-gradient(1200px 800px at 18% -10%, rgba(74,163,255,.35), transparent 60%),
-        radial-gradient(900px 700px at 90% 10%, rgba(255,212,0,.25), transparent 62%),
-        radial-gradient(900px 650px at 70% 115%, rgba(255,79,216,.18), transparent 62%),
-        radial-gradient(850px 650px at 5% 120%, rgba(34,197,94,.12), transparent 60%),
-        linear-gradient(180deg, var(--bg0), var(--bg1) 35%, var(--bg2));
-      overflow-x:hidden;
-    }
-    a{color:inherit; text-decoration:none}
-    .container{max-width:1180px; margin:0 auto; padding:0 16px}
-
-    .topbar{
-      position:sticky; top:0; z-index:100;
-      backdrop-filter:saturate(160%) blur(14px);
-      background:rgba(8,18,39,.66);
-      border-bottom:1px solid var(--line);
-    }
-    .topbar-inner{
-      display:flex; align-items:center; justify-content:space-between; gap:12px;
-      padding:12px 0;
-    }
-
-    .brand{display:flex; align-items:center; gap:12px; font-weight:950; letter-spacing:.2px; min-width:0}
-    .brand small{display:block; color:var(--muted); font-weight:800; margin-top:2px; max-width:44vw; white-space:nowrap; overflow:hidden; text-overflow:ellipsis}
-    .brand span[data-i18n="brand"]{display:block; font-size:16px; line-height:1.1; max-width:44vw; white-space:nowrap; overflow:hidden; text-overflow:ellipsis}
-
-    .logo-wrap{
-      width:44px; height:44px; border-radius:14px;
-      background:linear-gradient(135deg, rgba(255,212,0,.25), rgba(74,163,255,.20));
-      border:1px solid rgba(255,255,255,.16);
-      box-shadow:0 10px 28px rgba(0,0,0,.45);
-      display:grid; place-items:center;
-      overflow:hidden;
-      position:relative;
-      isolation:isolate;
-      flex:0 0 auto;
-    }
-    .logo-mark{position:absolute; inset:0; width:100%; height:100%; z-index:1}
-    .logo-img{
-      position:relative; z-index:2;
-      width:100%; height:100%;
-      object-fit:cover;
-      display:block;
-      opacity:0;
-      transition:opacity .18s ease;
-    }
-    .logo-img.loaded{opacity:1}
-
-    .nav{display:flex; align-items:center; gap:10px; flex-wrap:wrap; justify-content:flex-end}
-    .navlinks{display:flex; align-items:center; gap:10px; flex-wrap:wrap; justify-content:flex-end}
-
-    .chip{
-      padding:8px 10px;
-      border:1px solid var(--line);
-      border-radius:999px;
-      background:rgba(255,255,255,.04);
-      color:var(--muted);
-      font-weight:850;
-      font-size:13px;
-      transition:.2s ease;
-      white-space:nowrap;
-    }
-    .chip:hover{transform:translateY(-1px); border-color:rgba(255,255,255,.22); color:var(--text)}
-
-    .btn{
-      display:inline-flex; align-items:center; justify-content:center; gap:10px;
-      padding:12px 14px; border-radius:16px; font-weight:950;
-      border:1px solid var(--line);
-      background:rgba(255,255,255,.06);
-      transition:.2s ease;
-      cursor:pointer;
-      user-select:none;
-      line-height:1;
-    }
-    .btn:hover{transform:translateY(-1px); border-color:rgba(255,255,255,.22)}
-    .btn:focus{outline:2px solid var(--focus); outline-offset:2px}
-    .btn.primary{
-      background:linear-gradient(135deg, var(--blue), var(--blue2));
-      border-color:transparent;
-      color:white;
-      box-shadow:0 16px 40px rgba(43,118,255,.28);
-    }
-    .btn.accent{
-      background:linear-gradient(135deg, var(--ua2), var(--ua));
-      border-color:transparent;
-      color:#0b1220;
-      box-shadow:0 18px 40px rgba(255,212,0,.20);
-    }
-    .btn.pink{
-      background:linear-gradient(135deg, #ff7ae8, var(--pink));
-      border-color:transparent;
-      color:#160616;
-      box-shadow:0 18px 40px rgba(255,79,216,.18);
-    }
-
-    /* ✅ КРАСИВАЯ КНОПКА УСТАНОВКИ (наша, внутри сайта) */
-    .btn.install{
-      background:linear-gradient(135deg, rgba(34,197,94,1), rgba(74,163,255,1));
-      border-color:transparent;
-      color:#061021;
-      box-shadow:0 18px 45px rgba(34,197,94,.18);
-    }
-    .btn.install svg{width:18px;height:18px}
-
-    .btn.ghost{background:rgba(255,255,255,.04)}
-    .btn.block{width:100%}
-
-    .lang{
-      display:inline-flex;
-      border:1px solid var(--line);
-      border-radius:999px;
-      overflow:hidden;
-      background:rgba(255,255,255,.04);
-    }
-    .lang button{
-      border:0;
-      background:transparent;
-      color:var(--muted);
-      font-weight:950;
-      padding:9px 10px;
-      cursor:pointer;
-      font-size:12.5px;
-      min-width:44px;
-      display:inline-flex;
-      align-items:center;
-      justify-content:center;
-      gap:6px;
-    }
-    .lang button.active{
-      color:#071022;
-      background:linear-gradient(135deg, rgba(255,212,0,.95), rgba(74,163,255,.55));
-    }
-    .lang .dot{
-      width:14px;height:14px;border-radius:999px;
-      display:inline-block;
-      box-shadow:0 6px 14px rgba(0,0,0,.35);
-    }
-    .lang .dot.ua{background:linear-gradient(180deg,#2b76ff 0 50%, #ffd400 50% 100%)}
-    .lang .dot.de{background:linear-gradient(180deg,#111827 0 34%, #e5e7eb 34% 66%, #ef4444 66% 100%)}
-    .lang .dot.ru{background:linear-gradient(180deg,#ffffff 0 34%, #2b76ff 34% 66%, #ef4444 66% 100%)}
-
-    .hero{position:relative; padding:22px 0 10px}
-    .hero .container{position:relative; z-index:2}
-
-    .hero-grid{
-      display:grid;
-      grid-template-columns: 1.15fr .85fr;
-      gap:16px;
-      align-items:stretch;
-    }
-    @media (max-width: 920px){ .hero-grid{grid-template-columns:1fr} }
-
-    .panel{
-      border:1px solid var(--line);
-      border-radius:var(--radius);
-      background:linear-gradient(180deg, rgba(255,255,255,.07), rgba(255,255,255,.03));
-      box-shadow:var(--shadow);
-      overflow:hidden;
-      position:relative;
-    }
-    .panel.pad{padding:18px}
-    .kicker{
-      display:inline-flex; gap:8px; align-items:center;
-      padding:7px 10px; border-radius:999px;
-      background:rgba(255,212,0,.12);
-      border:1px solid rgba(255,212,0,.26);
-      color:#fff1b8;
-      font-weight:950;
-      font-size:12px;
-    }
-    h1{margin:12px 0 10px; font-size:36px; line-height:1.06}
-    @media (max-width: 520px){h1{font-size:31px}}
-    .lead{color:var(--muted); font-size:15.8px; line-height:1.55; margin:0 0 16px}
-    .hero-actions{display:flex; gap:10px; flex-wrap:wrap}
-
-    .stats{display:grid; grid-template-columns: repeat(3, 1fr); gap:10px; margin-top:14px}
-    @media (max-width: 560px){.stats{grid-template-columns:1fr}}
-    .stat{
-      border:1px solid var(--line);
-      border-radius:18px;
-      background:rgba(255,255,255,.04);
-      padding:12px;
-    }
-    .stat b{display:block; font-size:18px}
-    .stat span{color:var(--muted); font-size:13px; font-weight:850}
-
-    .side{display:grid; gap:12px}
-    .side-card{
-      border:1px solid var(--line);
-      border-radius:var(--radius);
-      background:linear-gradient(180deg, rgba(255,255,255,.06), rgba(255,255,255,.03));
-      padding:14px;
-      box-shadow:var(--shadow);
-      position:relative;
-      overflow:hidden;
-    }
-    .badge{
-      display:inline-flex; align-items:center; gap:8px;
-      padding:8px 10px; border-radius:999px;
-      border:1px solid rgba(34,197,94,.25);
-      background:rgba(34,197,94,.12);
-      color:#c9fbd8;
-      font-weight:950;
-      font-size:12px;
-    }
-    .side-card h3{margin:10px 0 8px; font-size:16px}
-    .side-card p{margin:0; color:var(--muted); font-size:13.8px; line-height:1.5}
-    .mini-actions{display:flex; gap:10px; margin-top:12px; flex-wrap:wrap}
-
+    :root{--bg0:#070a14;--bg1:#0a0f22;--bg2:#081a33;--text:#f4f7ff;--muted:#c8d2f4;--ua:#ffd400;--ua2:#fff2a8;--blue:#4aa3ff;--blue2:#2b76ff;--pink:#ff4fd8;--line:rgba(255,255,255,.12);--shadow:0 18px 55px rgba(0,0,0,.50);--radius:26px;--focus:rgba(255,212,0,.45);}
+    *{box-sizing:border-box} html{scroll-behavior:smooth}
+    body{margin:0;font-family:ui-sans-serif,system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif;color:var(--text);
+      background:radial-gradient(1200px 800px at 18% -10%, rgba(74,163,255,.35), transparent 60%),
+      radial-gradient(900px 700px at 90% 10%, rgba(255,212,0,.25), transparent 62%),
+      radial-gradient(900px 650px at 70% 115%, rgba(255,79,216,.18), transparent 62%),
+      linear-gradient(180deg,var(--bg0),var(--bg1) 35%,var(--bg2));overflow-x:hidden;}
+    a{color:inherit;text-decoration:none}
+    .container{max-width:1180px;margin:0 auto;padding:0 16px}
+    .topbar{position:sticky;top:0;z-index:100;backdrop-filter:saturate(160%) blur(14px);background:rgba(8,18,39,.66);border-bottom:1px solid var(--line);}
+    .topbar-inner{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:12px 0;}
+    .brand{display:flex;align-items:center;gap:12px;font-weight:950;letter-spacing:.2px;min-width:0}
+    .brand small{display:block;color:var(--muted);font-weight:800;margin-top:2px;max-width:44vw;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+    .brand span{display:block;font-size:16px;line-height:1.1;max-width:44vw;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+    .logo-wrap{width:44px;height:44px;border-radius:14px;background:linear-gradient(135deg, rgba(255,212,0,.25), rgba(74,163,255,.20));border:1px solid rgba(255,255,255,.16);box-shadow:0 10px 28px rgba(0,0,0,.45);display:grid;place-items:center;overflow:hidden;position:relative;}
+    .btn{display:inline-flex;align-items:center;justify-content:center;gap:10px;padding:12px 14px;border-radius:16px;font-weight:950;border:1px solid var(--line);background:rgba(255,255,255,.06);transition:.2s ease;cursor:pointer;user-select:none;line-height:1;}
+    .btn:hover{transform:translateY(-1px);border-color:rgba(255,255,255,.22)}
+    .btn:focus{outline:2px solid var(--focus);outline-offset:2px}
+    .btn.primary{background:linear-gradient(135deg,var(--blue),var(--blue2));border-color:transparent;color:white;box-shadow:0 16px 40px rgba(43,118,255,.28);}
+    .btn.accent{background:linear-gradient(135deg,var(--ua2),var(--ua));border-color:transparent;color:#0b1220;box-shadow:0 18px 40px rgba(255,212,0,.20);}
+    .btn.pink{background:linear-gradient(135deg,#ff7ae8,var(--pink));border-color:transparent;color:#160616;box-shadow:0 18px 40px rgba(255,79,216,.18);}
+    .btn.install{background:linear-gradient(135deg, rgba(34,197,94,.95), rgba(74,163,255,.75));border-color:transparent;color:#071022;box-shadow:0 18px 40px rgba(34,197,94,.18);}
+    .chip{padding:8px 10px;border:1px solid var(--line);border-radius:999px;background:rgba(255,255,255,.04);color:var(--muted);font-weight:850;font-size:13px;transition:.2s ease;white-space:nowrap;}
+    .chip:hover{transform:translateY(-1px);border-color:rgba(255,255,255,.22);color:var(--text)}
+    .navlinks{display:flex;align-items:center;gap:10px;flex-wrap:wrap;justify-content:flex-end}
+    .hero{padding:22px 0 10px}
+    .panel{border:1px solid var(--line);border-radius:var(--radius);background:linear-gradient(180deg, rgba(255,255,255,.07), rgba(255,255,255,.03));box-shadow:var(--shadow);padding:18px}
+    h1{margin:12px 0 10px;font-size:36px;line-height:1.06}
+    .lead{color:var(--muted);font-size:15.8px;line-height:1.55;margin:0 0 16px}
+    .hero-actions{display:flex;gap:10px;flex-wrap:wrap}
     .section{padding:18px 0 0}
-    .section-title{
-      display:flex; align-items:flex-end; justify-content:space-between; gap:10px; flex-wrap:wrap;
-      margin:0 0 10px;
-    }
-    .section-title h2{margin:0; font-size:20px}
-    .section-title span{color:var(--muted); font-size:13px; font-weight:850}
-
-    .grid{display:grid; grid-template-columns: repeat(4, 1fr); gap:12px; padding:16px 0 0}
-    @media (max-width: 980px){.grid{grid-template-columns: repeat(2, 1fr)}}
-    @media (max-width: 520px){.grid{grid-template-columns:1fr}}
-
-    .card{
-      border:1px solid var(--line);
-      border-radius:var(--radius);
-      background:linear-gradient(180deg, rgba(255,255,255,.07), rgba(255,255,255,.03));
-      box-shadow:var(--shadow);
-      overflow:hidden;
-      transition:.2s ease;
-      cursor:pointer;
-      position:relative;
-    }
-    .card:hover{transform:translateY(-2px); border-color:rgba(255,255,255,.24)}
-    .card:focus-within{outline:2px solid var(--focus); outline-offset:2px}
-    .card .img{
-      height:132px;
-      border-bottom:1px solid var(--line);
-      position:relative;
-      overflow:hidden;
-      background:
-        linear-gradient(180deg, rgba(0,0,0,.0), rgba(0,0,0,.35)),
-        radial-gradient(500px 260px at 20% 20%, rgba(255,212,0,.18), transparent 65%),
-        radial-gradient(520px 280px at 80% 40%, rgba(74,163,255,.22), transparent 68%),
-        linear-gradient(135deg, rgba(255,255,255,.10), rgba(255,255,255,.03));
-      display:flex; align-items:center; justify-content:center;
-    }
-    .icon{width:56px; height:56px; position:relative; z-index:1; filter: drop-shadow(0 8px 18px rgba(0,0,0,.35));}
-    .card .content{padding:14px}
-    .card h3{margin:0 0 6px; font-size:16px}
-    .card p{margin:0; color:var(--muted); font-size:13.6px; line-height:1.45; font-weight:750}
-    .tagrow{display:flex; gap:8px; flex-wrap:wrap; margin-top:10px}
-    .tag{
-      padding:6px 8px; border-radius:999px;
-      background:rgba(255,255,255,.05);
-      border:1px solid var(--line);
-      color:var(--muted);
-      font-weight:900;
-      font-size:12px;
-    }
-
-    .twocol{display:grid; grid-template-columns: 1fr 1fr; gap:12px}
-    @media (max-width: 920px){.twocol{grid-template-columns:1fr}}
-    .box{
-      border:1px solid var(--line);
-      border-radius:var(--radius);
-      background:rgba(255,255,255,.04);
-      padding:14px;
-      box-shadow:var(--shadow);
-    }
-    .box h3{margin:0 0 8px; font-size:16px}
-    .list{margin:0; padding-left:18px; color:var(--muted); line-height:1.7; font-weight:750}
-
-    .formgrid{display:grid; grid-template-columns:1fr 1fr; gap:10px}
-    @media (max-width: 700px){.formgrid{grid-template-columns:1fr}}
-    .input, select, textarea{
-      width:100%;
-      padding:12px 12px;
-      border-radius:16px;
-      border:1px solid var(--line);
-      background:rgba(255,255,255,.04);
-      color:var(--text);
-      outline:none;
-      font-size:14px;
-      font-weight:750;
-    }
-    .input:focus, select:focus, textarea:focus{outline:2px solid var(--focus); outline-offset:2px}
-    textarea{min-height:104px; resize:vertical}
-    label{display:block; margin:10px 0 6px; color:var(--muted); font-weight:950; font-size:13px}
-    .hint{color:var(--muted); font-size:12.8px; line-height:1.45; margin-top:8px; font-weight:750}
-    .divider{height:1px; background:var(--line); margin:16px 0}
-    .footer{padding:32px 0 44px; color:var(--muted); font-size:13px; text-align:center; font-weight:850}
-
-    .toast{
-      position:fixed; left:50%; bottom:18px; transform:translateX(-50%);
-      background:rgba(8,18,39,.85);
-      border:1px solid rgba(255,255,255,.18);
-      box-shadow:0 18px 50px rgba(0,0,0,.55);
-      padding:10px 12px;
-      border-radius:16px;
-      color:var(--text);
-      font-weight:850;
-      display:none;
-      z-index:999;
-      max-width:min(680px, calc(100vw - 32px));
-    }
-
-    .drawer-backdrop{
-      position:fixed; inset:0;
-      background:rgba(0,0,0,.45);
-      backdrop-filter: blur(2px);
-      display:none;
-      z-index:250;
-    }
-    .drawer{
-      position:fixed; top:0; right:0; height:100%; width:min(360px, 88vw);
-      background:rgba(8,18,39,.96);
-      border-left:1px solid rgba(255,255,255,.14);
-      box-shadow:-18px 0 55px rgba(0,0,0,.55);
-      transform:translateX(100%);
-      transition:transform .22s ease;
-      z-index:260;
-      padding:14px;
-      display:flex; flex-direction:column; gap:10px;
-    }
-    .drawer.open{transform:translateX(0)}
-    .drawer-head{
-      display:flex; align-items:center; justify-content:space-between; gap:10px;
-      padding:6px 4px 10px;
-      border-bottom:1px solid rgba(255,255,255,.12);
-      margin-bottom:6px;
-    }
-    .drawer-head b{font-size:15px}
-    .drawer a{display:flex; justify-content:flex-start}
-    .drawer .chip, .drawer .btn{width:100%}
-    .drawer .chip{justify-content:flex-start}
-
-    details{
-      border:1px solid var(--line);
-      border-radius:20px;
-      background:rgba(255,255,255,.04);
-      padding:12px 14px;
-      box-shadow:var(--shadow);
-    }
-    details summary{
-      cursor:pointer;
-      font-weight:950;
-      color:var(--text);
-      list-style:none;
-    }
+    .section-title{display:flex;align-items:flex-end;justify-content:space-between;gap:10px;flex-wrap:wrap;margin:0 0 10px;}
+    .section-title h2{margin:0;font-size:20px}
+    .section-title span{color:var(--muted);font-size:13px;font-weight:850}
+    details{border:1px solid var(--line);border-radius:20px;background:rgba(255,255,255,.04);padding:12px 14px;box-shadow:var(--shadow);}
+    details summary{cursor:pointer;font-weight:950;color:var(--text);list-style:none;}
     details summary::-webkit-details-marker{display:none}
-    details p{margin:10px 0 0; color:var(--muted); line-height:1.55; font-weight:750}
-    .faq{display:grid; gap:10px; padding-top:12px}
-
-    .menu-btn{
-      width:44px; height:44px;
-      border-radius:14px;
-      border:1px solid var(--line);
-      background:rgba(255,255,255,.06);
-      align-items:center; justify-content:center;
-      box-shadow:0 10px 26px rgba(0,0,0,.35);
-      cursor:pointer;
-      display:none;
-    }
-    .menu-btn svg{width:22px; height:22px}
-
-    .bottom-bar{
-      position:fixed; left:0; right:0; bottom:0;
-      padding:10px 12px calc(10px + env(safe-area-inset-bottom));
-      background:rgba(8,18,39,.82);
-      border-top:1px solid rgba(255,255,255,.14);
-      backdrop-filter:saturate(160%) blur(14px);
-      display:none;
-      z-index:220;
-    }
-    .bottom-bar .inner{
-      max-width:1180px; margin:0 auto;
-      display:grid; grid-template-columns: 1fr 1fr;
-      gap:10px;
-    }
-
-    @media (max-width: 720px){
-      .menu-btn{display:flex}
-      .navlinks{display:none}
-      .lang{display:none}
-      .topbar{height:56px}
-      .topbar-inner{height:56px; position:relative; justify-content:center; padding:0 64px}
-      .brand{margin:0 auto; gap:0}
-      .brand > div:last-child{display:none !important}
-      .logo-wrap{width:40px; height:40px; border-radius:50%}
-      .nav{position:absolute; right:10px; top:50%; transform:translateY(-50%); width:auto}
-      .menu-btn{width:42px; height:42px; border-radius:14px}
-      .panel.pad{padding:14px}
-      .footer{padding-bottom:96px}
-      .bottom-bar{display:block}
-      .logo-img{width:72%; height:72%; object-fit:contain; filter: drop-shadow(0 2px 6px rgba(0,0,0,.35))}
-      .logo-wrap{background:linear-gradient(135deg,#ffd400 0%, #2b76ff 100%); border-color:rgba(255,255,255,.18)}
-    }
-
-    /* Скрываем install-кнопки, пока установка недоступна */
-    .hidden{display:none !important;}
+    details p{margin:10px 0 0;color:var(--muted);line-height:1.55;font-weight:750}
+    .faq{display:grid;gap:10px;padding-top:12px}
+    .box{border:1px solid var(--line);border-radius:var(--radius);background:rgba(255,255,255,.04);padding:14px;box-shadow:var(--shadow);}
+    .formgrid{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+    @media (max-width: 700px){.formgrid{grid-template-columns:1fr}}
+    .input, select, textarea{width:100%;padding:12px 12px;border-radius:16px;border:1px solid var(--line);background:rgba(255,255,255,.04);color:var(--text);outline:none;font-size:14px;font-weight:750;}
+    textarea{min-height:104px;resize:vertical}
+    label{display:block;margin:10px 0 6px;color:var(--muted);font-weight:950;font-size:13px}
+    .hint{color:var(--muted);font-size:12.8px;line-height:1.45;margin-top:8px;font-weight:750}
+    .toast{position:fixed;left:50%;bottom:18px;transform:translateX(-50%);background:rgba(8,18,39,.85);border:1px solid rgba(255,255,255,.18);box-shadow:0 18px 50px rgba(0,0,0,.55);padding:10px 12px;border-radius:16px;color:var(--text);font-weight:850;display:none;z-index:999;max-width:min(680px, calc(100vw - 32px));}
+    .install-hint{margin-top:10px;display:none;border:1px solid rgba(255,255,255,.14);background:rgba(255,255,255,.04);border-radius:18px;padding:10px 12px;color:rgba(200,210,244,.95);font-weight:800;line-height:1.45;font-size:13px;}
+    .install-hint b{color:#fff}
   </style>
 </head>
 <body>
-
-<!-- TOPBAR -->
 <div class="topbar">
   <div class="container">
     <div class="topbar-inner">
       <a class="brand" href="#top" aria-label="UHU Kassel">
         <div class="logo-wrap" title="UHU" aria-label="UHU logo">
-          <svg class="logo-mark" viewBox="0 0 64 64" role="img" aria-hidden="true">
-            <defs>
-              <linearGradient id="g1" x1="0" y1="0" x2="1" y2="1">
-                <stop offset="0" stop-color="#ffd400"/>
-                <stop offset="1" stop-color="#2b76ff"/>
-              </linearGradient>
-            </defs>
-            <rect x="6" y="6" width="52" height="52" rx="16" fill="url(#g1)" opacity="0.22"/>
-            <path d="M12 24c0-7 5-12 12-12h0v8h0c-2 0-4 2-4 4v16c0 2 2 4 4 4h0v8h0c-7 0-12-5-12-12V24Z" fill="#ffffff" opacity="0.92"/>
-            <path d="M40 12h0c7 0 12 5 12 12v16c0 7-5 12-12 12h0v-8h0c2 0 4-2 4-4V24c0-2-2-4-4-4h0v-8Z" fill="#ffffff" opacity="0.92"/>
-            <path d="M24 12h8v40h-8z" fill="#ffffff" opacity="0.92"/>
-            <path d="M32 12h8v40h-8z" fill="#ffffff" opacity="0.92"/>
-            <text x="32" y="40" text-anchor="middle" font-family="system-ui,Segoe UI,Roboto,Arial" font-weight="1000" font-size="20" fill="#ffffff" opacity="0.95" style="letter-spacing:1px">UHU</text>
-          </svg>
-          <img class="logo-img" src="logo.png" alt="UHU logo" onload="this.classList.add('loaded')" onerror="this.remove();"/>
+          <span style="font-weight:1000;letter-spacing:1px">UHU</span>
         </div>
         <div>
-          <span data-i18n="brand">UHU Kassel</span>
-          <small data-i18n="brand_sub">Услуги рядом · Kassel</small>
+          <span>UHU Kassel</span>
+          <small>Услуги рядом · Kassel</small>
         </div>
       </a>
-
-      <div class="nav">
-        <div class="navlinks">
-          <div class="lang" aria-label="Language switch">
-            <button type="button" id="lang-ua" class="active"><span class="dot ua"></span>UA</button>
-            <button type="button" id="lang-de"><span class="dot de"></span>DE</button>
-            <button type="button" id="lang-ru"><span class="dot ru"></span>RU</button>
-          </div>
-
-          <a class="chip" href="#services" data-i18n="nav_services">Услуги</a>
-          <a class="chip" href="#how" data-i18n="nav_how">Как это работает</a>
-          <a class="chip" href="#pay" data-i18n="nav_pay">Оплата</a>
-          <a class="chip" href="#order" data-i18n="nav_order">Заявка</a>
-
-          <!-- ✅ НАША КНОПКА УСТАНОВКИ -->
-          <button id="installBtnTop" class="btn install hidden" type="button">
-            <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
-              <path d="M12 3v10m0 0 4-4m-4 4-4-4" stroke="#061021" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-              <path d="M4 15v4h16v-4" stroke="#061021" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-            </svg>
-            <span data-i18n="install_btn">Установить</span>
-          </button>
-
-          <a class="btn ghost" href="https://t.me/UHU_help" target="_blank" rel="noopener">Telegram</a>
-          <a class="btn primary" href="#order" data-i18n="cta_leave">Оставить заявку</a>
-        </div>
-
-        <button class="menu-btn" type="button" aria-label="Menu" onclick="toggleDrawer(true)">
-          <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
-            <path d="M4 7h16M4 12h16M4 17h16" stroke="white" stroke-width="2" stroke-linecap="round" opacity=".92"/>
-          </svg>
-        </button>
+      <div class="navlinks">
+        <a class="chip" href="#pay">Оплата</a>
+        <a class="chip" href="#order">Заявка</a>
+        <a class="btn primary" href="https://t.me/UHU_help" target="_blank" rel="noopener">Telegram</a>
+        <button class="btn install" id="installBtn" type="button" style="display:none">⬇︎ Установить приложение</button>
       </div>
     </div>
   </div>
 </div>
 
-<!-- Mobile Drawer -->
-<div id="drawerBackdrop" class="drawer-backdrop" onclick="toggleDrawer(false)"></div>
-<aside id="drawer" class="drawer" aria-label="Menu">
-  <div class="drawer-head">
-    <b>UHU Kassel</b>
-    <button class="btn ghost" type="button" onclick="toggleDrawer(false)" style="padding:10px 12px; border-radius:14px">✕</button>
-  </div>
-
-  <div style="margin:2px 0 6px">
-    <div class="lang" style="display:inline-flex">
-      <button type="button" id="dlang-ua" class="active"><span class="dot ua"></span>UA</button>
-      <button type="button" id="dlang-de"><span class="dot de"></span>DE</button>
-      <button type="button" id="dlang-ru"><span class="dot ru"></span>RU</button>
-    </div>
-  </div>
-
-  <a class="chip" href="#services" onclick="toggleDrawer(false)" data-i18n="nav_services">Услуги</a>
-  <a class="chip" href="#how" onclick="toggleDrawer(false)" data-i18n="nav_how">Как это работает</a>
-  <a class="chip" href="#pay" onclick="toggleDrawer(false)" data-i18n="nav_pay">Оплата</a>
-  <a class="chip" href="#order" onclick="toggleDrawer(false)" data-i18n="nav_order">Заявка</a>
-
-  <div style="height:1px;background:rgba(255,255,255,.12);margin:8px 0"></div>
-
-  <button id="installBtnDrawer" class="btn install hidden" type="button">
-    <span data-i18n="install_btn">Установить</span>
-  </button>
-
-  <a class="btn primary" href="#order" onclick="toggleDrawer(false)" data-i18n="cta_leave">Оставить заявку</a>
-  <a class="btn ghost" href="https://t.me/UHU_help" target="_blank" rel="noopener">Telegram</a>
-  <a class="btn accent" href="#pay" onclick="toggleDrawer(false)" data-i18n="cta_pay">Оплатить Revolut</a>
-
-  <div style="margin-top:auto; color:rgba(200,210,244,.85); font-weight:800; font-size:12.5px; line-height:1.4">
-    Telegram: <b>@UHU_help</b><br/>
-    Revolut: <b>@vladshvachko</b>
-  </div>
-</aside>
-
-<!-- HERO -->
 <div id="top" class="hero">
   <div class="container">
-    <div class="hero-grid">
-      <div class="panel pad">
-        <div class="kicker" data-i18n="kicker">🇺🇦 + 🇩🇪 Kassel · Быстро и надёжно</div>
-        <h1 data-i18n="hero_title">UHU Kassel — услуги по дому в 1 клик</h1>
-        <p class="lead" data-i18n="hero_lead">
-          Уборка • Переезды • Сборка мебели • Мелкий ремонт.
-          Нажимай на услугу — заявка заполнится и откроет Telegram с готовым текстом.
-        </p>
-        <div class="hero-actions">
-          <a class="btn primary" href="https://t.me/UHU_help" target="_blank" rel="noopener" data-i18n="cta_tg">Написать в Telegram</a>
-          <a class="btn accent" href="#pay" data-i18n="cta_pay">Оплатить Revolut</a>
-          <a class="btn pink" href="#services" data-i18n="cta_choose">Выбрать услугу</a>
-        </div>
-
-        <div class="stats">
-          <div class="stat"><b data-i18n="stat1_b">Кассель + район</b><span data-i18n="stat1_s">работаем по городу</span></div>
-          <div class="stat"><b data-i18n="stat2_b">Быстрый старт</b><span data-i18n="stat2_s">заявка → подбор</span></div>
-          <div class="stat"><b data-i18n="stat3_b">Прозрачный учёт</b><span data-i18n="stat3_s">заказы + отчёты</span></div>
-        </div>
+    <div class="panel">
+      <h1>UHU Kassel — услуги по дому в 1 клик</h1>
+      <p class="lead">Уборка • Переезды • Сборка мебели • Мелкий ремонт. Нажимай — заявка заполнится и откроет Telegram.</p>
+      <div class="hero-actions">
+        <a class="btn primary" href="https://t.me/UHU_help" target="_blank" rel="noopener">Написать в Telegram</a>
+        <a class="btn accent" href="#pay">Оплатить Revolut</a>
+        <button class="btn install" id="installBtnHero" type="button" style="display:none">⬇︎ Установить приложение</button>
       </div>
-
-      <div class="side">
-        <div class="side-card">
-          <div class="badge" data-i18n="online_badge">✅ Сейчас онлайн · @UHU_help</div>
-          <h3 data-i18n="need_today">Нужна помощь сегодня?</h3>
-          <p data-i18n="need_today_p">Напиши задачу, район, время и бюджет — мы ответим и предложим решение.</p>
-          <div class="mini-actions">
-            <a class="btn block primary" href="https://t.me/UHU_help" target="_blank" rel="noopener" data-i18n="open_tg">Открыть Telegram</a>
-            <a class="btn block ghost" href="#order" data-i18n="leave_order">Оставить заявку</a>
-          </div>
-        </div>
-
-        <div class="side-card">
-          <h3 data-i18n="for_workers">Для исполнителей</h3>
-          <p data-i18n="for_workers_p">Есть руки и желание работать? Напиши в Telegram — подключим к заказам в Kassel.</p>
-          <div class="mini-actions">
-            <a class="btn block" href="https://t.me/UHU_help" target="_blank" rel="noopener" data-i18n="be_worker">Стать исполнителем</a>
-          </div>
-        </div>
-
-        <div class="side-card">
-          <h3 data-i18n="fast_contact">Быстрый контакт</h3>
-          <p data-i18n="fast_contact_p">Если Telegram не установлен — можно скопировать текст заявки и отправить куда удобно.</p>
-          <div class="mini-actions">
-            <button class="btn block" type="button" id="quickCopyBtn" data-i18n="copy_btn">Скопировать заявку</button>
-          </div>
-        </div>
+      <div class="install-hint" id="iosHintHero">
+        На iPhone/iPad: открой Safari → <b>Поделиться</b> → <b>На экран «Домой»</b>.
       </div>
     </div>
 
-    <!-- SERVICES -->
-    <div id="services" class="section">
-      <div class="section-title">
-        <h2 data-i18n="services_title">Услуги (всё кликабельно)</h2>
-        <span data-i18n="services_sub">Нажми карточку — услуга подставится в заявку</span>
-      </div>
-
-      <div class="grid">
-        <div class="card" role="button" tabindex="0" onclick="quickOrder('cleaning')" onkeydown="cardKey(event,'cleaning')">
-          <div class="img">
-            <svg class="icon" viewBox="0 0 24 24" fill="none" aria-hidden="true">
-              <path d="M10 3l2 2-7 7-2-2 7-7Z" stroke="white" stroke-width="1.8" opacity=".95"/>
-              <path d="M12 5l7 7c1.2 1.2 1.2 3.1 0 4.3l-1.7 1.7c-1.2 1.2-3.1 1.2-4.3 0l-7-7 7-7Z" stroke="white" stroke-width="1.8"/>
-              <path d="M7.2 12.8l4 4" stroke="white" stroke-width="1.8" opacity=".85"/>
-            </svg>
-          </div>
-          <div class="content">
-            <h3 data-i18n="svc_cleaning_t">Уборка</h3>
-            <p data-i18n="svc_cleaning_p">Квартиры, дома, генеральная, после переезда.</p>
-            <div class="tagrow"><span class="tag" data-i18n="tag_apartment">квартира</span><span class="tag" data-i18n="tag_house">дом</span><span class="tag" data-i18n="tag_general">генеральная</span></div>
-          </div>
-        </div>
-
-        <div class="card" role="button" tabindex="0" onclick="quickOrder('moving')" onkeydown="cardKey(event,'moving')">
-          <div class="img">
-            <svg class="icon" viewBox="0 0 24 24" fill="none" aria-hidden="true">
-              <path d="M3 7h11v9H3V7Z" stroke="white" stroke-width="1.8"/>
-              <path d="M14 10h4l3 3v3h-7v-6Z" stroke="white" stroke-width="1.8"/>
-              <path d="M7 18a2 2 0 1 0 0 .01V18Zm11 0a2 2 0 1 0 0 .01V18Z" stroke="white" stroke-width="1.8"/>
-            </svg>
-          </div>
-          <div class="content">
-            <h3 data-i18n="svc_moving_t">Переезды</h3>
-            <p data-i18n="svc_moving_p">Перенос вещей, упаковка, помощь с мебелью.</p>
-            <div class="tagrow"><span class="tag" data-i18n="tag_things">вещи</span><span class="tag" data-i18n="tag_loading">погрузка</span><span class="tag" data-i18n="tag_assembly">сборка</span></div>
-          </div>
-        </div>
-
-        <div class="card" role="button" tabindex="0" onclick="quickOrder('furniture')" onkeydown="cardKey(event,'furniture')">
-          <div class="img">
-            <svg class="icon" viewBox="0 0 24 24" fill="none" aria-hidden="true">
-              <path d="M7 11h10l-1 5H8l-1-5Z" stroke="white" stroke-width="1.8"/>
-              <path d="M8 11V6h8v5" stroke="white" stroke-width="1.8"/>
-              <path d="M9 16v4M15 16v4" stroke="white" stroke-width="1.8"/>
-            </svg>
-          </div>
-          <div class="content">
-            <h3 data-i18n="svc_furniture_t">Сборка мебели</h3>
-            <p data-i18n="svc_furniture_p">IKEA, шкафы, кровати, кухни. Инструмент и опыт.</p>
-            <div class="tagrow"><span class="tag">IKEA</span><span class="tag" data-i18n="tag_wardrobe">шкаф</span><span class="tag" data-i18n="tag_kitchen">кухня</span></div>
-          </div>
-        </div>
-
-        <div class="card" role="button" tabindex="0" onclick="quickOrder('repair')" onkeydown="cardKey(event,'repair')">
-          <div class="img">
-            <svg class="icon" viewBox="0 0 24 24" fill="none" aria-hidden="true">
-              <path d="M14 7a4 4 0 0 0-5 5L3 18l3 3 6-6a4 4 0 0 0 5-5l-2 2-3-3 2-2Z" stroke="white" stroke-width="1.8"/>
-            </svg>
-          </div>
-          <div class="content">
-            <h3 data-i18n="svc_repair_t">Мелкий ремонт</h3>
-            <p data-i18n="svc_repair_p">Крепёж, полки, мелкие работы по дому.</p>
-            <div class="tagrow"><span class="tag" data-i18n="tag_shelves">полки</span><span class="tag" data-i18n="tag_fixing">крепёж</span><span class="tag" data-i18n="tag_home">дом</span></div>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <!-- HOW -->
-    <div id="how" class="section">
-      <div class="section-title"><h2 data-i18n="how_title">Как это работает</h2><span data-i18n="how_sub">3 простых шага</span></div>
-      <div class="twocol">
-        <div class="box">
-          <h3 data-i18n="how1_t">1) Заявка</h3>
-          <ul class="list">
-            <li data-i18n="how1_1">Нажмите на услугу</li>
-            <li data-i18n="how1_2">Заполните район/время/бюджет</li>
-            <li data-i18n="how1_3">Откроется Telegram с текстом</li>
-          </ul>
-        </div>
-        <div class="box">
-          <h3 data-i18n="how2_t">2) Подбор</h3>
-          <ul class="list">
-            <li data-i18n="how2_1">Мы подбираем исполнителя</li>
-            <li data-i18n="how2_2">Согласуем детали и цену</li>
-            <li data-i18n="how2_3">Подтверждаем время</li>
-          </ul>
-        </div>
-        <div class="box">
-          <h3 data-i18n="how3_t">3) Выполнение</h3>
-          <ul class="list">
-            <li data-i18n="how3_1">Работа выполняется на месте</li>
-            <li data-i18n="how3_2">Предоплата через Revolut (по желанию)</li>
-            <li data-i18n="how3_3">Контроль качества</li>
-          </ul>
-        </div>
-        <div class="box">
-          <h3 data-i18n="how_fast">Быстрые кнопки</h3>
-          <p style="color:var(--muted); margin:0 0 10px; line-height:1.45; font-weight:800" data-i18n="how_fast_p">
-            Самый быстрый контакт — Telegram. Для брони времени возможна предоплата.
-          </p>
-          <div style="display:flex; gap:10px; flex-wrap:wrap">
-            <a class="btn primary" href="https://t.me/UHU_help" target="_blank" rel="noopener">Telegram</a>
-            <a class="btn accent" href="#pay">Revolut</a>
-            <a class="btn ghost" href="#order" data-i18n="nav_order">Заявка</a>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <!-- PAYMENT -->
     <div id="pay" class="section">
-      <div class="section-title"><h2 data-i18n="pay_title">Оплата Revolut</h2><span data-i18n="pay_sub">Предоплата для брони времени</span></div>
-      <div class="twocol">
-        <div class="box">
-          <h3 data-i18n="pay_choose">Выберите сумму</h3>
-          <label for="rev-amount" data-i18n="pay_amount_label">Сумма предоплаты</label>
-          <select id="rev-amount" class="input">
-            <option value="20">20 €</option>
-            <option value="50">50 €</option>
-            <option value="100">100 €</option>
-            <option value="custom" data-i18n="pay_custom">Другая сумма</option>
-          </select>
-          <div id="rev-custom-wrap" style="display:none">
-            <label for="rev-custom" data-i18n="pay_custom_label">Другая сумма (€)</label>
-            <input id="rev-custom" class="input" placeholder="Например: 35" inputmode="decimal" />
-          </div>
-
-          <div style="margin-top:12px; display:flex; gap:10px; flex-wrap:wrap">
-            <button class="btn accent" type="button" onclick="payWithRevolut()" data-i18n="pay_btn">Оплатить через Revolut</button>
-            <a class="btn ghost" href="https://revolut.me/vladshvachko" target="_blank" rel="noopener" data-i18n="pay_open">Открыть ссылку</a>
-          </div>
-
-          <p class="hint" data-i18n="pay_hint">После оплаты напишите в Telegram: <b>@UHU_help</b> (имя + услуга).</p>
-        </div>
-        <div class="box">
-          <h3 data-i18n="pay_how">Как оплатить</h3>
-          <ol class="list">
-            <li data-i18n="pay_how_1">Нажмите «Оплатить»</li>
-            <li data-i18n="pay_how_2">Подтвердите сумму</li>
-            <li data-i18n="pay_how_3">Оплатите картой/в Revolut</li>
-            <li data-i18n="pay_how_4">Напишите в Telegram</li>
-          </ol>
-        </div>
+      <div class="section-title"><h2>Оплата Revolut</h2><span>Предоплата для брони</span></div>
+      <div class="box">
+        <p>Revolut: <b>revolut.me/vladshvachko</b></p>
+        <a class="btn accent" href="https://revolut.me/vladshvachko" target="_blank" rel="noopener">Открыть Revolut</a>
       </div>
     </div>
 
-    <!-- ORDER -->
     <div id="order" class="section" style="padding-bottom:14px">
-      <div class="section-title"><h2 data-i18n="order_title">Оставить заявку</h2><span data-i18n="order_sub">Откроется Telegram с готовым текстом</span></div>
+      <div class="section-title"><h2>Оставить заявку</h2><span>Откроется Telegram с готовым текстом</span></div>
       <div class="box">
         <div class="formgrid">
           <div>
-            <label for="service" data-i18n="order_service">Услуга</label>
-            <select id="service" class="input"></select>
+            <label for="district">Район Kassel</label>
+            <input id="district" class="input" placeholder="Mitte, Nord, Südstadt..." />
           </div>
           <div>
-            <label for="district" data-i18n="order_district">Район Kassel</label>
-            <input id="district" class="input" placeholder="Напр.: Mitte, Nord, Südstadt..." />
-          </div>
-          <div>
-            <label for="when" data-i18n="order_when">Когда нужно</label>
-            <input id="when" class="input" placeholder="Напр.: сегодня 18:00 / завтра утром" />
-          </div>
-          <div>
-            <label for="budget" data-i18n="order_budget">Бюджет (€)</label>
-            <input id="budget" class="input" placeholder="Напр.: 50" inputmode="decimal" />
+            <label for="when">Когда нужно</label>
+            <input id="when" class="input" placeholder="сегодня 18:00 / завтра утром" />
           </div>
         </div>
-
-        <label for="details" data-i18n="order_details">Что нужно сделать (коротко)</label>
-        <textarea id="details" class="input" placeholder="Опишите задачу: что, где, сколько, есть ли фото/размеры..."></textarea>
-
-        <div style="display:flex; gap:10px; flex-wrap:wrap; margin-top:12px">
-          <button class="btn primary" type="button" onclick="openTelegram()" data-i18n="order_send">Отправить в Telegram</button>
-          <button class="btn pink" type="button" onclick="copyText()" data-i18n="order_copy">Скопировать текст</button>
-          <a class="btn ghost" href="https://t.me/UHU_help" target="_blank" rel="noopener" data-i18n="order_open_chat">Открыть чат</a>
+        <label for="details">Что нужно сделать</label>
+        <textarea id="details" class="input" placeholder="Коротко опишите задачу..."></textarea>
+        <div style="display:flex;gap:10px;flex-wrap:wrap;margin-top:12px">
+          <button class="btn primary" type="button" id="sendBtn">Отправить в Telegram</button>
+          <button class="btn pink" type="button" id="copyBtn">Скопировать текст</button>
         </div>
+        <p class="hint">Если Telegram не установлен — скопируйте текст и отправьте вручную.</p>
+      </div>
 
-        <p class="hint" data-i18n="order_hint">Если Telegram не установлен — скопируйте текст и отправьте вручную.</p>
+      <div class="section-title" style="margin-top:14px">
+        <h2>FAQ</h2><span>Частые вопросы</span>
+      </div>
+      <div class="faq">
+        <details><summary>Сколько стоит?</summary><p>Цена зависит от объёма и времени. Напишите детали — мы предложим стоимость до начала работ.</p></details>
+        <details><summary>Можно срочно сегодня?</summary><p>Да, если есть свободный исполнитель. Укажите район, время и задачу — ответим быстро.</p></details>
+        <details><summary>Зачем предоплата?</summary><p>Предоплата — чтобы забронировать время (по желанию). Можно оплатить и на месте.</p></details>
       </div>
     </div>
 
-    <div class="footer">
-      © 2025 <span data-i18n="brand">UHU Kassel</span> · Telegram: <b>@UHU_help</b> · Revolut: <b>@vladshvachko</b><br/>
-      Домены: <b>uhu.digital</b> / <b>www.uhu.digital</b>
+    <div style="padding:24px 0 44px;color:var(--muted);font-size:13px;text-align:center;font-weight:850">
+      © 2025 UHU Kassel · Telegram: <b>@UHU_help</b> · Revolut: <b>@vladshvachko</b>
     </div>
-  </div>
-</div>
-
-<!-- Bottom action bar (mobile) -->
-<div class="bottom-bar">
-  <div class="inner">
-    <a class="btn primary" href="https://t.me/UHU_help" target="_blank" rel="noopener">Telegram</a>
-    <button id="installBtnBottom" class="btn install hidden" type="button"><span data-i18n="install_btn">Установить</span></button>
   </div>
 </div>
 
 <div id="toast" class="toast" role="status" aria-live="polite"></div>
 
 <script>
-  // ===== Service Worker (ОДИН раз) =====
-  (function(){
-    if ("serviceWorker" in navigator) {
-      window.addEventListener("load", () => {
-        navigator.serviceWorker.register("/sw.js", { scope: "/" }).catch(()=>{});
-      });
-    }
-  })();
+  // SW
+  if ("serviceWorker" in navigator) {
+    window.addEventListener("load", async () => {
+      try { await navigator.serviceWorker.register("/sw.js", { scope: "/" }); } catch(e) {}
+    });
+  }
 
-  // ===== КРАСИВАЯ УСТАНОВКА PWA (custom install button) =====
+  // Install (Chrome/Android/Mac)
   let deferredPrompt = null;
-
-  const installTop = document.getElementById("installBtnTop");
-  const installDrawer = document.getElementById("installBtnDrawer");
-  const installBottom = document.getElementById("installBtnBottom");
-
-  function showInstallButtons(show){
-    [installTop, installDrawer, installBottom].forEach(btn=>{
-      if(!btn) return;
-      btn.classList.toggle("hidden", !show);
-    });
-  }
-
-  // Когда браузер говорит: "можно установить"
-  window.addEventListener("beforeinstallprompt", (e) => {
-    e.preventDefault();
-    deferredPrompt = e;
-    showInstallButtons(true);
-  });
-
-  // Если приложение уже установлено
-  window.addEventListener("appinstalled", () => {
-    deferredPrompt = null;
-    showInstallButtons(false);
-  });
-
+  const installBtns = [document.getElementById("installBtn"), document.getElementById("installBtnHero")].filter(Boolean);
+  function showInstallButtons(show){ installBtns.forEach(b=>b.style.display = show ? "inline-flex" : "none"); }
+  window.addEventListener("beforeinstallprompt", (e)=>{ e.preventDefault(); deferredPrompt=e; showInstallButtons(true); });
   async function doInstall(){
-    if(!deferredPrompt){
-      toast(I18N[currentLang]?.install_na || "Установка недоступна. Откройте меню браузера → Установить приложение.");
-      return;
-    }
+    if(!deferredPrompt) return;
     deferredPrompt.prompt();
-    const choice = await deferredPrompt.userChoice.catch(()=>({outcome:"dismissed"}));
-    deferredPrompt = null;
+    await deferredPrompt.userChoice;
+    deferredPrompt=null;
     showInstallButtons(false);
-    if(choice && choice.outcome === "accepted"){
-      toast(I18N[currentLang]?.install_ok || "Установлено ✅");
-    }
   }
+  installBtns.forEach(b=>b.addEventListener("click", doInstall));
 
-  [installTop, installDrawer, installBottom].forEach(btn=>{
-    if(btn) btn.addEventListener("click", doInstall);
+  // iOS hint
+  const isIOS = /iphone|ipad|ipod/i.test(navigator.userAgent);
+  const isStandalone = (window.matchMedia && window.matchMedia("(display-mode: standalone)").matches) || (navigator.standalone === true);
+  if(isIOS && !isStandalone){ document.getElementById("iosHintHero").style.display="block"; }
+
+  // Order
+  const TELEGRAM_USERNAME="UHU_help";
+  const toastEl=document.getElementById("toast");
+  function toast(t){ toastEl.textContent=t; toastEl.style.display="block"; clearTimeout(toastEl._t); toastEl._t=setTimeout(()=>toastEl.style.display="none",2000); }
+  function buildMsg(){
+    const district=document.getElementById("district").value.trim() || "—";
+    const when=document.getElementById("when").value.trim() || "—";
+    const details=document.getElementById("details").value.trim() || "—";
+    return ["Здравствуйте! Хочу оформить заказ в UHU Kassel 🙌","",`Район: ${district}`,`Когда: ${when}`,"",`Описание: ${details}`].join("\n");
+  }
+  document.getElementById("sendBtn").addEventListener("click", ()=>{
+    const msg=buildMsg();
+    window.open(`https://t.me/${TELEGRAM_USERNAME}?text=${encodeURIComponent(msg)}`,"_blank");
   });
-
-  const TELEGRAM_USERNAME = "UHU_help";
-  const REVOLUT_LINK = "https://revolut.me/vladshvachko";
-
-  const I18N = {
-    ru: {
-      brand:"UHU Kassel",
-      brand_sub:"Услуги рядом · Kassel",
-      nav_services:"Услуги",
-      nav_how:"Как это работает",
-      nav_pay:"Оплата",
-      nav_order:"Заявка",
-      cta_leave:"Оставить заявку",
-      install_btn:"Установить",
-      install_na:"Установка недоступна. Обновите страницу и попробуйте снова.",
-      install_ok:"Установлено ✅",
-
-      kicker:"🇺🇦 + 🇩🇪 Kassel · Быстро и надёжно",
-      hero_title:"UHU Kassel — услуги по дому в 1 клик",
-      hero_lead:"Уборка • Переезды • Сборка мебели • Мелкий ремонт. Нажимай на услугу — заявка заполнится и откроет Telegram с готовым текстом.",
-      cta_tg:"Написать в Telegram",
-      cta_pay:"Оплатить Revolut",
-      cta_choose:"Выбрать услугу",
-      stat1_b:"Кассель + район", stat1_s:"работаем по городу",
-      stat2_b:"Быстрый старт", stat2_s:"заявка → подбор",
-      stat3_b:"Прозрачный учёт", stat3_s:"заказы + отчёты",
-      online_badge:"✅ Сейчас онлайн · @UHU_help",
-      need_today:"Нужна помощь сегодня?",
-      need_today_p:"Напиши задачу, район, время и бюджет — мы ответим и предложим решение.",
-      open_tg:"Открыть Telegram",
-      leave_order:"Оставить заявку",
-      for_workers:"Для исполнителей",
-      for_workers_p:"Есть руки и желание работать? Напиши в Telegram — подключим к заказам в Kassel.",
-      be_worker:"Стать исполнителем",
-      fast_contact:"Быстрый контакт",
-      fast_contact_p:"Если Telegram не установлен — можно скопировать текст заявки и отправить куда удобно.",
-      copy_btn:"Скопировать заявку",
-      services_title:"Услуги (всё кликабельно)",
-      services_sub:"Нажми карточку — услуга подставится в заявку",
-      svc_cleaning_t:"Уборка",
-      svc_cleaning_p:"Квартиры, дома, генеральная, после переезда.",
-      svc_moving_t:"Переезды",
-      svc_moving_p:"Перенос вещей, упаковка, помощь с мебелью.",
-      svc_furniture_t:"Сборка мебели",
-      svc_furniture_p:"IKEA, шкафы, кровати, кухни. Инструмент и опыт.",
-      svc_repair_t:"Мелкий ремонт",
-      svc_repair_p:"Крепёж, полки, мелкие работы по дому.",
-      tag_apartment:"квартира", tag_house:"дом", tag_general:"генеральная",
-      tag_things:"вещи", tag_loading:"погрузка", tag_assembly:"сборка",
-      tag_wardrobe:"шкаф", tag_kitchen:"кухня",
-      tag_shelves:"полки", tag_fixing:"крепёж", tag_home:"дом",
-      how_title:"Как это работает", how_sub:"3 простых шага",
-      how1_t:"1) Заявка", how1_1:"Нажмите на услугу", how1_2:"Заполните район/время/бюджет", how1_3:"Откроется Telegram с текстом",
-      how2_t:"2) Подбор", how2_1:"Мы подбираем исполнителя", how2_2:"Согласуем детали и цену", how2_3:"Подтверждаем время",
-      how3_t:"3) Выполнение", how3_1:"Работа выполняется на месте", how3_2:"Предоплата через Revolut (по желанию)", how3_3:"Контроль качества",
-      how_fast:"Быстрые кнопки", how_fast_p:"Самый быстрый контакт — Telegram. Для брони времени возможна предоплата.",
-      pay_title:"Оплата Revolut", pay_sub:"Предоплата для брони времени",
-      pay_choose:"Выберите сумму",
-      pay_amount_label:"Сумма предоплаты",
-      pay_custom:"Другая сумма",
-      pay_custom_label:"Другая сумма (€)",
-      pay_btn:"Оплатить через Revolut",
-      pay_open:"Открыть ссылку",
-      pay_hint:"После оплаты напишите в Telegram: <b>@UHU_help</b> (имя + услуга).",
-      pay_how:"Как оплатить",
-      pay_how_1:"Нажмите «Оплатить»", pay_how_2:"Подтвердите сумму", pay_how_3:"Оплатите картой/в Revolut", pay_how_4:"Напишите в Telegram",
-      order_title:"Оставить заявку", order_sub:"Откроется Telegram с готовым текстом",
-      order_service:"Услуга",
-      order_district:"Район Kassel",
-      order_when:"Когда нужно",
-      order_budget:"Бюджет (€)",
-      order_details:"Что нужно сделать (коротко)",
-      order_send:"Отправить в Telegram",
-      order_copy:"Скопировать текст",
-      order_open_chat:"Открыть чат",
-      order_hint:"Если Telegram не установлен — скопируйте текст и отправьте вручную.",
-      faq_title:"FAQ", faq_sub:"Частые вопросы",
-      faq1_q:"Сколько стоит?", faq1_a:"Цена зависит от объёма и времени. Напишите детали — мы предложим стоимость до начала работ.",
-      faq2_q:"Можно срочно сегодня?", faq2_a:"Да, если есть свободный исполнитель. Укажите район, время и задачу — ответим быстро.",
-      faq3_q:"Зачем предоплата?", faq3_a:"Предоплата — чтобы забронировать время (по желанию). Можно оплатить и на месте.",
-      alert_amount:"Введите сумму корректно (числом).",
-      toast_copied:"Текст заявки скопирован ✅"
-    },
-    ua: {
-      brand:"UHU Kassel",
-      brand_sub:"Послуги поруч · Kassel",
-      nav_services:"Послуги",
-      nav_how:"Як це працює",
-      nav_pay:"Оплата",
-      nav_order:"Заявка",
-      cta_leave:"Залишити заявку",
-      install_btn:"Встановити",
-      install_na:"Встановлення недоступне. Оновіть сторінку та спробуйте ще раз.",
-      install_ok:"Встановлено ✅",
-
-      kicker:"🇺🇦 + 🇩🇪 Kassel · Швидко та надійно",
-      hero_title:"UHU Kassel — домашні послуги в 1 клік",
-      hero_lead:"Прибирання • Переїзди • Збірка меблів • Дрібний ремонт. Обери послугу — заявка заповниться і відкриє Telegram з готовим текстом.",
-      cta_tg:"Написати в Telegram",
-      cta_pay:"Оплатити Revolut",
-      cta_choose:"Обрати послугу",
-      stat1_b:"Кассель + район", stat1_s:"працюємо по місту",
-      stat2_b:"Швидкий старт", stat2_s:"заявка → підбір",
-      stat3_b:"Прозорий облік", stat3_s:"замовлення + звіти",
-      online_badge:"✅ Зараз онлайн · @UHU_help",
-      need_today:"Потрібна допомога сьогодні?",
-      need_today_p:"Напиши задачу, район, час і бюджет — ми відповімо та запропонуємо рішення.",
-      open_tg:"Відкрити Telegram",
-      leave_order:"Залишити заявку",
-      for_workers:"Для виконавців",
-      for_workers_p:"Є руки і бажання працювати? Напиши в Telegram — підключимо до замовлень у Kassel.",
-      be_worker:"Стати виконавцем",
-      fast_contact:"Швидкий контакт",
-      fast_contact_p:"Якщо Telegram не встановлений — можна скопіювати текст заявки і надіслати куди зручно.",
-      copy_btn:"Скопіювати заявку",
-      services_title:"Послуги (все клікабельне)",
-      services_sub:"Натисни картку — послуга підставиться в заявку",
-      svc_cleaning_t:"Прибирання",
-      svc_cleaning_p:"Квартири, будинки, генеральне, після переїзду.",
-      svc_moving_t:"Переїзди",
-      svc_moving_p:"Перенесення речей, пакування, допомога з меблями.",
-      svc_furniture_t:"Збірка меблів",
-      svc_furniture_p:"IKEA, шафи, ліжка, кухні. Інструмент і досвід.",
-      svc_repair_t:"Дрібний ремонт",
-      svc_repair_p:"Кріплення, полиці, дрібні роботи по дому.",
-      tag_apartment:"квартира", tag_house:"будинок", tag_general:"генеральне",
-      tag_things:"речі", tag_loading:"вантаження", tag_assembly:"збірка",
-      tag_wardrobe:"шафа", tag_kitchen:"кухня",
-      tag_shelves:"полиці", tag_fixing:"кріплення", tag_home:"дім",
-      how_title:"Як це працює", how_sub:"3 прості кроки",
-      how1_t:"1) Заявка", how1_1:"Натисніть на послугу", how1_2:"Заповніть район/час/бюджет", how1_3:"Відкриється Telegram з текстом",
-      how2_t:"2) Підбір", how2_1:"Ми підбираємо виконавця", how2_2:"Узгоджуємо деталі і ціну", how2_3:"Підтверджуємо час",
-      how3_t:"3) Виконання", how3_1:"Робота виконується на місці", how3_2:"Передоплата через Revolut (за бажанням)", how3_3:"Контроль якості",
-      how_fast:"Швидкі кнопки", how_fast_p:"Найшвидший контакт — Telegram. Для броні часу можлива передоплата.",
-      pay_title:"Оплата Revolut", pay_sub:"Передоплата для бронювання часу",
-      pay_choose:"Оберіть суму",
-      pay_amount_label:"Сума передоплати",
-      pay_custom:"Інша сума",
-      pay_custom_label:"Інша сума (€)",
-      pay_btn:"Оплатити через Revolut",
-      pay_open:"Відкрити посилання",
-      pay_hint:"Після оплати напишіть у Telegram: <b>@UHU_help</b> (ім’я + послуга).",
-      pay_how:"Як оплатити",
-      pay_how_1:"Натисніть «Оплатити»", pay_how_2:"Підтвердіть суму", pay_how_3:"Оплатіть карткою/в Revolut", pay_how_4:"Напишіть у Telegram",
-      order_title:"Залишити заявку", order_sub:"Відкриється Telegram з готовим текстом",
-      order_service:"Послуга",
-      order_district:"Район Kassel",
-      order_when:"Коли потрібно",
-      order_budget:"Бюджет (€)",
-      order_details:"Що треба зробити (коротко)",
-      order_send:"Відправити в Telegram",
-      order_copy:"Скопіювати текст",
-      order_open_chat:"Відкрити чат",
-      order_hint:"Якщо Telegram не встановлений — скопіюйте текст і надішліть вручну.",
-      faq_title:"FAQ", faq_sub:"Часті питання",
-      faq1_q:"Скільки коштує?", faq1_a:"Ціна залежить від обсягу та часу. Напишіть деталі — ми назвемо вартість до початку робіт.",
-      faq2_q:"Можна терміново сьогодні?", faq2_a:"Так, якщо є вільний виконавець. Вкажіть район, час і задачу — відповімо швидко.",
-      faq3_q:"Навіщо передоплата?", faq3_a:"Передоплата — щоб забронювати час (за бажанням). Можна оплатити і на місці.",
-      alert_amount:"Введіть суму коректно (числом).",
-      toast_copied:"Текст заявки скопійовано ✅"
-    },
-    de: {
-      brand:"UHU Kassel",
-      brand_sub:"Services in der Nähe · Kassel",
-      nav_services:"Services",
-      nav_how:"So funktioniert’s",
-      nav_pay:"Zahlung",
-      nav_order:"Anfrage",
-      cta_leave:"Anfrage senden",
-      install_btn:"Installieren",
-      install_na:"Installation nicht verfügbar. Seite neu laden und erneut versuchen.",
-      install_ok:"Installiert ✅",
-
-      kicker:"🇺🇦 + 🇩🇪 Kassel · Schnell & zuverlässig",
-      hero_title:"UHU Kassel — Hilfe im Haushalt mit 1 Klick",
-      hero_lead:"Reinigung • Umzug • Möbelmontage • Kleine Reparaturen. Service auswählen — Anfrage wird ausgefüllt und Telegram öffnet sich mit fertigem Text.",
-      cta_tg:"In Telegram schreiben",
-      cta_pay:"Mit Revolut zahlen",
-      cta_choose:"Service wählen",
-      stat1_b:"Kassel + Umgebung", stat1_s:"in der Stadt unterwegs",
-      stat2_b:"Schneller Start", stat2_s:"Anfrage → Auswahl",
-      stat3_b:"Transparenter Ablauf", stat3_s:"Aufträge + Übersicht",
-      online_badge:"✅ Jetzt online · @UHU_help",
-      need_today:"Heute Hilfe nötig?",
-      need_today_p:"Schreib Aufgabe, Stadtteil, Zeit und Budget — wir antworten schnell.",
-      open_tg:"Telegram öffnen",
-      leave_order:"Anfrage senden",
-      for_workers:"Für Helfer",
-      for_workers_p:"Du willst arbeiten? Schreib in Telegram — wir verbinden dich mit Aufträgen in Kassel.",
-      be_worker:"Als Helfer starten",
-      fast_contact:"Schneller Kontakt",
-      fast_contact_p:"Kein Telegram? Du kannst den Text kopieren und überall senden.",
-      copy_btn:"Anfrage kopieren",
-      services_title:"Services (alles klickbar)",
-      services_sub:"Karte anklicken — Service wird in die Anfrage übernommen",
-      svc_cleaning_t:"Reinigung",
-      svc_cleaning_p:"Wohnung, Haus, Grundreinigung, nach Umzug.",
-      svc_moving_t:"Umzug",
-      svc_moving_p:"Tragen, Packen, Hilfe mit Möbeln.",
-      svc_furniture_t:"Möbelmontage",
-      svc_furniture_p:"IKEA, Schränke, Betten, Küchen. Werkzeug & Erfahrung.",
-      svc_repair_t:"Kleine Reparaturen",
-      svc_repair_p:"Befestigen, Regale, kleine Arbeiten im Haushalt.",
-      tag_apartment:"Wohnung", tag_house:"Haus", tag_general:"Grundreinigung",
-      tag_things:"Sachen", tag_loading:"Tragen", tag_assembly:"Montage",
-      tag_wardrobe:"Schrank", tag_kitchen:"Küche",
-      tag_shelves:"Regale", tag_fixing:"Befestigung", tag_home:"Zuhause",
-      how_title:"So funktioniert’s", how_sub:"3 Schritte",
-      how1_t:"1) Anfrage", how1_1:"Service auswählen", how1_2:"Stadtteil/Zeit/Budget eintragen", how1_3:"Telegram öffnet sich mit Text",
-      how2_t:"2) Auswahl", how2_1:"Wir suchen einen Helfer", how2_2:"Details & Preis abstimmen", how2_3:"Zeit bestätigen",
-      how3_t:"3) Ausführung", how3_1:"Arbeit vor Ort", how3_2:"Anzahlung via Revolut (optional)", how3_3:"Qualitätscheck",
-      how_fast:"Schnell-Buttons", how_fast_p:"Am schnellsten über Telegram. Optional Anzahlung zur Termin-Reservierung.",
-      pay_title:"Revolut-Zahlung", pay_sub:"Anzahlung zur Termin-Reservierung",
-      pay_choose:"Betrag wählen",
-      pay_amount_label:"Anzahlungsbetrag",
-      pay_custom:"Anderer Betrag",
-      pay_custom_label:"Anderer Betrag (€)",
-      pay_btn:"Mit Revolut zahlen",
-      pay_open:"Link öffnen",
-      pay_hint:"Nach Zahlung bitte in Telegram schreiben: <b>@UHU_help</b> (Name + Service).",
-      pay_how:"So zahlst du",
-      pay_how_1:"„Zahlen“ klicken", pay_how_2:"Betrag bestätigen", pay_how_3:"Mit Karte/Revolut zahlen", pay_how_4:"In Telegram schreiben",
-      order_title:"Anfrage senden", order_sub:"Telegram öffnet sich mit fertigem Text",
-      order_service:"Service",
-      order_district:"Stadtteil Kassel",
-      order_when:"Wann",
-      order_budget:"Budget (€)",
-      order_details:"Kurzbeschreibung",
-      order_send:"In Telegram senden",
-      order_copy:"Text kopieren",
-      order_open_chat:"Chat öffnen",
-      order_hint:"Falls Telegram nicht installiert ist — Text kopieren und manuell senden.",
-      faq_title:"FAQ", faq_sub:"Häufige Fragen",
-      faq1_q:"Was kostet es?", faq1_a:"Der Preis hängt von Umfang und Zeit ab. Schreib Details — wir nennen dir den Preis vor Beginn.",
-      faq2_q:"Geht es heute noch?", faq2_a:"Ja, wenn ein Helfer frei ist. Stadtteil, Zeit und Aufgabe angeben — wir antworten schnell.",
-      faq3_q:"Warum Anzahlung?", faq3_a:"Optional zur Termin-Reservierung. Du kannst auch vor Ort zahlen.",
-      alert_amount:"Bitte Betrag korrekt eingeben (Zahl).",
-      toast_copied:"Anfragetext kopiert ✅"
+  document.getElementById("copyBtn").addEventListener("click", async ()=>{
+    const msg=buildMsg();
+    try{ await navigator.clipboard.writeText(msg); }catch(e){
+      const ta=document.createElement("textarea"); ta.value=msg; document.body.appendChild(ta); ta.select(); document.execCommand("copy"); document.body.removeChild(ta);
     }
-  };
-
-  const SERVICE_KEYS = ["cleaning","moving","furniture","repair","other"];
-  const SERVICE_LABELS = {
-    ru: { cleaning:"Уборка", moving:"Переезды", furniture:"Сборка мебели", repair:"Мелкий ремонт", other:"Другое" },
-    ua: { cleaning:"Прибирання", moving:"Переїзди", furniture:"Збірка меблів", repair:"Дрібний ремонт", other:"Інше" },
-    de: { cleaning:"Reinigung", moving:"Umzug", furniture:"Möbelmontage", repair:"Kleine Reparaturen", other:"Sonstiges" }
-  };
-
-  let currentLang = localStorage.getItem("uhu_lang") || "ua";
-
-  const toastEl = document.getElementById("toast");
-  function toast(text){
-    toastEl.innerHTML = text;
-    toastEl.style.display = "block";
-    clearTimeout(toastEl._t);
-    toastEl._t = setTimeout(()=>{ toastEl.style.display="none"; }, 2100);
-  }
-
-  function populateServiceSelect(){
-    const sel = document.getElementById("service");
-    sel.innerHTML = "";
-    SERVICE_KEYS.forEach(k=>{
-      const opt = document.createElement("option");
-      opt.value = k;
-      opt.textContent = (SERVICE_LABELS[currentLang] && SERVICE_LABELS[currentLang][k]) ? SERVICE_LABELS[currentLang][k] : k;
-      sel.appendChild(opt);
-    });
-  }
-
-  function applyLang(lang){
-    currentLang = lang;
-    localStorage.setItem("uhu_lang", lang);
-    document.documentElement.lang = (lang === "ua") ? "uk" : lang;
-
-    ["ua","de","ru"].forEach(l=>{
-      const btn = document.getElementById("lang-"+l);
-      if (btn) btn.classList.toggle("active", l === lang);
-    });
-
-    document.querySelectorAll("[data-i18n]").forEach(el=>{
-      const key = el.getAttribute("data-i18n");
-      const val = I18N[lang] && I18N[lang][key];
-      if (typeof val === "string") el.innerHTML = val;
-    });
-
-    const customOpt = document.querySelector("#rev-amount option[value='custom']");
-    if (customOpt) customOpt.textContent = I18N[lang].pay_custom;
-
-    const ph = {
-      district: { ru:"Напр.: Mitte, Nord, Südstadt...", ua:"Напр.: Mitte, Nord, Südstadt...", de:"z.B.: Mitte, Nord, Südstadt..." },
-      when:     { ru:"Напр.: сегодня 18:00 / завтра утром", ua:"Напр.: сьогодні 18:00 / завтра зранку", de:"z.B.: heute 18:00 / morgen früh" },
-      budget:   { ru:"Напр.: 50", ua:"Напр.: 50", de:"z.B.: 50" },
-      details:  { ru:"Опишите задачу: что, где, сколько, есть ли фото/размеры...", ua:"Опишіть задачу: що, де, скільки, чи є фото/розміри...", de:"Beschreibe kurz: was, wo, wie viel, Fotos/Größe..." }
-    };
-    document.getElementById("district").placeholder = ph.district[lang];
-    document.getElementById("when").placeholder = ph.when[lang];
-    document.getElementById("budget").placeholder = ph.budget[lang];
-    document.getElementById("details").placeholder = ph.details[lang];
-
-    populateServiceSelect();
-  }
-
-  const bUA = document.getElementById("lang-ua");
-  const bDE = document.getElementById("lang-de");
-  const bRU = document.getElementById("lang-ru");
-  if (bUA) bUA.addEventListener("click", ()=>applyLang("ua"));
-  if (bDE) bDE.addEventListener("click", ()=>applyLang("de"));
-  if (bRU) bRU.addEventListener("click", ()=>applyLang("ru"));
-
-  const revSelect = document.getElementById("rev-amount");
-  const revCustomWrap = document.getElementById("rev-custom-wrap");
-  revSelect.addEventListener("change", () => {
-    revCustomWrap.style.display = (revSelect.value === "custom") ? "block" : "none";
+    toast("Скопировано ✅");
   });
-
-  function payWithRevolut(){
-    let amount = revSelect.value;
-    if (amount === "custom") amount = document.getElementById("rev-custom").value.trim();
-    if (!amount || isNaN(amount)) { alert(I18N[currentLang].alert_amount); return; }
-    window.open(`${REVOLUT_LINK}/${amount}`, "_blank");
-  }
-
-  function quickOrder(serviceKey){
-    const sel = document.getElementById("service");
-    sel.value = serviceKey;
-    document.getElementById("order").scrollIntoView({behavior:"smooth"});
-  }
-
-  function cardKey(e, key){
-    if (e.key === "Enter" || e.key === " "){
-      e.preventDefault();
-      quickOrder(key);
-    }
-  }
-
-  function buildMessage(){
-    const serviceKey = document.getElementById("service").value;
-    const service = (SERVICE_LABELS[currentLang] && SERVICE_LABELS[currentLang][serviceKey]) ? SERVICE_LABELS[currentLang][serviceKey] : serviceKey;
-
-    const district = document.getElementById("district").value.trim();
-    const when = document.getElementById("when").value.trim();
-    const budget = document.getElementById("budget").value.trim();
-    const details = document.getElementById("details").value.trim();
-
-    const linesByLang = {
-      ru: [
-        "Здравствуйте! Хочу оформить заказ в UHU Kassel 🙌",
-        "",
-        `1) Услуга: ${service}`,
-        `2) Район: ${district || "—"}`,
-        `3) Когда: ${when || "—"}`,
-        `4) Бюджет (€): ${budget || "—"}`,
-        "",
-        `Описание: ${details || "—"}`
-      ],
-      ua: [
-        "Вітаю! Хочу оформити замовлення в UHU Kassel 🙌",
-        "",
-        `1) Послуга: ${service}`,
-        `2) Район: ${district || "—"}`,
-        `3) Коли: ${when || "—"}`,
-        `4) Бюджет (€): ${budget || "—"}`,
-        "",
-        `Опис: ${details || "—"}`
-      ],
-      de: [
-        "Hallo! Ich möchte eine Anfrage bei UHU Kassel stellen 🙌",
-        "",
-        `1) Service: ${service}`,
-        `2) Stadtteil: ${district || "—"}`,
-        `3) Wann: ${when || "—"}`,
-        `4) Budget (€): ${budget || "—"}`,
-        "",
-        `Details: ${details || "—"}`
-      ]
-    };
-
-    return (linesByLang[currentLang] || linesByLang.ru).join("\n");
-  }
-
-  function openTelegram(){
-    const msg = buildMessage();
-    window.open(`https://t.me/${TELEGRAM_USERNAME}?text=${encodeURIComponent(msg)}`, "_blank");
-  }
-
-  async function copyText(){
-    const msg = buildMessage();
-    try{
-      await navigator.clipboard.writeText(msg);
-      toast(I18N[currentLang].toast_copied);
-    } catch(e){
-      const ta=document.createElement("textarea");
-      ta.value=msg; document.body.appendChild(ta); ta.select(); document.execCommand("copy");
-      document.body.removeChild(ta);
-      toast(I18N[currentLang].toast_copied);
-    }
-  }
-
-  window.payWithRevolut = payWithRevolut;
-  window.quickOrder = quickOrder;
-  window.openTelegram = openTelegram;
-  window.copyText = copyText;
-  window.cardKey = cardKey;
-
-  function toggleDrawer(open){
-    const d = document.getElementById("drawer");
-    const b = document.getElementById("drawerBackdrop");
-    if(open){
-      d.classList.add("open");
-      b.style.display = "block";
-      document.body.style.overflow = "hidden";
-    }else{
-      d.classList.remove("open");
-      b.style.display = "none";
-      document.body.style.overflow = "";
-    }
-  }
-  window.toggleDrawer = toggleDrawer;
-
-  function syncDrawerLangButtons(){
-    ["ua","de","ru"].forEach(l=>{
-      const b = document.getElementById("dlang-"+l);
-      if(!b) return;
-      b.classList.toggle("active", l === currentLang);
-    });
-  }
-
-  ["ua","de","ru"].forEach(l=>{
-    const b = document.getElementById("dlang-"+l);
-    if(!b) return;
-    b.addEventListener("click", ()=>{
-      applyLang(l);
-      syncDrawerLangButtons();
-    });
-  });
-
-  window.addEventListener("resize", ()=>{
-    if(window.innerWidth > 720) toggleDrawer(false);
-  });
-
-  const quickBtn = document.getElementById("quickCopyBtn");
-  if(quickBtn){
-    quickBtn.addEventListener("click", (e)=>{
-      e.preventDefault();
-      copyText();
-    });
-  }
-
-  applyLang(currentLang);
-  syncDrawerLangButtons();
 </script>
-
 </body>
 </html>
