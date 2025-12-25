@@ -1320,6 +1320,12 @@ Telegram: @UHU_help · Revolut: @vladshvachko
 
   function openTelegram(){
     const msg = buildMessage();
+    sendToCRM({
+  ts: new Date().toISOString(),
+  lang: currentLang,
+  message: buildMessage()
+});
+
     window.open(`https://t.me/${TELEGRAM_USERNAME}?text=${encodeURIComponent(msg)}`, "_blank");
   }
 
