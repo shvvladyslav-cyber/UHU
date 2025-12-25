@@ -1,79 +1,56 @@
-/* UHU SW: cache-first for static, network-first for html (safer updates) */
-const CACHE_NAME = "uhu-kassel-v2";
-
-const CORE = [
+const CACHE_VERSION = "uhu-v1.0.0";
+const CORE_ASSETS = [
   "/",
   "/index.html",
-  "/offline.html",
   "/manifest.webmanifest",
-  "/sw.js",
-  "/logo.png",
-
-  "/impressum.html",
-  "/datenschutz.html",
-  "/agb.html",
-
+  "/favicon.ico",
   "/icons/icon-192.png",
   "/icons/icon-512.png",
-
-  "/screenshots/screen-wide.png",
-  "/screenshots/screen-mobile.png"
+  "/icons/apple-touch-icon.png",
+  "/impressum.html",
+  "/datenschutz.html",
+  "/agb.html"
 ];
 
 self.addEventListener("install", (event) => {
-  event.waitUntil((async () => {
-    const cache = await caches.open(CACHE_NAME);
-    await cache.addAll(CORE);
-    self.skipWaiting();
-  })());
+  event.waitUntil(
+    caches.open(CACHE_VERSION).then((cache) => cache.addAll(CORE_ASSETS))
+  );
+  self.skipWaiting();
 });
 
 self.addEventListener("activate", (event) => {
-  event.waitUntil((async () => {
-    const keys = await caches.keys();
-    await Promise.all(keys.map((k) => (k !== CACHE_NAME ? caches.delete(k) : Promise.resolve())));
-    self.clients.claim();
-  })());
+  event.waitUntil(
+    (async () => {
+      const keys = await caches.keys();
+      await Promise.all(keys.map((k) => (k !== CACHE_VERSION ? caches.delete(k) : null)));
+      await self.clients.claim();
+    })()
+  );
 });
 
 self.addEventListener("fetch", (event) => {
   const req = event.request;
   if (req.method !== "GET") return;
 
-  const url = new URL(req.url);
-  const isSameOrigin = url.origin === self.location.origin;
+  event.respondWith(
+    (async () => {
+      const cache = await caches.open(CACHE_VERSION);
+      const cached = await cache.match(req);
+      if (cached) return cached;
 
-  // HTML: network-first (чтобы обновления прилетали быстрее)
-  if (req.headers.get("accept")?.includes("text/html")) {
-    event.respondWith((async () => {
       try {
         const fresh = await fetch(req);
-        const cache = await caches.open(CACHE_NAME);
-        cache.put(req, fresh.clone());
+        // кешируем только свои файлы
+        const url = new URL(req.url);
+        if (url.origin === self.location.origin) {
+          cache.put(req, fresh.clone());
+        }
         return fresh;
       } catch (e) {
-        // fallback to cached page or offline page
-        const cached = await caches.match(req, { ignoreSearch: true });
-        return cached || (await caches.match("/offline.html")) || new Response("Offline", { status: 503 });
+        // офлайн fallback на главную
+        return cache.match("/index.html");
       }
-    })());
-    return;
-  }
-
-  // Static assets: cache-first
-  event.respondWith((async () => {
-    const cached = await caches.match(req, { ignoreSearch: true });
-    if (cached) return cached;
-
-    try {
-      const fresh = await fetch(req);
-      if (isSameOrigin && fresh && fresh.status === 200 && fresh.type === "basic") {
-        const cache = await caches.open(CACHE_NAME);
-        cache.put(req, fresh.clone());
-      }
-      return fresh;
-    } catch (e) {
-      return (await caches.match("/offline.html")) || new Response("Offline", { status: 503 });
-    }
-  })());
+    })()
+  );
 });
