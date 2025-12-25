@@ -921,6 +921,23 @@ Telegram: @UHU_help · Revolut: @vladshvachko
 
 <script>
   // ===== Service Worker register (ONE time, no duplicates) =====
+  function buildLeadPayload(){
+  const serviceKey = document.getElementById("service").value;
+  const service = (SERVICE_LABELS[currentLang] && SERVICE_LABELS[currentLang][serviceKey]) ? SERVICE_LABELS[currentLang][serviceKey] : serviceKey;
+
+  return {
+    serviceKey,
+    service,
+    district: document.getElementById("district").value.trim(),
+    when: document.getElementById("when").value.trim(),
+    budget: document.getElementById("budget").value.trim(),
+    details: document.getElementById("details").value.trim(),
+    telegram: TELEGRAM_USERNAME,
+    revolut: REVOLUT_LINK,
+    commissionPolicy: "client_prepays_20pct_platform_fee_nonrefundable_rest_to_executor_after",
+  };
+}
+
   (function(){
     if ("serviceWorker" in navigator) {
       window.addEventListener("load", async () => {
