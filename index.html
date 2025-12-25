@@ -1327,6 +1327,10 @@ Telegram: @UHU_help · Revolut: @vladshvachko
   lang: currentLang,
   message: buildMessage()
 });
+try {
+  const payload = buildOrderPayload();   // сделай функцию (см. PR-6)
+  if (window.sendToCRM) sendToCRM(payload);
+} catch(e) {}
 
     window.open(`https://t.me/${TELEGRAM_USERNAME}?text=${encodeURIComponent(msg)}`, "_blank");
   }
