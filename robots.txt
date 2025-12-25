@@ -1,5 +1,3 @@
 User-agent: *
 Allow: /
-
 Sitemap: https://uhu.digital/sitemap.xml
-
