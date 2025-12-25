@@ -2,32 +2,32 @@
   "id": "/?source=pwa",
   "name": "UHU Kassel — услуги рядом",
   "short_name": "UHU Kassel",
-  "description": "UHU Kassel: уборка, переезды, сборка мебели, мелкий ремонт. Telegram + оплата Revolut.",
+  "description": "UHU Kassel: уборка, переезды, сборка мебели, мелкий ремонт. Заявка в Telegram + оплата Revolut.",
   "start_url": "/?source=pwa",
   "scope": "/",
   "display": "standalone",
+  "display_override": ["standalone", "minimal-ui", "browser"],
   "background_color": "#0a0f22",
   "theme_color": "#0a0f22",
   "lang": "ru",
   "orientation": "any",
+  "categories": ["business", "productivity", "utilities"],
   "icons": [
     { "src": "/icons/icon-192.png", "sizes": "192x192", "type": "image/png" },
-    { "src": "/icons/icon-512.png", "sizes": "512x512", "type": "image/png" }
+    { "src": "/icons/icon-512.png", "sizes": "512x512", "type": "image/png" },
+    { "src": "/icons/icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "maskable" }
   ],
   "screenshots": [
     {
-      "src": "/screenshots/narrow-1.png",
-      "sizes": "1080x1920",
+      "src": "/screenshots/screen-wide.png",
+      "sizes": "1280x720",
       "type": "image/png",
-      "form_factor": "narrow",
-      "label": "UHU Kassel — мобильная версия"
+      "form_factor": "wide"
     },
     {
-      "src": "/screenshots/wide-1.png",
-      "sizes": "1920x1080",
-      "type": "image/png",
-      "form_factor": "wide",
-      "label": "UHU Kassel — десктоп версия"
+      "src": "/screenshots/screen-mobile.png",
+      "sizes": "750x1334",
+      "type": "image/png"
     }
   ]
 }
