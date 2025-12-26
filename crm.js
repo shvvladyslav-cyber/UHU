@@ -1,30 +1,27 @@
 // crm.js
 (function () {
-  function cfg() {
-    return window.UHU_CRM || {};
-  }
-
-  async function postNoCors(url, payload) {
-    // no-cors запрещает кастомные заголовки → используем text/plain
-    const body = JSON.stringify(payload);
-
-    return fetch(url, {
-      method: "POST",
-      mode: cfg().mode || "no-cors",
-      headers: { "Content-Type": "text/plain;charset=UTF-8" },
-      body
-    });
+  function safeStringify(obj) {
+    try { return JSON.stringify(obj); } catch (e) { return "{}"; }
   }
 
   async function sendToCRM(payload) {
     try {
-      const c = cfg();
-      if (!c.enabled) return;
-      if (!c.endpoint || !String(c.endpoint).includes("/exec")) return;
+      const cfg = window.UHU_CRM || {};
+      if (!cfg.enabled) return false;
+      if (!cfg.endpoint || String(cfg.endpoint).includes("PASTE_YOUR")) return false;
 
-      await postNoCors(c.endpoint, payload);
+      // no-cors: ответ прочитать нельзя, но запрос уйдет
+      await fetch(cfg.endpoint, {
+        method: "POST",
+        mode: cfg.mode || "no-cors",
+        headers: { "Content-Type": "application/json" },
+        body: safeStringify(payload || {}),
+      });
+
+      return true;
     } catch (e) {
-      // не ломаем сайт при ошибках CRM
+      // никогда не ломаем сайт
+      return false;
     }
   }
 
