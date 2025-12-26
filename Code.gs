@@ -1,43 +1,28 @@
-/**
- * UHU CRM — Google Apps Script WebApp
- * Receives JSON from the site (crm.js) and writes to Google Sheets.
- * Also sends Telegram notification (optional).
- *
- * 1) Create a Google Sheet (e.g. "UHU CRM")
- * 2) Extensions -> Apps Script, paste this file
- * 3) Set SPREADSHEET_ID (from URL) and SHEET_NAME
- * 4) Set TELEGRAM_BOT_TOKEN + TELEGRAM_CHAT_ID (optional)
- * 5) Deploy -> New deployment -> Web app
- *    - Execute as: Me
- *    - Who has access: Anyone
- * 6) Copy Web app URL into crm-config.js as endpoint
- */
-
 const SPREADSHEET_ID = "PASTE_SPREADSHEET_ID_HERE";
 const SHEET_NAME = "Leads";
 
 const TELEGRAM_BOT_TOKEN = "PASTE_TELEGRAM_BOT_TOKEN_HERE"; // optional
 const TELEGRAM_CHAT_ID = "PASTE_TELEGRAM_CHAT_ID_HERE";     // optional
 
-// Statuses and colors (edit if you want)
 const STATUS_DEFAULT = "NEW";
+const STATUSES = ["NEW", "IN_WORK", "DONE", "CANCELED"];
 const STATUS_COLORS = {
-  NEW: "#FFF2CC",        // light yellow
-  IN_WORK: "#D9E1F2",    // light blue
-  DONE: "#C6EFCE",       // light green
-  CANCELED: "#F8CBAD"    // light red
+  NEW: "#FFF2CC",
+  IN_WORK: "#D9E1F2",
+  DONE: "#C6EFCE",
+  CANCELED: "#F8CBAD"
 };
 
 function doGet() {
-  return ContentService
-    .createTextOutput("UHU CRM WebApp is running.")
+  return ContentService.createTextOutput("UHU CRM WebApp is running.")
     .setMimeType(ContentService.MimeType.TEXT);
 }
 
 function doPost(e) {
   try {
     const data = parseJson_(e);
-    const rowId = appendLead_(data);
+    const sh = ensureSheet_();
+    const rowId = appendLead_(sh, data);
     notifyTelegram_(rowId, data);
     return jsonOk_({ ok: true, id: rowId });
   } catch (err) {
@@ -45,12 +30,34 @@ function doPost(e) {
   }
 }
 
-// ---- helpers ----
+// === 1) Запусти вручную один раз после вставки скрипта ===
+function setupUhuCrm() {
+  const sh = ensureSheet_();
+  setupStatusDropdown_(sh);
+  setupConditionalFormatting_(sh);
+}
+
+function onEdit(e) {
+  try {
+    const range = e.range;
+    const sh = range.getSheet();
+    if (sh.getName() !== SHEET_NAME) return;
+
+    // Status column = C (3)
+    if (range.getColumn() !== 3) return;
+    if (range.getRow() <= 1) return;
+
+    const status = String(range.getValue() || "").trim();
+    const color = STATUS_COLORS[status];
+    if (!color) return;
+
+    sh.getRange(range.getRow(), 1, 1, sh.getLastColumn()).setBackground(color);
+  } catch (err) {}
+}
 
 function parseJson_(e) {
   if (!e || !e.postData || !e.postData.contents) return {};
-  const raw = e.postData.contents;
-  try { return JSON.parse(raw); } catch (err) { return {}; }
+  try { return JSON.parse(e.postData.contents); } catch (err) { return {}; }
 }
 
 function ensureSheet_() {
@@ -58,7 +65,6 @@ function ensureSheet_() {
   let sh = ss.getSheetByName(SHEET_NAME);
   if (!sh) sh = ss.insertSheet(SHEET_NAME);
 
-  // Header (only if empty)
   if (sh.getLastRow() === 0) {
     sh.appendRow([
       "ID","CreatedAt","Status",
@@ -72,34 +78,56 @@ function ensureSheet_() {
   return sh;
 }
 
-function appendLead_(d) {
-  const sh = ensureSheet_();
+function appendLead_(sh, d) {
   const id = Utilities.getUuid();
   const createdAt = d.createdAt || new Date().toISOString();
   const status = STATUS_DEFAULT;
 
-  const row = [
+  sh.appendRow([
     id, createdAt, status,
     d.name || "", d.contact || "",
     d.service || "", d.district || "", d.when || "", d.budget || "", d.details || "",
     d.pageUrl || "", d.lang || "", d.userAgent || ""
-  ];
+  ]);
 
-  sh.appendRow(row);
-
-  // color whole row based on status
   const lastRow = sh.getLastRow();
-  const color = STATUS_COLORS[status] || null;
+  const color = STATUS_COLORS[status];
   if (color) sh.getRange(lastRow, 1, 1, sh.getLastColumn()).setBackground(color);
 
   return id;
 }
 
-function notifyTelegram_(id, d) {
-  if (!TELEGRAM_BOT_TOKEN || TELEGRAM_BOT_TOKEN.indexOf("PASTE_") === 0) return;
-  if (!TELEGRAM_CHAT_ID || TELEGRAM_CHAT_ID.indexOf("PASTE_") === 0) return;
+function setupStatusDropdown_(sh) {
+  const last = Math.max(sh.getLastRow(), 2);
+  const rule = SpreadsheetApp.newDataValidation()
+    .requireValueInList(STATUSES, true)
+    .setAllowInvalid(false)
+    .build();
 
-  const lines = [
+  sh.getRange(2, 3, last - 1, 1).setDataValidation(rule);
+}
+
+function setupConditionalFormatting_(sh) {
+  const rules = [];
+  const rangeAll = sh.getRange(2, 1, Math.max(sh.getMaxRows()-1, 1), sh.getLastColumn());
+
+  Object.keys(STATUS_COLORS).forEach((st) => {
+    const r = SpreadsheetApp.newConditionalFormatRule()
+      .whenFormulaSatisfied(`=$C2="${st}"`)
+      .setBackground(STATUS_COLORS[st])
+      .setRanges([rangeAll])
+      .build();
+    rules.push(r);
+  });
+
+  sh.setConditionalFormatRules(rules);
+}
+
+function notifyTelegram_(id, d) {
+  if (!TELEGRAM_BOT_TOKEN || TELEGRAM_BOT_TOKEN.startsWith("PASTE_")) return;
+  if (!TELEGRAM_CHAT_ID || TELEGRAM_CHAT_ID.startsWith("PASTE_")) return;
+
+  const text = [
     "🆕 Neue Anfrage (UHU)",
     "ID: " + id,
     "Service: " + (d.service || "-"),
@@ -110,17 +138,14 @@ function notifyTelegram_(id, d) {
     "Contact: " + (d.contact || "-"),
     "Details: " + (d.details || "-"),
     "URL: " + (d.pageUrl || "-")
-  ];
+  ].join("\n");
 
-  const text = lines.join("\n");
-  const url = "https://api.telegram.org/bot" + TELEGRAM_BOT_TOKEN + "/sendMessage";
-
-  UrlFetchApp.fetch(url, {
+  UrlFetchApp.fetch("https://api.telegram.org/bot" + TELEGRAM_BOT_TOKEN + "/sendMessage", {
     method: "post",
     contentType: "application/json",
     payload: JSON.stringify({
       chat_id: TELEGRAM_CHAT_ID,
-      text: text,
+      text,
       disable_web_page_preview: true
     }),
     muteHttpExceptions: true
@@ -128,7 +153,6 @@ function notifyTelegram_(id, d) {
 }
 
 function jsonOk_(obj) {
-  return ContentService
-    .createTextOutput(JSON.stringify(obj))
+  return ContentService.createTextOutput(JSON.stringify(obj))
     .setMimeType(ContentService.MimeType.JSON);
 }
