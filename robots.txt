@@ -1,3 +1,4 @@
 User-agent: *
 Allow: /
-Sitemap: https://uhu.digital/sitemap.xml
+
+Sitemap: https://www.uhu.digital/sitemap.xml
