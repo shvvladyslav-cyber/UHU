@@ -1,1 +1,0 @@
-Скопируй содержимое архива в корень сайта (Hostinger: public_html). Затем открой https://uhu.digital . На iPhone: Safari→Поделиться→На экран «Домой».
