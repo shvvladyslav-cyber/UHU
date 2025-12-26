@@ -9,26 +9,26 @@
   <meta name="theme-color" content="#0a0f22" />
   <meta name="color-scheme" content="dark" />
   <meta name="referrer" content="strict-origin-when-cross-origin" />
-  <link rel="canonical" href="https://www.uhu.digital/" />
+
+  <link rel="canonical" href="https://uhu.digital/" />
 
   <!-- Open Graph -->
   <meta property="og:title" content="UHU Kassel — услуги рядом" />
   <meta property="og:description" content="Нажмите услугу → заявка заполняется → открывается Telegram. Оплата Revolut." />
   <meta property="og:type" content="website" />
-  <meta property="og:url" content="https://www.uhu.digital/" />
   <meta property="og:image" content="https://uhu.digital/og.png" />
 
   <!-- Icons -->
-  <link rel="icon" href="/favicon.ico">
-  <link rel="icon" href="/icons/icon-192.png">
-  <link rel="apple-touch-icon" sizes="180x180" href="/icons/apple-touch-icon.png">
-  <link rel="apple-touch-icon" href="/icons/icon-192.png">
+  <link rel="icon" href="/favicon.ico" />
+  <link rel="icon" href="/icons/icon-192.png" type="image/png" />
+  <link rel="apple-touch-icon" sizes="180x180" href="/icons/apple-touch-icon.png" />
+  <link rel="apple-touch-icon" href="/icons/icon-192.png" />
 
   <!-- PWA -->
-  <link rel="manifest" href="/manifest.webmanifest">
-  <meta name="apple-mobile-web-app-capable" content="yes">
-  <meta name="mobile-web-app-capable" content="yes">
-  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <link rel="manifest" href="/manifest.webmanifest" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
 
   <style>
     :root{
@@ -54,7 +54,7 @@
       --radius:26px;
       --focus:rgba(255,212,0,.45);
 
-      /* Install button color (ПОМЕНЯЙ ТУТ) */
+      /* Install button color */
       --installA:#22c55e;
       --installB:#16a34a;
     }
@@ -75,7 +75,6 @@
     a{color:inherit; text-decoration:none}
     .container{max-width:1180px; margin:0 auto; padding:0 16px}
 
-    /* Topbar */
     .topbar{
       position:sticky; top:0; z-index:100;
       backdrop-filter:saturate(160%) blur(14px);
@@ -87,7 +86,6 @@
       padding:12px 0;
     }
 
-    /* Brand + Logo */
     .brand{display:flex; align-items:center; gap:12px; font-weight:950; letter-spacing:.2px; min-width:0}
     .brand small{display:block; color:var(--muted); font-weight:800; margin-top:2px; max-width:44vw; white-space:nowrap; overflow:hidden; text-overflow:ellipsis}
     .brand span[data-i18n="brand"]{display:block; font-size:16px; line-height:1.1; max-width:44vw; white-space:nowrap; overflow:hidden; text-overflow:ellipsis}
@@ -127,13 +125,9 @@
       font-size:13px;
       transition:.2s ease;
       white-space:nowrap;
-      display:inline-flex;
-      align-items:center;
-      justify-content:center;
     }
     .chip:hover{transform:translateY(-1px); border-color:rgba(255,255,255,.22); color:var(--text)}
 
-    /* Buttons */
     .btn{
       display:inline-flex; align-items:center; justify-content:center; gap:10px;
       padding:12px 14px; border-radius:16px; font-weight:950;
@@ -167,7 +161,6 @@
     .btn.ghost{background:rgba(255,255,255,.04)}
     .btn.block{width:100%}
 
-    /* Install button (beautiful) */
     .btn.install{
       background:linear-gradient(135deg, var(--installA), var(--installB));
       border-color:transparent;
@@ -176,7 +169,6 @@
     }
     .btn.install svg{width:18px;height:18px}
 
-    /* Language pill */
     .lang{
       display:inline-flex;
       border:1px solid var(--line);
@@ -211,7 +203,6 @@
     .lang .dot.de{background:linear-gradient(180deg,#111827 0 34%, #e5e7eb 34% 66%, #ef4444 66% 100%)}
     .lang .dot.ru{background:linear-gradient(180deg,#ffffff 0 34%, #2b76ff 34% 66%, #ef4444 66% 100%)}
 
-    /* Hero */
     .hero{position:relative; padding:22px 0 10px}
     .hero::before{
       content:"";
@@ -277,7 +268,6 @@
     .stat b{display:block; font-size:18px}
     .stat span{color:var(--muted); font-size:13px; font-weight:850}
 
-    /* Side cards */
     .side{display:grid; gap:12px}
     .side-card{
       border:1px solid var(--line);
@@ -301,7 +291,6 @@
     .side-card p{margin:0; color:var(--muted); font-size:13.8px; line-height:1.5}
     .mini-actions{display:flex; gap:10px; margin-top:12px; flex-wrap:wrap}
 
-    /* Sections */
     .section{padding:18px 0 0}
     .section-title{
       display:flex; align-items:flex-end; justify-content:space-between; gap:10px; flex-wrap:wrap;
@@ -310,7 +299,6 @@
     .section-title h2{margin:0; font-size:20px}
     .section-title span{color:var(--muted); font-size:13px; font-weight:850}
 
-    /* Service cards */
     .grid{display:grid; grid-template-columns: repeat(4, 1fr); gap:12px; padding:16px 0 0}
     @media (max-width: 980px){.grid{grid-template-columns: repeat(2, 1fr)}}
     @media (max-width: 520px){.grid{grid-template-columns:1fr}}
@@ -359,7 +347,6 @@
       font-size:12px;
     }
 
-    /* Boxes */
     .twocol{display:grid; grid-template-columns: 1fr 1fr; gap:12px}
     @media (max-width: 920px){.twocol{grid-template-columns:1fr}}
     .box{
@@ -372,7 +359,6 @@
     .box h3{margin:0 0 8px; font-size:16px}
     .list{margin:0; padding-left:18px; color:var(--muted); line-height:1.7; font-weight:750}
 
-    /* Form */
     .formgrid{display:grid; grid-template-columns:1fr 1fr; gap:10px}
     @media (max-width: 700px){.formgrid{grid-template-columns:1fr}}
     .input, select, textarea{
@@ -393,7 +379,6 @@
     .divider{height:1px; background:var(--line); margin:16px 0}
     .footer{padding:32px 0 44px; color:var(--muted); font-size:13px; text-align:center; font-weight:850}
 
-    /* Toast */
     .toast{
       position:fixed; left:50%; bottom:18px; transform:translateX(-50%);
       background:rgba(8,18,39,.85);
@@ -408,7 +393,6 @@
       max-width:min(680px, calc(100vw - 32px));
     }
 
-    /* Drawer */
     .drawer-backdrop{
       position:fixed; inset:0;
       background:rgba(0,0,0,.45);
@@ -439,7 +423,6 @@
     .drawer .chip, .drawer .btn{width:100%}
     .drawer .chip{justify-content:flex-start}
 
-    /* FAQ */
     details{
       border:1px solid var(--line);
       border-radius:20px;
@@ -457,7 +440,6 @@
     details p{margin:10px 0 0; color:var(--muted); line-height:1.55; font-weight:750}
     .faq{display:grid; gap:10px; padding-top:12px}
 
-    /* Mobile tweaks */
     .menu-btn{
       width:44px; height:44px;
       border-radius:14px;
@@ -494,7 +476,6 @@
       .bottom-bar{display:block}
     }
 
-    /* iOS install hint */
     .ios-hint{
       display:none;
       margin-top:10px;
@@ -790,8 +771,8 @@
           <h3 data-i18n="how3_t">3) Выполнение</h3>
           <ul class="list">
             <li data-i18n="how3_1">Работа выполняется на месте</li>
-            <li data-i18n="how3_2">Предоплата через Revolut (по желанию)</li>
-            <li data-i18n="how3_3">Контроль качества</li>
+            <li data-i18n="how3_2">Комиссия платформы 20% — для брони и организации</li>
+            <li data-i18n="how3_3">Остальное — исполнителю после выполнения</li>
           </ul>
         </div>
         <div class="box">
@@ -810,7 +791,7 @@
 
     <!-- PAYMENT -->
     <div id="pay" class="section">
-      <div class="section-title"><h2 data-i18n="pay_title">Оплата Revolut</h2><span data-i18n="pay_sub">Предоплата для брони времени</span></div>
+      <div class="section-title"><h2 data-i18n="pay_title">Оплата Revolut</h2><span data-i18n="pay_sub">Комиссия платформы (20%) для брони и организации</span></div>
       <div class="twocol">
         <div class="box">
           <h3 data-i18n="pay_choose">Выберите сумму</h3>
@@ -832,7 +813,7 @@
           </div>
 
           <p class="hint" data-i18n="pay_hint">После оплаты напишите в Telegram: <b>@UHU_help</b> (имя + услуга).</p>
-          <p class="hint" style="margin-top:10px">
+          <p class="hint" style="margin-top:10px" data-i18n="pay_policy">
             <b>Важно:</b> предоплата — это <b>комиссия платформы (20%)</b> за подбор/организацию и она <b>не возвращается</b>.
             Остальная сумма оплачивается исполнителю <b>после выполнения</b>.
           </p>
@@ -904,8 +885,8 @@
           <p data-i18n="faq2_a">Да, если есть свободный исполнитель. Укажите район, время и задачу — ответим быстро.</p>
         </details>
         <details>
-          <summary data-i18n="faq3_q">Что такое “предоплата”?</summary>
-          <p data-i18n="faq3_a">Предоплата — это комиссия платформы (20%) за подбор/организацию. Она не возвращается. Остальная сумма оплачивается исполнителю после выполнения.</p>
+          <summary data-i18n="faq3_q">Что такое предоплата?</summary>
+          <p data-i18n="faq3_a">Предоплата — это комиссия платформы (20%) за подбор/организацию; она не возвращается. Остальная сумма оплачивается исполнителю после выполнения.</p>
         </details>
       </div>
     </div>
@@ -918,7 +899,6 @@
       Telegram: <b>@UHU_help</b> · Revolut: <b>@vladshvachko</b><br/>
       Домены: <b>uhu.digital</b> / <b>www.uhu.digital</b>
     </div>
-
   </div>
 </div>
 
@@ -932,12 +912,12 @@
 
 <div id="toast" class="toast" role="status" aria-live="polite"></div>
 
-<!-- CRM scripts (ONLY ONCE) -->
+<!-- IMPORTANT: подключаем CRM ровно один раз -->
 <script src="/crm-config.js"></script>
 <script src="/crm.js"></script>
 
 <script>
-  // ===== SW register (ONE time) =====
+  // ===== Service Worker register (one time) =====
   (function(){
     if ("serviceWorker" in navigator) {
       window.addEventListener("load", async () => {
@@ -996,9 +976,9 @@
       how_title:"Как это работает", how_sub:"3 простых шага",
       how1_t:"1) Заявка", how1_1:"Нажмите на услугу", how1_2:"Заполните район/время/бюджет", how1_3:"Откроется Telegram с текстом",
       how2_t:"2) Подбор", how2_1:"Мы подбираем исполнителя", how2_2:"Согласуем детали и цену", how2_3:"Подтверждаем время",
-      how3_t:"3) Выполнение", how3_1:"Работа выполняется на месте", how3_2:"Предоплата через Revolut (по желанию)", how3_3:"Контроль качества",
+      how3_t:"3) Выполнение", how3_1:"Работа выполняется на месте", how3_2:"Комиссия платформы 20% — для брони и организации", how3_3:"Остальное — исполнителю после выполнения",
       how_fast:"Быстрые кнопки", how_fast_p:"Самый быстрый контакт — Telegram. Для брони времени возможна предоплата.",
-      pay_title:"Оплата Revolut", pay_sub:"Предоплата для брони времени",
+      pay_title:"Оплата Revolut", pay_sub:"Комиссия платформы (20%) для брони и организации",
       pay_choose:"Выберите сумму",
       pay_amount_label:"Сумма предоплаты",
       pay_custom:"Другая сумма",
@@ -1006,6 +986,7 @@
       pay_btn:"Оплатить через Revolut",
       pay_open:"Открыть ссылку",
       pay_hint:"После оплаты напишите в Telegram: <b>@UHU_help</b> (имя + услуга).",
+      pay_policy:"<b>Важно:</b> предоплата — это <b>комиссия платформы (20%)</b> за подбор/организацию и она <b>не возвращается</b>. Остальная сумма оплачивается исполнителю <b>после выполнения</b>.",
       pay_how:"Как оплатить",
       pay_how_1:"Нажмите «Оплатить»", pay_how_2:"Подтвердите сумму", pay_how_3:"Оплатите картой/в Revolut", pay_how_4:"Напишите в Telegram",
       order_title:"Оставить заявку", order_sub:"Откроется Telegram с готовым текстом",
@@ -1021,8 +1002,7 @@
       faq_title:"FAQ", faq_sub:"Частые вопросы",
       faq1_q:"Сколько стоит?", faq1_a:"Цена зависит от объёма и времени. Напишите детали — мы предложим стоимость до начала работ.",
       faq2_q:"Можно срочно сегодня?", faq2_a:"Да, если есть свободный исполнитель. Укажите район, время и задачу — ответим быстро.",
-      faq3_q:"Что такое “предоплата”?",
-      faq3_a:"Предоплата — это комиссия платформы (20%) за подбор/организацию. Она не возвращается. Остальная сумма оплачивается исполнителю после выполнения.",
+      faq3_q:"Что такое предоплата?", faq3_a:"Предоплата — это комиссия платформы (20%) за подбор/организацию; она не возвращается. Остальная сумма оплачивается исполнителю после выполнения.",
       alert_amount:"Введите сумму корректно (числом).",
       toast_copied:"Текст заявки скопирован ✅"
     },
@@ -1071,9 +1051,9 @@
       how_title:"Як це працює", how_sub:"3 прості кроки",
       how1_t:"1) Заявка", how1_1:"Натисніть на послугу", how1_2:"Заповніть район/час/бюджет", how1_3:"Відкриється Telegram з текстом",
       how2_t:"2) Підбір", how2_1:"Ми підбираємо виконавця", how2_2:"Узгоджуємо деталі і ціну", how2_3:"Підтверджуємо час",
-      how3_t:"3) Виконання", how3_1:"Робота виконується на місці", how3_2:"Передоплата через Revolut (за бажанням)", how3_3:"Контроль якості",
+      how3_t:"3) Виконання", how3_1:"Робота виконується на місці", how3_2:"Комісія платформи 20% — для броні та організації", how3_3:"Решта — виконавцю після виконання",
       how_fast:"Швидкі кнопки", how_fast_p:"Найшвидший контакт — Telegram. Для броні часу можлива передоплата.",
-      pay_title:"Оплата Revolut", pay_sub:"Передоплата для бронювання часу",
+      pay_title:"Оплата Revolut", pay_sub:"Комісія платформи (20%) для броні та організації",
       pay_choose:"Оберіть суму",
       pay_amount_label:"Сума передоплати",
       pay_custom:"Інша сума",
@@ -1081,6 +1061,7 @@
       pay_btn:"Оплатити через Revolut",
       pay_open:"Відкрити посилання",
       pay_hint:"Після оплати напишіть у Telegram: <b>@UHU_help</b> (ім’я + послуга).",
+      pay_policy:"<b>Важливо:</b> передоплата — це <b>комісія платформи (20%)</b> за підбір/організацію і вона <b>не повертається</b>. Решта суми сплачується виконавцю <b>після виконання</b>.",
       pay_how:"Як оплатити",
       pay_how_1:"Натисніть «Оплатити»", pay_how_2:"Підтвердіть суму", pay_how_3:"Оплатіть карткою/в Revolut", pay_how_4:"Напишіть у Telegram",
       order_title:"Залишити заявку", order_sub:"Відкриється Telegram з готовим текстом",
@@ -1096,8 +1077,7 @@
       faq_title:"FAQ", faq_sub:"Часті питання",
       faq1_q:"Скільки коштує?", faq1_a:"Ціна залежить від обсягу та часу. Напишіть деталі — ми назвемо вартість до початку робіт.",
       faq2_q:"Можна терміново сьогодні?", faq2_a:"Так, якщо є вільний виконавець. Вкажіть район, час і задачу — відповімо швидко.",
-      faq3_q:"Що таке “передоплата”?",
-      faq3_a:"Передоплата — це комісія платформи (20%) за підбір/організацію. Вона не повертається. Решта суми оплачується виконавцю після виконання.",
+      faq3_q:"Що таке передоплата?", faq3_a:"Передоплата — це комісія платформи (20%) за підбір/організацію; вона не повертається. Решта суми сплачується виконавцю після виконання.",
       alert_amount:"Введіть суму коректно (числом).",
       toast_copied:"Текст заявки скопійовано ✅"
     },
@@ -1146,9 +1126,9 @@
       how_title:"So funktioniert’s", how_sub:"3 Schritte",
       how1_t:"1) Anfrage", how1_1:"Service auswählen", how1_2:"Stadtteil/Zeit/Budget eintragen", how1_3:"Telegram öffnet sich mit Text",
       how2_t:"2) Auswahl", how2_1:"Wir suchen einen Helfer", how2_2:"Details & Preis abstimmen", how2_3:"Zeit bestätigen",
-      how3_t:"3) Ausführung", how3_1:"Arbeit vor Ort", how3_2:"Anzahlung via Revolut (optional)", how3_3:"Qualitätscheck",
+      how3_t:"3) Ausführung", how3_1:"Arbeit vor Ort", how3_2:"Plattformgebühr 20% — für Reservierung & Organisation", how3_3:"Restzahlung an den Helfer nach Ausführung",
       how_fast:"Schnell-Buttons", how_fast_p:"Am schnellsten über Telegram. Optional Anzahlung zur Termin-Reservierung.",
-      pay_title:"Revolut-Zahlung", pay_sub:"Anzahlung zur Termin-Reservierung",
+      pay_title:"Revolut-Zahlung", pay_sub:"Plattformgebühr (20%) für Reservierung & Organisation",
       pay_choose:"Betrag wählen",
       pay_amount_label:"Anzahlungsbetrag",
       pay_custom:"Anderer Betrag",
@@ -1156,6 +1136,7 @@
       pay_btn:"Mit Revolut zahlen",
       pay_open:"Link öffnen",
       pay_hint:"Nach Zahlung bitte in Telegram schreiben: <b>@UHU_help</b> (Name + Service).",
+      pay_policy:"<b>Wichtig:</b> Die Anzahlung ist die <b>Plattformgebühr (20%)</b> für Vermittlung/Organisation und ist <b>nicht erstattbar</b>. Der Rest wird dem Helfer <b>nach Ausführung</b> bezahlt.",
       pay_how:"So zahlst du",
       pay_how_1:"„Zahlen“ klicken", pay_how_2:"Betrag bestätigen", pay_how_3:"Mit Karte/Revolut zahlen", pay_how_4:"In Telegram schreiben",
       order_title:"Anfrage senden", order_sub:"Telegram öffnet sich mit fertigem Text",
@@ -1171,8 +1152,7 @@
       faq_title:"FAQ", faq_sub:"Häufige Fragen",
       faq1_q:"Was kostet es?", faq1_a:"Der Preis hängt von Umfang und Zeit ab. Schreib Details — wir nennen dir den Preis vor Beginn.",
       faq2_q:"Geht es heute noch?", faq2_a:"Ja, wenn ein Helfer frei ist. Stadtteil, Zeit und Aufgabe angeben — wir antworten schnell.",
-      faq3_q:"Was bedeutet „Anzahlung“?",
-      faq3_a:"Die Anzahlung ist die Plattformgebühr (20%) für Auswahl/Organisation. Sie ist nicht erstattbar. Der Restbetrag wird dem Helfer nach der Ausführung bezahlt.",
+      faq3_q:"Was ist die Anzahlung?", faq3_a:"Die Anzahlung ist die Plattformgebühr (20%) für Vermittlung/Organisation und ist nicht erstattbar. Der Rest wird dem Helfer nach Ausführung bezahlt.",
       alert_amount:"Bitte Betrag korrekt eingeben (Zahl).",
       toast_copied:"Anfragetext kopiert ✅"
     }
@@ -1248,7 +1228,6 @@
     if (db) db.addEventListener("click", ()=>applyLang(l));
   });
 
-  // Revolut amount toggle
   const revSelect = document.getElementById("rev-amount");
   const revCustomWrap = document.getElementById("rev-custom-wrap");
   revSelect.addEventListener("change", () => {
@@ -1320,8 +1299,7 @@
     return (linesByLang[currentLang] || linesByLang.ru).join("\n");
   }
 
-  // ✅ FIX: payload builder exists and matches usage
-  function buildOrderPayload(){
+  function buildLeadPayload(){
     const serviceKey = document.getElementById("service").value;
     const service = (SERVICE_LABELS[currentLang] && SERVICE_LABELS[currentLang][serviceKey]) ? SERVICE_LABELS[currentLang][serviceKey] : serviceKey;
 
@@ -1337,19 +1315,19 @@
       message: buildMessage(),
       telegram: TELEGRAM_USERNAME,
       revolut: REVOLUT_LINK,
-      commissionPolicy: "platform_fee_20pct_nonrefundable_rest_to_executor_after"
+      commissionPolicy: "platform_fee_20pct_nonrefundable_rest_to_executor_after",
+      page: location.href,
+      ua: navigator.userAgent
     };
   }
 
   function openTelegram(){
     const msg = buildMessage();
 
-    // ✅ FIX: CRM send once (and only if loaded)
-    try{
-      if (typeof window.sendToCRM === "function") {
-        window.sendToCRM(buildOrderPayload());
-      }
-    } catch(e){}
+    // CRM send (не ломает сайт даже если CRM не настроен)
+    try {
+      if (window.sendToCRM) window.sendToCRM(buildLeadPayload());
+    } catch(e) {}
 
     window.open(`https://t.me/${TELEGRAM_USERNAME}?text=${encodeURIComponent(msg)}`, "_blank");
   }
@@ -1367,7 +1345,6 @@
     }
   }
 
-  // Drawer
   function toggleDrawer(open){
     const d = document.getElementById("drawer");
     const b = document.getElementById("drawerBackdrop");
@@ -1387,7 +1364,6 @@
     if(window.innerWidth > 720) toggleDrawer(false);
   });
 
-  // Quick copy
   const quickBtn = document.getElementById("quickCopyBtn");
   if(quickBtn){
     quickBtn.addEventListener("click", (e)=>{
@@ -1396,7 +1372,6 @@
     });
   }
 
-  // Init language
   applyLang(currentLang);
 
   // ===== INSTALL FLOW =====
