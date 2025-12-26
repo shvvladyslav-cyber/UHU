@@ -1,5 +1,5 @@
-// sw.js
-const CACHE = "uhu-v2";
+// sw.js (safe)
+const CACHE = "uhu-v3";
 const OFFLINE_URL = "/offline.html";
 
 const ASSETS = [
@@ -11,19 +11,29 @@ const ASSETS = [
   "/logo.png",
   "/og.png",
   "/icons/apple-touch-icon.png",
-  "/crm-config.js",
-  "/crm.js",
   "/icons/icon-192.png",
   "/icons/icon-512.png",
+  "/crm-config.js",
+  "/crm.js",
   "/impressum.html",
   "/datenschutz.html",
-  "/agb.html"
+  "/agb.html",
 ];
 
 self.addEventListener("install", (event) => {
   event.waitUntil((async () => {
     const cache = await caches.open(CACHE);
-    await cache.addAll(ASSETS);
+
+    // Кешируем по одному — без "падения" из-за одного 404
+    await Promise.allSettled(
+      ASSETS.map(async (url) => {
+        try {
+          const res = await fetch(url, { cache: "no-cache" });
+          if (res && res.ok) await cache.put(url, res.clone());
+        } catch (_) {}
+      })
+    );
+
     self.skipWaiting();
   })());
 });
@@ -39,24 +49,50 @@ self.addEventListener("activate", (event) => {
 self.addEventListener("fetch", (event) => {
   const req = event.request;
 
-  // Только GET кешируем
+  // не трогаем не-GET
   if (req.method !== "GET") return;
 
-  event.respondWith((async () => {
-    try {
-      const cached = await caches.match(req);
-      if (cached) return cached;
+  const url = new URL(req.url);
 
-      const res = await fetch(req);
-      const cache = await caches.open(CACHE);
-      cache.put(req, res.clone());
-      return res;
-    } catch (e) {
-      // offline fallback для навигации
-      if (req.mode === "navigate") {
-        const offline = await caches.match(OFFLINE_URL);
-        return offline || new Response("Offline", { status: 503 });
+  // кешируем только same-origin (чтоб не ломать внешние запросы)
+  if (url.origin !== self.location.origin) return;
+
+  event.respondWith((async () => {
+    // Навигация: сначала сеть, потом кеш, иначе offline
+    if (req.mode === "navigate") {
+      try {
+        const fresh = await fetch(req);
+        const cache = await caches.open(CACHE);
+        cache.put("/index.html", fresh.clone());
+        return fresh;
+      } catch (_) {
+        return (await caches.match(OFFLINE_URL)) || (await caches.match("/index.html"));
       }
+    }
+
+    // Файлы: cache-first + обновление в фоне
+    const cached = await caches.match(req);
+    if (cached) {
+      event.waitUntil((async () => {
+        try {
+          const fresh = await fetch(req);
+          if (fresh && fresh.ok) {
+            const cache = await caches.open(CACHE);
+            cache.put(req, fresh.clone());
+          }
+        } catch (_) {}
+      })());
+      return cached;
+    }
+
+    try {
+      const fresh = await fetch(req);
+      if (fresh && fresh.ok) {
+        const cache = await caches.open(CACHE);
+        cache.put(req, fresh.clone());
+      }
+      return fresh;
+    } catch (_) {
       return new Response("", { status: 504 });
     }
   })());
