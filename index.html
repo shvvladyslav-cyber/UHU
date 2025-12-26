@@ -1,0 +1,142 @@
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>UHU Kassel — услуги рядом</title>
+  <meta name="description" content="UHU Kassel: уборка, переезды, сборка мебели, мелкий ремонт. Заявка в Telegram + оплата Revolut." />
+  <meta property="og:title" content="UHU Kassel — услуги рядом" />
+  <meta property="og:description" content="Заявка в 1 клик + оплата Revolut" />
+  <meta property="og:image" content="/og.png" />
+  <meta name="theme-color" content="#0a0f22" />
+  <link rel="manifest" href="/manifest.webmanifest">
+  <link rel="icon" href="/favicon.ico">
+  <link rel="apple-touch-icon" href="/icons/apple-touch-icon.png">
+  <style>
+    :root{--bg:#0a0f22;--card:rgba(255,255,255,.06);--text:#fff;--muted:rgba(255,255,255,.75);--line:rgba(255,255,255,.12)}
+    body{font-family:system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif;margin:0;background:var(--bg);color:var(--text)}
+    .wrap{max-width:980px;margin:0 auto;padding:20px}
+    header{display:flex;gap:12px;align-items:center;margin:10px 0 18px}
+    header img{width:44px;height:44px;border-radius:10px}
+    h1{font-size:22px;margin:0}
+    .grid{display:grid;grid-template-columns:1fr;gap:14px}
+    @media (min-width:900px){ .grid{grid-template-columns:1.2fr .8fr} }
+    .card{background:var(--card);border:1px solid var(--line);border-radius:18px;padding:16px}
+    label{display:block;margin:10px 0 6px;color:var(--muted);font-size:14px}
+    input,select,textarea{width:100%;padding:12px 12px;border-radius:12px;border:1px solid var(--line);background:rgba(0,0,0,.25);color:var(--text);outline:none}
+    textarea{min-height:92px;resize:vertical}
+    .row{display:grid;grid-template-columns:1fr;gap:12px}
+    @media (min-width:700px){ .row{grid-template-columns:1fr 1fr} }
+    .check{display:flex;gap:10px;align-items:flex-start;margin-top:12px;color:var(--muted);font-size:14px}
+    .check input{width:auto;margin-top:3px}
+    button{width:100%;padding:12px 14px;border-radius:12px;border:0;background:#18a0fb;color:#001022;font-weight:700;cursor:pointer}
+    button:disabled{opacity:.6;cursor:not-allowed}
+    .muted{color:var(--muted);font-size:14px;line-height:1.4}
+    .footer{margin-top:16px;padding-top:14px;border-top:1px solid var(--line);display:flex;flex-wrap:wrap;gap:12px;justify-content:space-between;color:var(--muted);font-size:13px}
+    .footer a{color:#8bd3ff;text-decoration:none}
+    .toast{position:fixed;left:50%;bottom:20px;transform:translateX(-50%);background:rgba(0,0,0,.75);border:1px solid var(--line);padding:10px 12px;border-radius:12px;max-width:92vw}
+    .toast.ok{box-shadow:0 0 0 1px rgba(24,160,251,.25)}
+    .toast.bad{box-shadow:0 0 0 1px rgba(255,80,80,.25)}
+    .paybox{display:flex;gap:12px;align-items:center}
+    .paybox img{width:120px;height:120px;border-radius:14px;background:#fff;padding:6px}
+    .pill{display:inline-block;padding:6px 10px;border-radius:999px;border:1px solid var(--line);background:rgba(0,0,0,.18);font-size:12px;color:var(--muted)}
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <header>
+      <img src="/logo.png" alt="UHU">
+      <div>
+        <h1>UHU Kassel — услуги рядом</h1>
+        <div class="muted">Уборка • Переезд • Сборка мебели • Мелкий ремонт</div>
+      </div>
+    </header>
+
+    <div class="grid">
+      <section class="card">
+        <div class="pill">Заявка</div>
+        <h2 style="margin:10px 0 6px;font-size:18px">Оставить заявку</h2>
+        <p class="muted" style="margin-top:0">Заполни форму — заявка попадёт в Google Sheets (CRM) и придёт уведомление в Telegram.</p>
+
+        <!-- ✅ ГОТОВАЯ ФОРМА -->
+        <form id="leadForm">
+          <div class="row">
+            <div>
+              <label for="name">Ваше имя *</label>
+              <input id="name" autocomplete="name" placeholder="Например: Влад" required />
+            </div>
+            <div>
+              <label for="phone">Телефон / Telegram *</label>
+              <input id="phone" autocomplete="tel" placeholder="+49... или @username" required />
+            </div>
+          </div>
+
+          <label for="service">Услуга</label>
+          <select id="service">
+            <option>Уборка</option>
+            <option>Переезд</option>
+            <option>Сборка мебели</option>
+            <option>Мелкий ремонт</option>
+          </select>
+
+          <label for="address">Район / адрес</label>
+          <input id="address" placeholder="Kassel, Nord-Holland..." />
+
+          <label for="comment">Комментарий</label>
+          <textarea id="comment" placeholder="Что нужно сделать? Когда?"></textarea>
+
+          <div class="check">
+            <input id="consent" type="checkbox" required />
+            <div>Я согласен с <a href="/datenschutz.html">Datenschutz</a>.</div>
+          </div>
+
+          <div style="margin-top:12px">
+            <button type="submit">Отправить заявку</button>
+          </div>
+        </form>
+      </section>
+
+      <aside class="card">
+        <div class="pill">Оплата</div>
+        <h2 style="margin:10px 0 6px;font-size:18px">Revolut</h2>
+        <p class="muted" style="margin-top:0">Можно оплатить по ссылке или QR-коду. Сумму вводит клиент на защищённой странице Revolut.</p>
+
+        <div class="paybox">
+          <img src="/revolut-qr.png" alt="Revolut QR">
+          <div>
+            <div class="muted" style="margin-bottom:8px">Ссылка:</div>
+            <div style="font-size:16px;font-weight:700;word-break:break-all">
+              <a href="https://revolut.me/vladshvachko" style="color:#8bd3ff">revolut.me/vladshvachko</a>
+            </div>
+            <div class="muted" style="margin-top:10px">Совет: в комментарии к платежу пусть пишут «UHU + услуга + дата».</div>
+          </div>
+        </div>
+
+        <div class="footer" style="margin-top:18px">
+          <div>© <span id="y"></span> UHU</div>
+          <div>
+            <a href="/impressum.html">Impressum</a> ·
+            <a href="/datenschutz.html">Datenschutz</a> ·
+            <a href="/agb.html">AGB</a>
+          </div>
+        </div>
+      </aside>
+    </div>
+
+    <div id="crmToast" class="toast" hidden></div>
+  </div>
+
+  <script>document.getElementById("y").textContent = new Date().getFullYear();</script>
+  <script src="/crm-config.js"></script>
+  <script src="/crm.js"></script>
+
+  <script>
+    // Регистрируем SW (без ошибок)
+    if ("serviceWorker" in navigator) {
+      window.addEventListener("load", () => {
+        navigator.serviceWorker.register("/sw.js").catch(()=>{});
+      });
+    }
+  </script>
+</body>
+</html>
