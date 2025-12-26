@@ -14,18 +14,5 @@
   "icons": [
     { "src": "/icons/icon-192.png", "sizes": "192x192", "type": "image/png" },
     { "src": "/icons/icon-512.png", "sizes": "512x512", "type": "image/png" }
-  ],
-  "screenshots": [
-    {
-      "src": "/screenshots/uhu-wide.png",
-      "sizes": "1280x720",
-      "type": "image/png",
-      "form_factor": "wide"
-    },
-    {
-      "src": "/screenshots/uhu-mobile.png",
-      "sizes": "540x720",
-      "type": "image/png"
-    }
   ]
 }
