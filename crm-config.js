@@ -1,12 +1,11 @@
 // crm-config.js
 // PR-14 CRM Live
 window.UHU_CRM = {
-  // Вставь сюда URL своего Google Apps Script Web App (/exec)
-  endpoint: "PASTE_YOUR_GOOGLE_APPS_SCRIPT_WEB_APP_URL_HERE",
+  // Google Apps Script Web App (/exec)
+  endpoint: "https://script.google.com/macros/s/AKfycbxeN8spv04Am9LxgtaPTNx7PLW3eqxeY3mnHqWWERk6xC26SX3eVGzhPXdfP8lrqCEC3g/exec",
 
-  // включатели (можно оставить true)
   enabled: true,
 
-  // куда отправлять (минимум)
-  mode: "no-cors", // важно для GitHub Pages/статического сайта
+  // важно для GitHub Pages/статического сайта
+  mode: "no-cors",
 };
