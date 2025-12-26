@@ -1,102 +1,88 @@
-// crm.js (UHU) — safe, works with existing index.html
-(function () {
-  function $(id) { return document.getElementById(id); }
-  function val(id) {
-    const el = $(id);
-    if (!el) return "";
-    return String(el.value || "").trim();
-  }
-  function safeStringify(obj) {
-    try { return JSON.stringify(obj); } catch (e) { return "{}"; }
+<script>
+(() => {
+  // Настройки — поменяй под себя
+  const CFG = {
+    endpoint: window.UHU_CRM?.endpoint || "",   // URL Web App из Apps Script
+    revolutLink: "https://revolut.me/vladshvachko", // твой Revolut.me
+    autoOpenRevolut: false, // true = после заявки откроет оплату
+  };
+
+  function $(id){ return document.getElementById(id); }
+
+  async function postJSON(url, data) {
+    const res = await fetch(url, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(data),
+    });
+    const json = await res.json().catch(() => ({}));
+    if (!res.ok || json.ok === false) throw new Error(json.error || ("HTTP " + res.status));
+    return json;
   }
 
-  async function sendToCRM(payload) {
+  function setMsg(text, ok=true) {
+    const el = $("formMsg");
+    if (!el) return;
+    el.textContent = text;
+    el.style.display = "block";
+    el.style.padding = "10px";
+    el.style.borderRadius = "12px";
+    el.style.marginTop = "10px";
+    el.style.border = ok ? "1px solid rgba(0,200,0,.35)" : "1px solid rgba(255,0,0,.35)";
+  }
+
+  function getFormData() {
+    return {
+      name: ($("name")?.value || "").trim(),
+      phone: ($("phone")?.value || "").trim(),
+      service: ($("service")?.value || "").trim(),
+      address: ($("address")?.value || "").trim(),
+      comment: ($("comment")?.value || "").trim(),
+      source: "pwa"
+    };
+  }
+
+  window.UHU_sendLead = async function UHU_sendLead() {
+    if (!CFG.endpoint) {
+      setMsg("❌ CRM не настроен: нет endpoint в crm-config.js", false);
+      return;
+    }
+    const consent = $("consent");
+    if (consent && !consent.checked) {
+      setMsg("❌ Нужно согласие с Datenschutz", false);
+      return;
+    }
+
+    const payload = getFormData();
+    if (!payload.name || !payload.phone) {
+      setMsg("❌ Заполни имя и контакт", false);
+      return;
+    }
+
     try {
-      const cfg = window.UHU_CRM || {};
-      if (!cfg.enabled) return false;
-      if (!cfg.endpoint || String(cfg.endpoint).includes("PASTE_")) return false;
+      setMsg("⏳ Отправляю заявку...");
+      await postJSON(CFG.endpoint, payload);
+      setMsg("✅ Заявка отправлена! Мы скоро свяжемся.");
 
-      await fetch(cfg.endpoint, {
-        method: "POST",
-        mode: cfg.mode || "no-cors",
-        headers: { "Content-Type": "application/json" },
-        body: safeStringify(payload || {}),
-      });
+      // очистка
+      ["name","phone","address","comment"].forEach(id => { if($(id)) $(id).value = ""; });
 
-      return true;
+      if (CFG.autoOpenRevolut) {
+        window.open(CFG.revolutLink, "_blank", "noopener,noreferrer");
+      }
     } catch (e) {
-      return false;
+      setMsg("❌ Ошибка отправки: " + e.message, false);
     }
-  }
+  };
 
-  function buildPayload() {
-    const payload = {
-      createdAt: new Date().toISOString(),
-      pageUrl: location.href,
-      lang: document.documentElement.lang || "ru",
-      name: val("name"),
-      contact: val("contact") || val("phone") || val("telegram") || "",
-      service: val("service"),
-      district: val("district") || val("address") || "",
-      when: val("when") || "",
-      budget: val("budget") || "",
-      details: val("details") || val("comment") || "",
-      consent: !!($("consent") && $("consent").checked),
-      userAgent: navigator.userAgent || ""
-    };
-
-    Object.keys(payload).forEach((k) => {
-      if (payload[k] === "" || payload[k] === null || typeof payload[k] === "undefined") delete payload[k];
+  // Автопривязка к форме
+  document.addEventListener("DOMContentLoaded", () => {
+    const form = document.getElementById("leadForm");
+    if (!form) return;
+    form.addEventListener("submit", (ev) => {
+      ev.preventDefault();
+      window.UHU_sendLead();
     });
-    return payload;
-  }
-
-  function showToast(msg) {
-    try {
-      const t = $("toast");
-      if (!t) return;
-      t.textContent = msg;
-      t.classList.add("show");
-      setTimeout(() => t.classList.remove("show"), 2500);
-    } catch (e) {}
-  }
-
-  async function submitLead(alsoOpenTelegram) {
-    const consentEl = $("consent");
-    if (consentEl && !consentEl.checked) {
-      showToast("Нужно согласие с Datenschutz");
-      consentEl.focus();
-      return false;
-    }
-
-    const payload = buildPayload();
-    await sendToCRM(payload);
-    showToast("Заявка отправлена ✅");
-
-    if (alsoOpenTelegram && typeof window.openTelegram === "function") {
-      try { window.openTelegram(); } catch (e) {}
-    }
-    return true;
-  }
-
-  window.sendToCRM = sendToCRM;
-  window.uhuSubmitLead = submitLead;
-
-  const form = document.getElementById("leadForm");
-  if (form) {
-    form.addEventListener("submit", function (e) {
-      e.preventDefault();
-      submitLead(false);
-    });
-    return;
-  }
-
-  if (typeof window.openTelegram === "function") {
-    const original = window.openTelegram;
-    window.openTelegram = function () {
-      submitLead(false).finally(() => {
-        try { original(); } catch (e) {}
-      });
-    };
-  }
+  });
 })();
+</script>
