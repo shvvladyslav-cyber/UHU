@@ -1,8 +1,8 @@
-// sw.js — SAFE VERSION
+// sw.js — safe, no-crash cache
 const CACHE = "uhu-v3";
 const OFFLINE_URL = "/offline.html";
 
-const ASSETS = [
+const CORE = [
   "/",
   "/index.html",
   "/offline.html",
@@ -17,21 +17,25 @@ const ASSETS = [
   "/crm.js",
   "/impressum.html",
   "/datenschutz.html",
-  "/agb.html",
+  "/agb.html"
 ];
+
+async function cacheOne(cache, url) {
+  try {
+    const res = await fetch(url, { cache: "no-cache" });
+    if (!res.ok) throw new Error(res.status + " " + res.statusText);
+    await cache.put(url, res);
+  } catch (e) {
+    // не падаем
+    console.warn("[SW] skip cache", url, e.message);
+  }
+}
 
 self.addEventListener("install", (event) => {
   event.waitUntil((async () => {
-    const cache = await caches.open(CACHE);
-    await Promise.allSettled(
-      ASSETS.map(async (url) => {
-        try {
-          const res = await fetch(url, { cache: "no-cache" });
-          if (res && res.ok) await cache.put(url, res.clone());
-        } catch (_) {}
-      })
-    );
     self.skipWaiting();
+    const cache = await caches.open(CACHE);
+    for (const url of CORE) await cacheOne(cache, url);
   })());
 });
 
@@ -39,40 +43,46 @@ self.addEventListener("activate", (event) => {
   event.waitUntil((async () => {
     const keys = await caches.keys();
     await Promise.all(keys.map((k) => (k === CACHE ? null : caches.delete(k))));
-    self.clients.claim();
+    await self.clients.claim();
   })());
 });
 
+// cache-first для статических файлов, network-first для навигации
 self.addEventListener("fetch", (event) => {
   const req = event.request;
+
   if (req.method !== "GET") return;
 
   const url = new URL(req.url);
+
+  // кешируем только свой домен
   if (url.origin !== self.location.origin) return;
 
   event.respondWith((async () => {
-    if (req.mode === "navigate") {
+    const isNav = req.mode === "navigate";
+
+    if (isNav) {
       try {
         const fresh = await fetch(req);
         const cache = await caches.open(CACHE);
-        cache.put("/index.html", fresh.clone());
+        cache.put(req, fresh.clone());
         return fresh;
-      } catch {
-        return (await caches.match(OFFLINE_URL)) || (await caches.match("/index.html"));
+      } catch (e) {
+        const cached = await caches.match(req);
+        return cached || (await caches.match(OFFLINE_URL)) || new Response("Offline", { status: 503 });
       }
     }
 
+    // статические
     const cached = await caches.match(req);
     if (cached) return cached;
 
     try {
       const fresh = await fetch(req);
-      if (fresh && fresh.ok) {
-        const cache = await caches.open(CACHE);
-        cache.put(req, fresh.clone());
-      }
+      const cache = await caches.open(CACHE);
+      cache.put(req, fresh.clone());
       return fresh;
-    } catch {
+    } catch (e) {
       return new Response("", { status: 504 });
     }
   })());
