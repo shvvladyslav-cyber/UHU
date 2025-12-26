@@ -6,7 +6,6 @@
   "start_url": "/?source=pwa",
   "scope": "/",
   "display": "standalone",
-  "display_override": ["standalone", "minimal-ui", "browser"],
   "background_color": "#0a0f22",
   "theme_color": "#0a0f22",
   "lang": "ru",
@@ -14,19 +13,18 @@
   "categories": ["business", "productivity", "utilities"],
   "icons": [
     { "src": "/icons/icon-192.png", "sizes": "192x192", "type": "image/png" },
-    { "src": "/icons/icon-512.png", "sizes": "512x512", "type": "image/png" },
-    { "src": "/icons/icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "maskable" }
+    { "src": "/icons/icon-512.png", "sizes": "512x512", "type": "image/png" }
   ],
   "screenshots": [
     {
-      "src": "/screenshots/screen-wide.png",
+      "src": "/screenshots/uhu-wide.png",
       "sizes": "1280x720",
       "type": "image/png",
       "form_factor": "wide"
     },
     {
-      "src": "/screenshots/screen-mobile.png",
-      "sizes": "750x1334",
+      "src": "/screenshots/uhu-mobile.png",
+      "sizes": "540x720",
       "type": "image/png"
     }
   ]
