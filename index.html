@@ -6,17 +6,15 @@
 
   <title>UHU Kassel — услуги рядом (RU/UA/DE)</title>
   <meta name="description" content="UHU Kassel: уборка, переезды, сборка мебели, мелкий ремонт. Заявка в Telegram в 1 клик + оплата Revolut." />
-
   <meta name="theme-color" content="#0a0f22" />
   <meta name="color-scheme" content="dark" />
   <meta name="referrer" content="strict-origin-when-cross-origin" />
   <link rel="canonical" href="https://www.uhu.digital/" />
 
-  <!-- OpenGraph -->
+  <!-- Open Graph -->
   <meta property="og:title" content="UHU Kassel — услуги рядом" />
   <meta property="og:description" content="Нажмите услугу → заявка заполняется → открывается Telegram. Оплата Revolut." />
   <meta property="og:type" content="website" />
-  <meta property="og:url" content="https://www.uhu.digital/" />
   <meta property="og:image" content="https://uhu.digital/og.png" />
 
   <!-- Icons -->
@@ -33,24 +31,29 @@
 
   <style>
     :root{
+      /* Background */
       --bg0:#070a14;
       --bg1:#0a0f22;
       --bg2:#081a33;
 
+      /* Text */
       --text:#f4f7ff;
       --muted:#c8d2f4;
 
+      /* Brand */
       --ua:#ffd400;
       --ua2:#fff2a8;
       --blue:#4aa3ff;
       --blue2:#2b76ff;
       --pink:#ff4fd8;
 
+      /* UI */
       --line:rgba(255,255,255,.12);
       --shadow:0 18px 55px rgba(0,0,0,.50);
       --radius:26px;
       --focus:rgba(255,212,0,.45);
 
+      /* Install button color */
       --installA:#22c55e;
       --installB:#16a34a;
     }
@@ -71,6 +74,7 @@
     a{color:inherit; text-decoration:none}
     .container{max-width:1180px; margin:0 auto; padding:0 16px}
 
+    /* Topbar */
     .topbar{
       position:sticky; top:0; z-index:100;
       backdrop-filter:saturate(160%) blur(14px);
@@ -82,6 +86,7 @@
       padding:12px 0;
     }
 
+    /* Brand + Logo */
     .brand{display:flex; align-items:center; gap:12px; font-weight:950; letter-spacing:.2px; min-width:0}
     .brand small{display:block; color:var(--muted); font-weight:800; margin-top:2px; max-width:44vw; white-space:nowrap; overflow:hidden; text-overflow:ellipsis}
     .brand span[data-i18n="brand"]{display:block; font-size:16px; line-height:1.1; max-width:44vw; white-space:nowrap; overflow:hidden; text-overflow:ellipsis}
@@ -124,6 +129,7 @@
     }
     .chip:hover{transform:translateY(-1px); border-color:rgba(255,255,255,.22); color:var(--text)}
 
+    /* Buttons */
     .btn{
       display:inline-flex; align-items:center; justify-content:center; gap:10px;
       padding:12px 14px; border-radius:16px; font-weight:950;
@@ -157,6 +163,7 @@
     .btn.ghost{background:rgba(255,255,255,.04)}
     .btn.block{width:100%}
 
+    /* Install button */
     .btn.install{
       background:linear-gradient(135deg, var(--installA), var(--installB));
       border-color:transparent;
@@ -165,6 +172,7 @@
     }
     .btn.install svg{width:18px;height:18px}
 
+    /* Language pill */
     .lang{
       display:inline-flex;
       border:1px solid var(--line);
@@ -199,6 +207,7 @@
     .lang .dot.de{background:linear-gradient(180deg,#111827 0 34%, #e5e7eb 34% 66%, #ef4444 66% 100%)}
     .lang .dot.ru{background:linear-gradient(180deg,#ffffff 0 34%, #2b76ff 34% 66%, #ef4444 66% 100%)}
 
+    /* Hero */
     .hero{position:relative; padding:22px 0 10px}
     .hero::before{
       content:"";
@@ -264,6 +273,7 @@
     .stat b{display:block; font-size:18px}
     .stat span{color:var(--muted); font-size:13px; font-weight:850}
 
+    /* Side cards */
     .side{display:grid; gap:12px}
     .side-card{
       border:1px solid var(--line);
@@ -287,6 +297,7 @@
     .side-card p{margin:0; color:var(--muted); font-size:13.8px; line-height:1.5}
     .mini-actions{display:flex; gap:10px; margin-top:12px; flex-wrap:wrap}
 
+    /* Sections */
     .section{padding:18px 0 0}
     .section-title{
       display:flex; align-items:flex-end; justify-content:space-between; gap:10px; flex-wrap:wrap;
@@ -295,6 +306,7 @@
     .section-title h2{margin:0; font-size:20px}
     .section-title span{color:var(--muted); font-size:13px; font-weight:850}
 
+    /* Service cards */
     .grid{display:grid; grid-template-columns: repeat(4, 1fr); gap:12px; padding:16px 0 0}
     @media (max-width: 980px){.grid{grid-template-columns: repeat(2, 1fr)}}
     @media (max-width: 520px){.grid{grid-template-columns:1fr}}
@@ -343,6 +355,7 @@
       font-size:12px;
     }
 
+    /* Boxes */
     .twocol{display:grid; grid-template-columns: 1fr 1fr; gap:12px}
     @media (max-width: 920px){.twocol{grid-template-columns:1fr}}
     .box{
@@ -355,6 +368,7 @@
     .box h3{margin:0 0 8px; font-size:16px}
     .list{margin:0; padding-left:18px; color:var(--muted); line-height:1.7; font-weight:750}
 
+    /* Form */
     .formgrid{display:grid; grid-template-columns:1fr 1fr; gap:10px}
     @media (max-width: 700px){.formgrid{grid-template-columns:1fr}}
     .input, select, textarea{
@@ -375,6 +389,7 @@
     .divider{height:1px; background:var(--line); margin:16px 0}
     .footer{padding:32px 0 44px; color:var(--muted); font-size:13px; text-align:center; font-weight:850}
 
+    /* Toast */
     .toast{
       position:fixed; left:50%; bottom:18px; transform:translateX(-50%);
       background:rgba(8,18,39,.85);
@@ -389,6 +404,7 @@
       max-width:min(680px, calc(100vw - 32px));
     }
 
+    /* Drawer */
     .drawer-backdrop{
       position:fixed; inset:0;
       background:rgba(0,0,0,.45);
@@ -419,6 +435,7 @@
     .drawer .chip, .drawer .btn{width:100%}
     .drawer .chip{justify-content:flex-start}
 
+    /* FAQ */
     details{
       border:1px solid var(--line);
       border-radius:20px;
@@ -436,6 +453,7 @@
     details p{margin:10px 0 0; color:var(--muted); line-height:1.55; font-weight:750}
     .faq{display:grid; gap:10px; padding-top:12px}
 
+    /* Mobile tweaks */
     .menu-btn{
       width:44px; height:44px;
       border-radius:14px;
@@ -472,6 +490,7 @@
       .bottom-bar{display:block}
     }
 
+    /* iOS install hint */
     .ios-hint{
       display:none;
       margin-top:10px;
@@ -510,7 +529,7 @@
             <path d="M32 12h8v40h-8z" fill="#ffffff" opacity="0.92"/>
             <text x="32" y="40" text-anchor="middle" font-family="system-ui,Segoe UI,Roboto,Arial" font-weight="1000" font-size="20" fill="#ffffff" opacity="0.95" style="letter-spacing:1px">UHU</text>
           </svg>
-          <img class="logo-img" src="logo.png" alt="UHU logo" onload="this.classList.add('loaded')" onerror="this.remove();"/>
+          <img class="logo-img" src="logo.png" alt="UHU logo" onload="this.classList.add('loaded')" onerror="this.remove();" />
         </div>
         <div>
           <span data-i18n="brand">UHU Kassel</span>
@@ -611,7 +630,7 @@
               <rect x="6" y="6" width="52" height="52" rx="18" fill="url(#g2)" opacity="0.26"/>
               <text x="32" y="40" text-anchor="middle" font-family="system-ui,Segoe UI,Roboto,Arial" font-weight="1000" font-size="20" fill="#ffffff" opacity="0.96" style="letter-spacing:1px">UHU</text>
             </svg>
-            <img class="logo-img" src="logo.png" alt="UHU logo" onload="this.classList.add('loaded')" onerror="this.remove();"/>
+            <img class="logo-img" src="logo.png" alt="UHU logo" onload="this.classList.add('loaded')" onerror="this.remove();" />
           </div>
           <div style="min-width:0">
             <div style="font-weight:1000; font-size:18px; line-height:1.1">UHU Kassel</div>
@@ -628,7 +647,6 @@
         <div class="hero-actions">
           <a class="btn primary" href="https://t.me/UHU_help" target="_blank" rel="noopener" data-i18n="cta_tg">Написать в Telegram</a>
           <a class="btn accent" href="#pay" data-i18n="cta_pay">Оплатить Revolut</a>
-
           <button class="btn install" id="installBtnHero" type="button" style="display:none">
             <span data-i18n="install_btn">Установить</span>
           </button>
@@ -636,7 +654,7 @@
 
         <div class="ios-hint" id="iosHint">
           <b>iPhone:</b> Safari не показывает кнопку “Установить”.<br>
-          Нажми <b>Поделиться</b> → <b>На экран “Домой”</b>.
+          Нажми <b>Поделиться</b> (квадрат со стрелкой) → <b>На экран “Домой”</b>.
         </div>
 
         <div class="stats">
@@ -809,6 +827,7 @@
           </div>
 
           <p class="hint" data-i18n="pay_hint">После оплаты напишите в Telegram: <b>@UHU_help</b> (имя + услуга).</p>
+
           <p class="hint" style="margin-top:10px">
             <b>Важно:</b> предоплата — это <b>комиссия платформы (20%)</b> за подбор/организацию и она <b>не возвращается</b>.
             Остальная сумма оплачивается исполнителю <b>после выполнения</b>.
@@ -859,7 +878,7 @@
 
         <div style="display:flex; gap:10px; flex-wrap:wrap; margin-top:12px">
           <button class="btn primary" type="button" onclick="openTelegram()" data-i18n="order_send">Отправить в Telegram</button>
-          <button class="btn pink" type="button" onclick="copyText()" data-i18n="order_copy">Скопировать текст</button>
+          <button class="btn pink" type="button" onclick="copyText(false)" data-i18n="order_copy">Скопировать текст</button>
           <a class="btn ghost" href="https://t.me/UHU_help" target="_blank" rel="noopener" data-i18n="order_open_chat">Открыть чат</a>
         </div>
 
@@ -894,9 +913,11 @@
       Telegram: <b>@UHU_help</b> · Revolut: <b>@vladshvachko</b><br/>
       Домены: <b>uhu.digital</b> / <b>www.uhu.digital</b>
     </div>
+
   </div>
 </div>
 
+<!-- Bottom action bar (mobile) -->
 <div class="bottom-bar">
   <div class="inner">
     <a class="btn primary" href="https://t.me/UHU_help" target="_blank" rel="noopener">Telegram</a>
@@ -906,54 +927,12 @@
 
 <div id="toast" class="toast" role="status" aria-live="polite"></div>
 
+<!-- CRM (подключаем 1 раз) -->
+<script src="/crm-config.js"></script>
+<script src="/crm.js"></script>
+
 <script>
-  // =========================
-  // CONFIG (важное)
-  // =========================
-  const CRM_ENDPOINT = "https://script.google.com/macros/s/AKfycbxeN8spv04Am9LxgtaPTNx7PLW3eqxeY3mnHqWWERk6xC26SX3eVGzhPXdfP8lrqCEC3g/exec";
-  const TELEGRAM_USERNAME = "UHU_help";
-  const REVOLUT_LINK = "https://revolut.me/vladshvachko";
-
-  // =========================
-  // CRM (безопасная отправка)
-  // =========================
-  function sendToCRM(payload){
-    try{
-      if(!CRM_ENDPOINT) return;
-      // no-cors: чтобы не падало из-за CORS, даже если не видим ответ
-      fetch(CRM_ENDPOINT, {
-        method: "POST",
-        mode: "no-cors",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(payload)
-      }).catch(()=>{});
-    }catch(e){}
-  }
-
-  function buildOrderPayload(){
-    const serviceKey = document.getElementById("service")?.value || "";
-    const service = (SERVICE_LABELS[currentLang] && SERVICE_LABELS[currentLang][serviceKey]) ? SERVICE_LABELS[currentLang][serviceKey] : serviceKey;
-
-    return {
-      ts: new Date().toISOString(),
-      page: location.href,
-      lang: currentLang,
-      serviceKey,
-      service,
-      district: (document.getElementById("district")?.value || "").trim(),
-      when: (document.getElementById("when")?.value || "").trim(),
-      budget: (document.getElementById("budget")?.value || "").trim(),
-      details: (document.getElementById("details")?.value || "").trim(),
-      telegram: TELEGRAM_USERNAME,
-      revolut: REVOLUT_LINK,
-      ua: navigator.userAgent || "",
-      commissionPolicy: "client_prepays_20pct_platform_fee_nonrefundable_rest_to_executor_after"
-    };
-  }
-
-  // =========================
-  // Service Worker register (1 раз)
-  // =========================
+  // ===== Service Worker register (ONE time) =====
   (function(){
     if ("serviceWorker" in navigator) {
       window.addEventListener("load", async () => {
@@ -962,21 +941,234 @@
     }
   })();
 
-  // =========================
-  // i18n
-  // =========================
-  const I18N = /* ... (оставил твой словарь 1:1 ниже) ... */ {};
-  // Чтобы ответ не был гигантским вдвое, я не выкидываю твой словарь —
-  // НО ВАЖНО: вставь сюда твой I18N объект целиком (как у тебя в файле).
-</script>
+  const TELEGRAM_USERNAME = "UHU_help";
+  const REVOLUT_LINK = "https://revolut.me/vladshvachko";
 
-<script>
-  // ======= ВСТАВЬ СЮДА ТВОЙ I18N ОБЪЕКТ ПОЛНОСТЬЮ =======
-  // (я сознательно не дублирую его второй раз в сообщении — он очень длинный)
-</script>
-
-<script>
-  // ======= ЛОГИКА (взята из твоего файла и исправлена) =======
+  // ===== I18N (твой блок — оставил как есть, целиком) =====
+  const I18N = {
+    ru: {
+      brand:"UHU Kassel",
+      brand_sub:"Услуги рядом · Kassel",
+      nav_services:"Услуги",
+      nav_how:"Как это работает",
+      nav_pay:"Оплата",
+      nav_order:"Заявка",
+      cta_leave:"Оставить заявку",
+      install_btn:"Установить",
+      kicker:"🇺🇦 + 🇩🇪 Kassel · Быстро и надёжно",
+      hero_title:"UHU Kassel — услуги по дому в 1 клик",
+      hero_lead:"Уборка • Переезды • Сборка мебели • Мелкий ремонт. Нажимай на услугу — заявка заполнится и откроет Telegram с готовым текстом.",
+      cta_tg:"Написать в Telegram",
+      cta_pay:"Оплатить Revolut",
+      stat1_b:"Кассель + район", stat1_s:"работаем по городу",
+      stat2_b:"Быстрый старт", stat2_s:"заявка → подбор",
+      stat3_b:"Прозрачный учёт", stat3_s:"заказы + отчёты",
+      online_badge:"✅ Сейчас онлайн · @UHU_help",
+      need_today:"Нужна помощь сегодня?",
+      need_today_p:"Напиши задачу, район, время и бюджет — мы ответим и предложим решение.",
+      open_tg:"Открыть Telegram",
+      leave_order:"Оставить заявку",
+      for_workers:"Для исполнителей",
+      for_workers_p:"Есть руки и желание работать? Напиши в Telegram — подключим к заказам в Kassel.",
+      be_worker:"Стать исполнителем",
+      fast_contact:"Быстрый контакт",
+      fast_contact_p:"Если Telegram не установлен — можно скопировать текст заявки и отправить куда удобно.",
+      copy_btn:"Скопировать заявку",
+      services_title:"Услуги (всё кликабельно)",
+      services_sub:"Нажми карточку — услуга подставится в заявку",
+      svc_cleaning_t:"Уборка",
+      svc_cleaning_p:"Квартиры, дома, генеральная, после переезда.",
+      svc_moving_t:"Переезды",
+      svc_moving_p:"Перенос вещей, упаковка, помощь с мебелью.",
+      svc_furniture_t:"Сборка мебели",
+      svc_furniture_p:"IKEA, шкафы, кровати, кухни. Инструмент и опыт.",
+      svc_repair_t:"Мелкий ремонт",
+      svc_repair_p:"Крепёж, полки, мелкие работы по дому.",
+      tag_apartment:"квартира", tag_house:"дом", tag_general:"генеральная",
+      tag_things:"вещи", tag_loading:"погрузка", tag_assembly:"сборка",
+      tag_wardrobe:"шкаф", tag_kitchen:"кухня",
+      tag_shelves:"полки", tag_fixing:"крепёж", tag_home:"дом",
+      how_title:"Как это работает", how_sub:"3 простых шага",
+      how1_t:"1) Заявка", how1_1:"Нажмите на услугу", how1_2:"Заполните район/время/бюджет", how1_3:"Откроется Telegram с текстом",
+      how2_t:"2) Подбор", how2_1:"Мы подбираем исполнителя", how2_2:"Согласуем детали и цену", how2_3:"Подтверждаем время",
+      how3_t:"3) Выполнение", how3_1:"Работа выполняется на месте", how3_2:"Предоплата через Revolut (по желанию)", how3_3:"Контроль качества",
+      how_fast:"Быстрые кнопки", how_fast_p:"Самый быстрый контакт — Telegram. Для брони времени возможна предоплата.",
+      pay_title:"Оплата Revolut", pay_sub:"Предоплата для брони времени",
+      pay_choose:"Выберите сумму",
+      pay_amount_label:"Сумма предоплаты",
+      pay_custom:"Другая сумма",
+      pay_custom_label:"Другая сумма (€)",
+      pay_btn:"Оплатить через Revolut",
+      pay_open:"Открыть ссылку",
+      pay_hint:"После оплаты напишите в Telegram: <b>@UHU_help</b> (имя + услуга).",
+      pay_how:"Как оплатить",
+      pay_how_1:"Нажмите «Оплатить»", pay_how_2:"Подтвердите сумму", pay_how_3:"Оплатите картой/в Revolut", pay_how_4:"Напишите в Telegram",
+      order_title:"Оставить заявку", order_sub:"Откроется Telegram с готовым текстом",
+      order_service:"Услуга",
+      order_district:"Район Kassel",
+      order_when:"Когда нужно",
+      order_budget:"Бюджет (€)",
+      order_details:"Что нужно сделать (коротко)",
+      order_send:"Отправить в Telegram",
+      order_copy:"Скопировать текст",
+      order_open_chat:"Открыть чат",
+      order_hint:"Если Telegram не установлен — скопируйте текст и отправьте вручную.",
+      faq_title:"FAQ", faq_sub:"Частые вопросы",
+      faq1_q:"Сколько стоит?", faq1_a:"Цена зависит от объёма и времени. Напишите детали — мы предложим стоимость до начала работ.",
+      faq2_q:"Можно срочно сегодня?", faq2_a:"Да, если есть свободный исполнитель. Укажите район, время и задачу — ответим быстро.",
+      faq3_q:"Зачем предоплата?", faq3_a:"Предоплата — чтобы забронировать время (по желанию). Можно оплатить и на месте.",
+      alert_amount:"Введите сумму корректно (числом).",
+      toast_copied:"Текст заявки скопирован ✅"
+    },
+    ua: {
+      brand:"UHU Kassel",
+      brand_sub:"Послуги поруч · Kassel",
+      nav_services:"Послуги",
+      nav_how:"Як це працює",
+      nav_pay:"Оплата",
+      nav_order:"Заявка",
+      cta_leave:"Залишити заявку",
+      install_btn:"Встановити",
+      kicker:"🇺🇦 + 🇩🇪 Kassel · Швидко та надійно",
+      hero_title:"UHU Kassel — домашні послуги в 1 клік",
+      hero_lead:"Прибирання • Переїзди • Збірка меблів • Дрібний ремонт. Обери послугу — заявка заповниться і відкриє Telegram з готовим текстом.",
+      cta_tg:"Написати в Telegram",
+      cta_pay:"Оплатити Revolut",
+      stat1_b:"Кассель + район", stat1_s:"працюємо по місту",
+      stat2_b:"Швидкий старт", stat2_s:"заявка → підбір",
+      stat3_b:"Прозорий облік", stat3_s:"замовлення + звіти",
+      online_badge:"✅ Зараз онлайн · @UHU_help",
+      need_today:"Потрібна допомога сьогодні?",
+      need_today_p:"Напиши задачу, район, час і бюджет — ми відповімо та запропонуємо рішення.",
+      open_tg:"Відкрити Telegram",
+      leave_order:"Залишити заявку",
+      for_workers:"Для виконавців",
+      for_workers_p:"Є руки і бажання працювати? Напиши в Telegram — підключимо до замовлень у Kassel.",
+      be_worker:"Стати виконавцем",
+      fast_contact:"Швидкий контакт",
+      fast_contact_p:"Якщо Telegram не встановлений — можна скопіювати текст заявки і надіслати куди зручно.",
+      copy_btn:"Скопіювати заявку",
+      services_title:"Послуги (все клікабельне)",
+      services_sub:"Натисни картку — послуга підставиться в заявку",
+      svc_cleaning_t:"Прибирання",
+      svc_cleaning_p:"Квартири, будинки, генеральне, після переїзду.",
+      svc_moving_t:"Переїзди",
+      svc_moving_p:"Перенесення речей, пакування, допомога з меблями.",
+      svc_furniture_t:"Збірка меблів",
+      svc_furniture_p:"IKEA, шафи, ліжка, кухні. Інструмент і досвід.",
+      svc_repair_t:"Дрібний ремонт",
+      svc_repair_p:"Кріплення, полиці, дрібні роботи по дому.",
+      tag_apartment:"квартира", tag_house:"будинок", tag_general:"генеральне",
+      tag_things:"речі", tag_loading:"вантаження", tag_assembly:"збірка",
+      tag_wardrobe:"шафа", tag_kitchen:"кухня",
+      tag_shelves:"полиці", tag_fixing:"кріплення", tag_home:"дім",
+      how_title:"Як це працює", how_sub:"3 прості кроки",
+      how1_t:"1) Заявка", how1_1:"Натисніть на послугу", how1_2:"Заповніть район/час/бюджет", how1_3:"Відкриється Telegram з текстом",
+      how2_t:"2) Підбір", how2_1:"Ми підбираємо виконавця", how2_2:"Узгоджуємо деталі і ціну", how2_3:"Підтверджуємо час",
+      how3_t:"3) Виконання", how3_1:"Робота виконується на місці", how3_2:"Передоплата через Revolut (за бажанням)", how3_3:"Контроль якості",
+      how_fast:"Швидкі кнопки", how_fast_p:"Найшвидший контакт — Telegram. Для броні часу можлива передоплата.",
+      pay_title:"Оплата Revolut", pay_sub:"Передоплата для бронювання часу",
+      pay_choose:"Оберіть суму",
+      pay_amount_label:"Сума передоплати",
+      pay_custom:"Інша сума",
+      pay_custom_label:"Інша сума (€)",
+      pay_btn:"Оплатити через Revolut",
+      pay_open:"Відкрити посилання",
+      pay_hint:"Після оплати напишіть у Telegram: <b>@UHU_help</b> (ім’я + послуга).",
+      pay_how:"Як оплатити",
+      pay_how_1:"Натисніть «Оплатити»", pay_how_2:"Підтвердіть суму", pay_how_3:"Оплатіть карткою/в Revolut", pay_how_4:"Напишіть у Telegram",
+      order_title:"Залишити заявку", order_sub:"Відкриється Telegram з готовим текстом",
+      order_service:"Послуга",
+      order_district:"Район Kassel",
+      order_when:"Коли потрібно",
+      order_budget:"Бюджет (€)",
+      order_details:"Що треба зробити (коротко)",
+      order_send:"Відправити в Telegram",
+      order_copy:"Скопіювати текст",
+      order_open_chat:"Відкрити чат",
+      order_hint:"Якщо Telegram не встановлений — скопіюйте текст і надішліть вручну.",
+      faq_title:"FAQ", faq_sub:"Часті питання",
+      faq1_q:"Скільки коштує?", faq1_a:"Ціна залежить від обсягу та часу. Напишіть деталі — ми назвемо вартість до початку робіт.",
+      faq2_q:"Можна терміново сьогодні?", faq2_a:"Так, якщо є вільний виконавець. Вкажіть район, час і задачу — відповімо швидко.",
+      faq3_q:"Навіщо передоплата?", faq3_a:"Передоплата — щоб забронювати час (за бажанням). Можна оплатити і на місці.",
+      alert_amount:"Введіть суму коректно (числом).",
+      toast_copied:"Текст заявки скопійовано ✅"
+    },
+    de: {
+      brand:"UHU Kassel",
+      brand_sub:"Services in der Nähe · Kassel",
+      nav_services:"Services",
+      nav_how:"So funktioniert’s",
+      nav_pay:"Zahlung",
+      nav_order:"Anfrage",
+      cta_leave:"Anfrage senden",
+      install_btn:"Installieren",
+      kicker:"🇺🇦 + 🇩🇪 Kassel · Schnell & zuverlässig",
+      hero_title:"UHU Kassel — Hilfe im Haushalt mit 1 Klick",
+      hero_lead:"Reinigung • Umzug • Möbelmontage • Kleine Reparaturen. Service auswählen — Anfrage wird ausgefüllt und Telegram öffnet sich mit fertigem Text.",
+      cta_tg:"In Telegram schreiben",
+      cta_pay:"Mit Revolut zahlen",
+      stat1_b:"Kassel + Umgebung", stat1_s:"in der Stadt unterwegs",
+      stat2_b:"Schneller Start", stat2_s:"Anfrage → Auswahl",
+      stat3_b:"Transparenter Ablauf", stat3_s:"Aufträge + Übersicht",
+      online_badge:"✅ Jetzt online · @UHU_help",
+      need_today:"Heute Hilfe nötig?",
+      need_today_p:"Schreib Aufgabe, Stadtteil, Zeit und Budget — wir antworten schnell.",
+      open_tg:"Telegram öffnen",
+      leave_order:"Anfrage senden",
+      for_workers:"Für Helfer",
+      for_workers_p:"Du willst arbeiten? Schreib in Telegram — wir verbinden dich mit Aufträgen in Kassel.",
+      be_worker:"Als Helfer starten",
+      fast_contact:"Schneller Kontakt",
+      fast_contact_p:"Kein Telegram? Du kannst den Text kopieren und überall senden.",
+      copy_btn:"Anfrage kopieren",
+      services_title:"Services (alles klickbar)",
+      services_sub:"Karte anklicken — Service wird in die Anfrage übernommen",
+      svc_cleaning_t:"Reinigung",
+      svc_cleaning_p:"Wohnung, Haus, Grundreinigung, nach Umzug.",
+      svc_moving_t:"Umzug",
+      svc_moving_p:"Tragen, Packen, Hilfe mit Möbeln.",
+      svc_furniture_t:"Möbelmontage",
+      svc_furniture_p:"IKEA, Schränke, Betten, Küchen. Werkzeug & Erfahrung.",
+      svc_repair_t:"Kleine Reparaturen",
+      svc_repair_p:"Befestigen, Regale, kleine Arbeiten im Haushalt.",
+      tag_apartment:"Wohnung", tag_house:"Haus", tag_general:"Grundreinigung",
+      tag_things:"Sachen", tag_loading:"Tragen", tag_assembly:"Montage",
+      tag_wardrobe:"Schrank", tag_kitchen:"Küche",
+      tag_shelves:"Regale", tag_fixing:"Befestigung", tag_home:"Zuhause",
+      how_title:"So funktioniert’s", how_sub:"3 Schritte",
+      how1_t:"1) Anfrage", how1_1:"Service auswählen", how1_2:"Stadtteil/Zeit/Budget eintragen", how1_3:"Telegram öffnet sich mit Text",
+      how2_t:"2) Auswahl", how2_1:"Wir suchen einen Helfer", how2_2:"Details & Preis abstimmen", how2_3:"Zeit bestätigen",
+      how3_t:"3) Ausführung", how3_1:"Arbeit vor Ort", how3_2:"Anzahlung via Revolut (optional)", how3_3:"Qualitätscheck",
+      how_fast:"Schnell-Buttons", how_fast_p:"Am schnellsten über Telegram. Optional Anzahlung zur Termin-Reservierung.",
+      pay_title:"Revolut-Zahlung", pay_sub:"Anzahlung zur Termin-Reservierung",
+      pay_choose:"Betrag wählen",
+      pay_amount_label:"Anzahlungsbetrag",
+      pay_custom:"Anderer Betrag",
+      pay_custom_label:"Anderer Betrag (€)",
+      pay_btn:"Mit Revolut zahlen",
+      pay_open:"Link öffnen",
+      pay_hint:"Nach Zahlung bitte in Telegram schreiben: <b>@UHU_help</b> (Name + Service).",
+      pay_how:"So zahlst du",
+      pay_how_1:"„Zahlen“ klicken", pay_how_2:"Betrag bestätigen", pay_how_3:"Mit Karte/Revolut zahlen", pay_how_4:"In Telegram schreiben",
+      order_title:"Anfrage senden", order_sub:"Telegram öffnet sich mit fertigem Text",
+      order_service:"Service",
+      order_district:"Stadtteil Kassel",
+      order_when:"Wann",
+      order_budget:"Budget (€)",
+      order_details:"Kurzbeschreibung",
+      order_send:"In Telegram senden",
+      order_copy:"Text kopieren",
+      order_open_chat:"Chat öffnen",
+      order_hint:"Falls Telegram nicht installiert ist — Text kopieren und manuell senden.",
+      faq_title:"FAQ", faq_sub:"Häufige Fragen",
+      faq1_q:"Was kostet es?", faq1_a:"Der Preis hängt von Umfang und Zeit ab. Schreib Details — wir nennen dir den Preis vor Beginn.",
+      faq2_q:"Geht es heute noch?", faq2_a:"Ja, wenn ein Helfer frei ist. Stadtteil, Zeit und Aufgabe angeben — wir antworten schnell.",
+      faq3_q:"Warum Anzahlung?", faq3_a:"Optional zur Termin-Reservierung. Du kannst auch vor Ort zahlen.",
+      alert_amount:"Bitte Betrag korrekt eingeben (Zahl).",
+      toast_copied:"Anfragetext kopiert ✅"
+    }
+  };
 
   const SERVICE_KEYS = ["cleaning","moving","furniture","repair","other"];
   const SERVICE_LABELS = {
@@ -1025,7 +1217,7 @@
     });
 
     const customOpt = document.querySelector("#rev-amount option[value='custom']");
-    if (customOpt && I18N[lang]?.pay_custom) customOpt.textContent = I18N[lang].pay_custom;
+    if (customOpt) customOpt.textContent = I18N[lang].pay_custom;
 
     const ph = {
       district: { ru:"Напр.: Mitte, Nord, Südstadt...", ua:"Напр.: Mitte, Nord, Südstadt...", de:"z.B.: Mitte, Nord, Südstadt..." },
@@ -1048,16 +1240,19 @@
     if (db) db.addEventListener("click", ()=>applyLang(l));
   });
 
+  // Revolut amount toggle
   const revSelect = document.getElementById("rev-amount");
   const revCustomWrap = document.getElementById("rev-custom-wrap");
-  revSelect.addEventListener("change", () => {
-    revCustomWrap.style.display = (revSelect.value === "custom") ? "block" : "none";
-  });
+  if (revSelect && revCustomWrap){
+    revSelect.addEventListener("change", () => {
+      revCustomWrap.style.display = (revSelect.value === "custom") ? "block" : "none";
+    });
+  }
 
   function payWithRevolut(){
     let amount = revSelect.value;
     if (amount === "custom") amount = document.getElementById("rev-custom").value.trim();
-    if (!amount || isNaN(amount)) { alert(I18N[currentLang]?.alert_amount || "Введите сумму корректно."); return; }
+    if (!amount || isNaN(amount)) { alert(I18N[currentLang].alert_amount); return; }
     window.open(`${REVOLUT_LINK}/${amount}`, "_blank");
   }
 
@@ -1119,31 +1314,56 @@
     return (linesByLang[currentLang] || linesByLang.ru).join("\n");
   }
 
-  function openTelegram(){
-    // 1) CRM (1 раз)
-    sendToCRM({
-      ...buildOrderPayload(),
-      message: buildMessage()
-    });
+  // ✅ единый payload для CRM
+  function buildOrderPayload(){
+    const serviceKey = document.getElementById("service").value;
+    const service = (SERVICE_LABELS[currentLang] && SERVICE_LABELS[currentLang][serviceKey])
+      ? SERVICE_LABELS[currentLang][serviceKey]
+      : serviceKey;
 
-    // 2) Telegram
+    return {
+      ts: new Date().toISOString(),
+      lang: currentLang,
+      serviceKey,
+      service,
+      district: document.getElementById("district").value.trim(),
+      when: document.getElementById("when").value.trim(),
+      budget: document.getElementById("budget").value.trim(),
+      details: document.getElementById("details").value.trim(),
+      message: buildMessage(),
+      telegram: TELEGRAM_USERNAME,
+      revolut: REVOLUT_LINK,
+      commissionPolicy: "client_prepays_20pct_platform_fee_nonrefundable_rest_to_executor_after",
+    };
+  }
+
+  function openTelegram(){
     const msg = buildMessage();
+
+    // CRM (если подключен — отправим, если нет — не ломаем сайт)
+    try{
+      if (typeof window.sendToCRM === "function"){
+        window.sendToCRM(buildOrderPayload());
+      }
+    }catch(e){}
+
     window.open(`https://t.me/${TELEGRAM_USERNAME}?text=${encodeURIComponent(msg)}`, "_blank");
   }
 
-  async function copyText(){
+  async function copyText(silent=false){
     const msg = buildMessage();
     try{
       await navigator.clipboard.writeText(msg);
-      toast(I18N[currentLang]?.toast_copied || "Скопировано ✅");
+      if (!silent) toast(I18N[currentLang].toast_copied);
     } catch(e){
       const ta=document.createElement("textarea");
       ta.value=msg; document.body.appendChild(ta); ta.select(); document.execCommand("copy");
       document.body.removeChild(ta);
-      toast(I18N[currentLang]?.toast_copied || "Скопировано ✅");
+      if (!silent) toast(I18N[currentLang].toast_copied);
     }
   }
 
+  // Drawer
   function toggleDrawer(open){
     const d = document.getElementById("drawer");
     const b = document.getElementById("drawerBackdrop");
@@ -1167,15 +1387,16 @@
   if(quickBtn){
     quickBtn.addEventListener("click", (e)=>{
       e.preventDefault();
-      copyText();
+      copyText(false);
     });
   }
 
   // Init language
   applyLang(currentLang);
 
-  // INSTALL FLOW
+  // ===== INSTALL FLOW =====
   let deferredPrompt = null;
+
   const installBtn = document.getElementById("installBtn");
   const installBtnDrawer = document.getElementById("installBtnDrawer");
   const installBtnHero = document.getElementById("installBtnHero");
@@ -1212,8 +1433,8 @@
   window.addEventListener("appinstalled", ()=> showInstallButtons(false));
 
   // iOS hint
-  const uaStr = navigator.userAgent || "";
-  const isIOS = /iPhone|iPad|iPod/i.test(uaStr);
+  const ua = navigator.userAgent || "";
+  const isIOS = /iPhone|iPad|iPod/i.test(ua);
   const isInStandalone = (window.matchMedia && window.matchMedia("(display-mode: standalone)").matches) || (navigator.standalone === true);
   if (isIOS && !isInStandalone) {
     const hint = document.getElementById("iosHint");
@@ -1227,6 +1448,5 @@
   window.copyText = copyText;
   window.cardKey = cardKey;
 </script>
-
 </body>
 </html>
