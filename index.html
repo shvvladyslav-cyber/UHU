@@ -2,58 +2,55 @@
 <html lang="ru">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 
   <title>UHU Kassel — услуги рядом (RU/UA/DE)</title>
   <meta name="description" content="UHU Kassel: уборка, переезды, сборка мебели, мелкий ремонт. Заявка в Telegram в 1 клик + оплата Revolut." />
   <meta name="theme-color" content="#0a0f22" />
-  <meta name="color-scheme" content="dark" />
-  <meta name="referrer" content="strict-origin-when-cross-origin" />
-  <link rel="canonical" href="https://www.uhu.digital/" />
+  <meta name="color-scheme" content="dark">
+  <meta name="referrer" content="strict-origin-when-cross-origin">
 
-  <!-- Open Graph -->
+  <!-- Canonical -->
+  <link rel="canonical" href="https://www.uhu.digital/">
+
+  <!-- OpenGraph -->
   <meta property="og:title" content="UHU Kassel — услуги рядом" />
   <meta property="og:description" content="Нажмите услугу → заявка заполняется → открывается Telegram. Оплата Revolut." />
   <meta property="og:type" content="website" />
   <meta property="og:image" content="https://uhu.digital/og.png" />
 
   <!-- Icons -->
-  <link rel="icon" href="/favicon.ico" />
-  <link rel="icon" href="/icons/icon-192.png" />
-  <link rel="apple-touch-icon" sizes="180x180" href="/icons/apple-touch-icon.png" />
-  <link rel="apple-touch-icon" href="/icons/icon-192.png" />
+  <link rel="icon" href="/favicon.ico">
+  <link rel="icon" href="/icons/icon-192.png" sizes="192x192">
+  <link rel="apple-touch-icon" sizes="180x180" href="/icons/apple-touch-icon.png">
+  <link rel="apple-touch-icon" href="/icons/icon-192.png">
 
   <!-- PWA -->
-  <link rel="manifest" href="/manifest.webmanifest" />
-  <meta name="apple-mobile-web-app-capable" content="yes" />
-  <meta name="mobile-web-app-capable" content="yes" />
-  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+  <link rel="manifest" href="/manifest.webmanifest">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 
   <style>
     :root{
-      /* Background */
       --bg0:#070a14;
       --bg1:#0a0f22;
       --bg2:#081a33;
 
-      /* Text */
       --text:#f4f7ff;
       --muted:#c8d2f4;
 
-      /* Brand */
       --ua:#ffd400;
       --ua2:#fff2a8;
       --blue:#4aa3ff;
       --blue2:#2b76ff;
       --pink:#ff4fd8;
 
-      /* UI */
       --line:rgba(255,255,255,.12);
       --shadow:0 18px 55px rgba(0,0,0,.50);
       --radius:26px;
       --focus:rgba(255,212,0,.45);
 
-      /* Install button color */
       --installA:#22c55e;
       --installB:#16a34a;
     }
@@ -74,7 +71,6 @@
     a{color:inherit; text-decoration:none}
     .container{max-width:1180px; margin:0 auto; padding:0 16px}
 
-    /* Topbar */
     .topbar{
       position:sticky; top:0; z-index:100;
       backdrop-filter:saturate(160%) blur(14px);
@@ -86,7 +82,6 @@
       padding:12px 0;
     }
 
-    /* Brand + Logo */
     .brand{display:flex; align-items:center; gap:12px; font-weight:950; letter-spacing:.2px; min-width:0}
     .brand small{display:block; color:var(--muted); font-weight:800; margin-top:2px; max-width:44vw; white-space:nowrap; overflow:hidden; text-overflow:ellipsis}
     .brand span[data-i18n="brand"]{display:block; font-size:16px; line-height:1.1; max-width:44vw; white-space:nowrap; overflow:hidden; text-overflow:ellipsis}
@@ -129,7 +124,6 @@
     }
     .chip:hover{transform:translateY(-1px); border-color:rgba(255,255,255,.22); color:var(--text)}
 
-    /* Buttons */
     .btn{
       display:inline-flex; align-items:center; justify-content:center; gap:10px;
       padding:12px 14px; border-radius:16px; font-weight:950;
@@ -163,7 +157,6 @@
     .btn.ghost{background:rgba(255,255,255,.04)}
     .btn.block{width:100%}
 
-    /* Install button */
     .btn.install{
       background:linear-gradient(135deg, var(--installA), var(--installB));
       border-color:transparent;
@@ -172,7 +165,6 @@
     }
     .btn.install svg{width:18px;height:18px}
 
-    /* Language pill */
     .lang{
       display:inline-flex;
       border:1px solid var(--line);
@@ -207,7 +199,6 @@
     .lang .dot.de{background:linear-gradient(180deg,#111827 0 34%, #e5e7eb 34% 66%, #ef4444 66% 100%)}
     .lang .dot.ru{background:linear-gradient(180deg,#ffffff 0 34%, #2b76ff 34% 66%, #ef4444 66% 100%)}
 
-    /* Hero */
     .hero{position:relative; padding:22px 0 10px}
     .hero::before{
       content:"";
@@ -273,7 +264,6 @@
     .stat b{display:block; font-size:18px}
     .stat span{color:var(--muted); font-size:13px; font-weight:850}
 
-    /* Side cards */
     .side{display:grid; gap:12px}
     .side-card{
       border:1px solid var(--line);
@@ -297,7 +287,6 @@
     .side-card p{margin:0; color:var(--muted); font-size:13.8px; line-height:1.5}
     .mini-actions{display:flex; gap:10px; margin-top:12px; flex-wrap:wrap}
 
-    /* Sections */
     .section{padding:18px 0 0}
     .section-title{
       display:flex; align-items:flex-end; justify-content:space-between; gap:10px; flex-wrap:wrap;
@@ -306,7 +295,6 @@
     .section-title h2{margin:0; font-size:20px}
     .section-title span{color:var(--muted); font-size:13px; font-weight:850}
 
-    /* Service cards */
     .grid{display:grid; grid-template-columns: repeat(4, 1fr); gap:12px; padding:16px 0 0}
     @media (max-width: 980px){.grid{grid-template-columns: repeat(2, 1fr)}}
     @media (max-width: 520px){.grid{grid-template-columns:1fr}}
@@ -355,7 +343,6 @@
       font-size:12px;
     }
 
-    /* Boxes */
     .twocol{display:grid; grid-template-columns: 1fr 1fr; gap:12px}
     @media (max-width: 920px){.twocol{grid-template-columns:1fr}}
     .box{
@@ -368,7 +355,6 @@
     .box h3{margin:0 0 8px; font-size:16px}
     .list{margin:0; padding-left:18px; color:var(--muted); line-height:1.7; font-weight:750}
 
-    /* Form */
     .formgrid{display:grid; grid-template-columns:1fr 1fr; gap:10px}
     @media (max-width: 700px){.formgrid{grid-template-columns:1fr}}
     .input, select, textarea{
@@ -389,7 +375,6 @@
     .divider{height:1px; background:var(--line); margin:16px 0}
     .footer{padding:32px 0 44px; color:var(--muted); font-size:13px; text-align:center; font-weight:850}
 
-    /* Toast */
     .toast{
       position:fixed; left:50%; bottom:18px; transform:translateX(-50%);
       background:rgba(8,18,39,.85);
@@ -404,7 +389,6 @@
       max-width:min(680px, calc(100vw - 32px));
     }
 
-    /* Drawer */
     .drawer-backdrop{
       position:fixed; inset:0;
       background:rgba(0,0,0,.45);
@@ -435,7 +419,6 @@
     .drawer .chip, .drawer .btn{width:100%}
     .drawer .chip{justify-content:flex-start}
 
-    /* FAQ */
     details{
       border:1px solid var(--line);
       border-radius:20px;
@@ -453,7 +436,6 @@
     details p{margin:10px 0 0; color:var(--muted); line-height:1.55; font-weight:750}
     .faq{display:grid; gap:10px; padding-top:12px}
 
-    /* Mobile tweaks */
     .menu-btn{
       width:44px; height:44px;
       border-radius:14px;
@@ -490,7 +472,6 @@
       .bottom-bar{display:block}
     }
 
-    /* iOS install hint */
     .ios-hint{
       display:none;
       margin-top:10px;
@@ -506,7 +487,6 @@
     .ios-hint b{color:var(--text)}
   </style>
 </head>
-
 <body>
 
 <!-- TOPBAR -->
@@ -529,7 +509,7 @@
             <path d="M32 12h8v40h-8z" fill="#ffffff" opacity="0.92"/>
             <text x="32" y="40" text-anchor="middle" font-family="system-ui,Segoe UI,Roboto,Arial" font-weight="1000" font-size="20" fill="#ffffff" opacity="0.95" style="letter-spacing:1px">UHU</text>
           </svg>
-          <img class="logo-img" src="logo.png" alt="UHU logo" onload="this.classList.add('loaded')" onerror="this.remove();" />
+          <img class="logo-img" src="logo.png" alt="UHU logo" onload="this.classList.add('loaded')" onerror="this.remove();"/>
         </div>
         <div>
           <span data-i18n="brand">UHU Kassel</span>
@@ -630,7 +610,7 @@
               <rect x="6" y="6" width="52" height="52" rx="18" fill="url(#g2)" opacity="0.26"/>
               <text x="32" y="40" text-anchor="middle" font-family="system-ui,Segoe UI,Roboto,Arial" font-weight="1000" font-size="20" fill="#ffffff" opacity="0.96" style="letter-spacing:1px">UHU</text>
             </svg>
-            <img class="logo-img" src="logo.png" alt="UHU logo" onload="this.classList.add('loaded')" onerror="this.remove();" />
+            <img class="logo-img" src="logo.png" alt="UHU logo" onload="this.classList.add('loaded')" onerror="this.remove();"/>
           </div>
           <div style="min-width:0">
             <div style="font-weight:1000; font-size:18px; line-height:1.1">UHU Kassel</div>
@@ -647,6 +627,7 @@
         <div class="hero-actions">
           <a class="btn primary" href="https://t.me/UHU_help" target="_blank" rel="noopener" data-i18n="cta_tg">Написать в Telegram</a>
           <a class="btn accent" href="#pay" data-i18n="cta_pay">Оплатить Revolut</a>
+
           <button class="btn install" id="installBtnHero" type="button" style="display:none">
             <span data-i18n="install_btn">Установить</span>
           </button>
@@ -827,7 +808,6 @@
           </div>
 
           <p class="hint" data-i18n="pay_hint">После оплаты напишите в Telegram: <b>@UHU_help</b> (имя + услуга).</p>
-
           <p class="hint" style="margin-top:10px">
             <b>Важно:</b> предоплата — это <b>комиссия платформы (20%)</b> за подбор/организацию и она <b>не возвращается</b>.
             Остальная сумма оплачивается исполнителю <b>после выполнения</b>.
@@ -878,7 +858,7 @@
 
         <div style="display:flex; gap:10px; flex-wrap:wrap; margin-top:12px">
           <button class="btn primary" type="button" onclick="openTelegram()" data-i18n="order_send">Отправить в Telegram</button>
-          <button class="btn pink" type="button" onclick="copyText(false)" data-i18n="order_copy">Скопировать текст</button>
+          <button class="btn pink" type="button" onclick="copyText()" data-i18n="order_copy">Скопировать текст</button>
           <a class="btn ghost" href="https://t.me/UHU_help" target="_blank" rel="noopener" data-i18n="order_open_chat">Открыть чат</a>
         </div>
 
@@ -913,11 +893,9 @@
       Telegram: <b>@UHU_help</b> · Revolut: <b>@vladshvachko</b><br/>
       Домены: <b>uhu.digital</b> / <b>www.uhu.digital</b>
     </div>
-
   </div>
 </div>
 
-<!-- Bottom action bar (mobile) -->
 <div class="bottom-bar">
   <div class="inner">
     <a class="btn primary" href="https://t.me/UHU_help" target="_blank" rel="noopener">Telegram</a>
@@ -927,7 +905,7 @@
 
 <div id="toast" class="toast" role="status" aria-live="polite"></div>
 
-<!-- CRM (подключаем 1 раз) -->
+<!-- CRM (подключаем ОДИН раз) -->
 <script src="/crm-config.js"></script>
 <script src="/crm.js"></script>
 
@@ -944,7 +922,7 @@
   const TELEGRAM_USERNAME = "UHU_help";
   const REVOLUT_LINK = "https://revolut.me/vladshvachko";
 
-  // ===== I18N (твой блок — оставил как есть, целиком) =====
+  // i18n dictionary
   const I18N = {
     ru: {
       brand:"UHU Kassel",
@@ -1196,6 +1174,7 @@
       opt.textContent = (SERVICE_LABELS[currentLang] && SERVICE_LABELS[currentLang][k]) ? SERVICE_LABELS[currentLang][k] : k;
       sel.appendChild(opt);
     });
+    if (!sel.value) sel.value = SERVICE_KEYS[0];
   }
 
   function applyLang(lang){
@@ -1240,14 +1219,11 @@
     if (db) db.addEventListener("click", ()=>applyLang(l));
   });
 
-  // Revolut amount toggle
   const revSelect = document.getElementById("rev-amount");
   const revCustomWrap = document.getElementById("rev-custom-wrap");
-  if (revSelect && revCustomWrap){
-    revSelect.addEventListener("change", () => {
-      revCustomWrap.style.display = (revSelect.value === "custom") ? "block" : "none";
-    });
-  }
+  revSelect.addEventListener("change", () => {
+    revCustomWrap.style.display = (revSelect.value === "custom") ? "block" : "none";
+  });
 
   function payWithRevolut(){
     let amount = revSelect.value;
@@ -1314,12 +1290,10 @@
     return (linesByLang[currentLang] || linesByLang.ru).join("\n");
   }
 
-  // ✅ единый payload для CRM
+  // ✅ ЕДИНАЯ функция payload для CRM (раньше была путаница buildLeadPayload/buildOrderPayload)
   function buildOrderPayload(){
     const serviceKey = document.getElementById("service").value;
-    const service = (SERVICE_LABELS[currentLang] && SERVICE_LABELS[currentLang][serviceKey])
-      ? SERVICE_LABELS[currentLang][serviceKey]
-      : serviceKey;
+    const service = (SERVICE_LABELS[currentLang] && SERVICE_LABELS[currentLang][serviceKey]) ? SERVICE_LABELS[currentLang][serviceKey] : serviceKey;
 
     return {
       ts: new Date().toISOString(),
@@ -1334,36 +1308,33 @@
       telegram: TELEGRAM_USERNAME,
       revolut: REVOLUT_LINK,
       commissionPolicy: "client_prepays_20pct_platform_fee_nonrefundable_rest_to_executor_after",
+      source: "web"
     };
   }
 
   function openTelegram(){
-    const msg = buildMessage();
-
-    // CRM (если подключен — отправим, если нет — не ломаем сайт)
+    // CRM логирование (НЕ ломаем страницу, если crm.js не загрузился)
     try{
-      if (typeof window.sendToCRM === "function"){
-        window.sendToCRM(buildOrderPayload());
-      }
-    }catch(e){}
+      if (window.sendToCRM) window.sendToCRM(buildOrderPayload());
+    } catch(e){}
 
+    const msg = buildMessage();
     window.open(`https://t.me/${TELEGRAM_USERNAME}?text=${encodeURIComponent(msg)}`, "_blank");
   }
 
-  async function copyText(silent=false){
+  async function copyText(){
     const msg = buildMessage();
     try{
       await navigator.clipboard.writeText(msg);
-      if (!silent) toast(I18N[currentLang].toast_copied);
+      toast(I18N[currentLang].toast_copied);
     } catch(e){
       const ta=document.createElement("textarea");
       ta.value=msg; document.body.appendChild(ta); ta.select(); document.execCommand("copy");
       document.body.removeChild(ta);
-      if (!silent) toast(I18N[currentLang].toast_copied);
+      toast(I18N[currentLang].toast_copied);
     }
   }
 
-  // Drawer
   function toggleDrawer(open){
     const d = document.getElementById("drawer");
     const b = document.getElementById("drawerBackdrop");
@@ -1387,7 +1358,7 @@
   if(quickBtn){
     quickBtn.addEventListener("click", (e)=>{
       e.preventDefault();
-      copyText(false);
+      copyText();
     });
   }
 
@@ -1396,7 +1367,6 @@
 
   // ===== INSTALL FLOW =====
   let deferredPrompt = null;
-
   const installBtn = document.getElementById("installBtn");
   const installBtnDrawer = document.getElementById("installBtnDrawer");
   const installBtnHero = document.getElementById("installBtnHero");
@@ -1432,7 +1402,6 @@
 
   window.addEventListener("appinstalled", ()=> showInstallButtons(false));
 
-  // iOS hint
   const ua = navigator.userAgent || "";
   const isIOS = /iPhone|iPad|iPod/i.test(ua);
   const isInStandalone = (window.matchMedia && window.matchMedia("(display-mode: standalone)").matches) || (navigator.standalone === true);
@@ -1441,12 +1410,13 @@
     if (hint) hint.style.display = "block";
   }
 
-  // Expose
+  // Expose for inline handlers
   window.payWithRevolut = payWithRevolut;
   window.quickOrder = quickOrder;
   window.openTelegram = openTelegram;
   window.copyText = copyText;
   window.cardKey = cardKey;
 </script>
+
 </body>
 </html>
