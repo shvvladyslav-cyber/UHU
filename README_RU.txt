@@ -1,30 +1,62 @@
-UHU.digital — ФИНАЛ (для чайника)
+UHU CRM (Google Sheets + Apps Script) — инструкция для «чайника»
 
-1) Загрузить файлы в GitHub (репозиторий shvvladyslav-cyber/UHU)
-   ВАЖНО: удалять репозиторий НЕ нужно.
-   Проще всего: открыть репозиторий → кнопка Add file → Upload files → перетащить ВСЕ файлы из этого архива → Commit changes.
+ЧТО ПОЛУЧИШЬ
+- Заявка с сайта → падает в Google Sheets
+- В таблице есть статус (NEW / IN_WORK / DONE / CANCELLED)
+- Цвета строк по статусу (условное форматирование)
+- Telegram-уведомления о новых заявках (опционально)
 
-2) Подключить CRM (Google Sheets + Apps Script)
-   - Создай таблицу Google Sheets с листом "Leads" (или любое имя, но тогда поменяй SHEET_NAME).
-   - Открой Apps Script:
-       Таблица → Extensions → Apps Script
-   - Вставь код из apps-script/Code.gs (заменить всё).
-   - Project Settings → Script Properties (СВОЙСТВА СКРИПТА):
-       SHEET_ID    = ID таблицы (между /d/ и /edit в URL)
-       SHEET_NAME  = Leads
-       TG_BOT_TOKEN = (опционально)
-       TG_CHAT_ID   = (опционально)
-   - Deploy → New deployment → Select type: Web app
-       Execute as: Me
-       Who has access: Anyone
-     Deploy → Copy URL
+ШАГ 1. СОЗДАЙ GOOGLE SHEET
+1) Google Drive → New → Google Sheets
+2) Назови файл: UHU CRM
+3) Скопируй ID таблицы (это кусок в адресе):
+   https://docs.google.com/spreadsheets/d/  [SHEET_ID]  /edit
 
-   - Открой файл crm-config.js и вставь URL в endpoint.
+ШАГ 2. ОТКРОЙ APPS SCRIPT
+1) В таблице: Extensions → Apps Script
+2) Удали всё в Code.gs
+3) Вставь код из файла apps-script/Code.gs
+4) Сохрани (Ctrl+S)
 
-3) Проверка
-   - Открой сайт. Внизу появится тост, если CRM не настроен.
-   - Заполни форму → Отправить заявку → в Sheets должна появиться новая строка.
+ШАГ 3. ДОБАВЬ SCRIPT PROPERTIES
+1) В Apps Script: Project Settings (шестерёнка слева)
+2) Script Properties → Add property:
+   - SHEET_ID = (вставь ID таблицы)
+   - SHEET_NAME = Leads
 
-4) Если в PWA (приложении) кэш старый
-   - Android: Настройки → Приложения → UHU → Хранилище → Очистить кеш/данные
-   - Или: в браузере открой DevTools → Application → Service Workers → Unregister (если есть).
+(ОПЦИОНАЛЬНО) TELEGRAM
+A) Создай бота через @BotFather → получи TG_BOT_TOKEN
+B) Узнай chat_id:
+   - Напиши боту любое сообщение
+   - Открой в браузере:
+     https://api.telegram.org/bot<TOKEN>/getUpdates
+   - В ответе найди "chat":{"id":123456789,...} → это TG_CHAT_ID
+C) Добавь в Script Properties:
+   - TG_BOT_TOKEN = ...
+   - TG_CHAT_ID = ...
+
+ШАГ 4. DEPLOY (WEB APP)
+1) В Apps Script: Deploy → New deployment
+2) Select type → Web app
+3) Execute as: Me
+4) Who has access: Anyone
+5) Deploy → Authorize доступы
+6) Скопируй URL вида:
+   https://script.google.com/macros/s/XXXXX/exec
+
+ШАГ 5. ВСТАВЬ URL В crm-config.js
+1) Открой файл crm-config.js в репозитории
+2) Замени:
+   endpoint: "PASTE_YOUR_APPS_SCRIPT_WEB_APP_URL_HERE"
+   на свой URL из шага 4
+3) Commit
+
+ШАГ 6. ПРОВЕРКА
+1) Открой сайт
+2) Заполни форму → Submit
+3) Открой таблицу → лист Leads → должна появиться строка
+
+ЕСЛИ НЕ ПРИХОДЯТ ЗАЯВКИ
+- Проверь, что Web App доступен "Anyone"
+- Проверь, что endpoint вставлен без пробелов
+- Проверь Script Properties: SHEET_ID правильный
