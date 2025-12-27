@@ -1,268 +1,170 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="ru">
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>UHU Kassel — Кабинет (CRM)</title>
-  <meta name="robots" content="noindex,nofollow" />
+  <title>UHU.digital — Кабинет</title>
   <meta name="theme-color" content="#0a0f22" />
-  <link rel="icon" href="/favicon.ico" />
+  <link rel="icon" href="/favicon.ico">
+  <link rel="apple-touch-icon" href="/icons/apple-touch-icon.png">
+  <link rel="manifest" href="/manifest.webmanifest">
   <style>
     :root{
       --bg:#0a0f22;
-      --card:rgba(255,255,255,.06);
-      --line:rgba(255,255,255,.12);
-      --txt:#e9eef7;
-      --muted:rgba(233,238,247,.75);
-      --focus:rgba(99,102,241,.55);
-      --r:22px;
+      --card: rgba(255,255,255,.06);
+      --card2: rgba(255,255,255,.10);
+      --text:#e9ecff;
+      --muted: rgba(233,236,255,.72);
+      --border: rgba(255,255,255,.14);
+      --accent:#7c5cff;
+      --accent2:#2dd4bf;
     }
     *{box-sizing:border-box}
     body{
-      margin:0;
-      font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, "Apple Color Emoji","Segoe UI Emoji";
-      color:var(--txt);
-      background:
-        radial-gradient(900px 500px at 20% 10%, rgba(56,189,248,.26), transparent 60%),
-        radial-gradient(900px 500px at 85% 20%, rgba(234,179,8,.22), transparent 55%),
-        radial-gradient(900px 500px at 65% 95%, rgba(236,72,153,.18), transparent 55%),
-        var(--bg);
+      margin:0; font-family: system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif;
+      background: radial-gradient(900px 600px at 20% -10%, rgba(124,92,255,.25), transparent 60%),
+                  radial-gradient(900px 600px at 110% 0%, rgba(45,212,191,.18), transparent 55%),
+                  var(--bg);
+      color: var(--text);
       min-height:100vh;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      padding: 20px;
     }
-    a{color:inherit}
-    .wrap{max-width:980px; margin:0 auto; padding:18px 14px 70px}
+    .wrap{
+      width:min(720px, 100%);
+    }
+    .card{
+      background: linear-gradient(180deg, var(--card), rgba(255,255,255,.03));
+      border: 1px solid var(--border);
+      border-radius: 18px;
+      padding: 18px;
+      box-shadow: 0 20px 60px rgba(0,0,0,.35);
+    }
     .top{
-      display:flex; align-items:center; justify-content:space-between; gap:14px;
-      padding:12px 14px;
-      border:1px solid var(--line);
-      border-radius:18px;
-      background:rgba(255,255,255,.04);
-      backdrop-filter: blur(10px);
-      position:sticky; top:10px; z-index:10;
+      display:flex;
+      gap:12px;
+      align-items:center;
+      justify-content:space-between;
+      margin-bottom: 12px;
     }
-    .brand{display:flex; align-items:center; gap:12px; text-decoration:none}
-    .brand img{width:42px; height:42px; border-radius:14px; border:1px solid var(--line); background:#fff}
-    .brand small{display:block; color:var(--muted); font-weight:800}
+    .brand{
+      display:flex; gap:10px; align-items:center;
+    }
+    .logo{
+      width:40px;height:40px;border-radius:12px;
+      background: linear-gradient(135deg, rgba(124,92,255,.95), rgba(45,212,191,.9));
+      display:flex;align-items:center;justify-content:center;
+      font-weight:800;
+      box-shadow: 0 10px 30px rgba(124,92,255,.25);
+    }
+    h1{font-size:18px;margin:0}
+    .muted{color:var(--muted); font-size:13px; line-height:1.4}
+    .grid{
+      display:grid;
+      grid-template-columns: 1fr;
+      gap: 12px;
+      margin-top: 12px;
+    }
     .btn{
-      display:inline-flex; align-items:center; justify-content:center; gap:10px;
-      padding:10px 14px; border-radius:14px; font-weight:950;
-      border:1px solid var(--line);
-      background:rgba(255,255,255,.06);
-      cursor:pointer; text-decoration:none;
-      transition:.2s ease;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      gap:10px;
+      width:100%;
+      padding: 14px 14px;
+      border-radius: 14px;
+      border: 1px solid rgba(255,255,255,.18);
+      background: rgba(255,255,255,.06);
+      color: var(--text);
+      text-decoration:none;
+      font-weight: 700;
+      transition: transform .06s ease, background .2s ease, border-color .2s ease;
       user-select:none;
     }
-    .btn:hover{transform:translateY(-1px); border-color:rgba(255,255,255,.22)}
-    .btn:focus{outline:2px solid var(--focus); outline-offset:2px}
-    .btn.primary{background:linear-gradient(135deg, rgba(59,130,246,.9), rgba(99,102,241,.85)); border-color:rgba(255,255,255,.10)}
-    .grid{display:grid; grid-template-columns:1.2fr .8fr; gap:14px; margin-top:14px}
-    @media (max-width: 860px){ .grid{grid-template-columns:1fr} }
-    .card{
-      border:1px solid var(--line);
-      background:var(--card);
-      border-radius:var(--r);
-      padding:14px;
-      box-shadow:0 18px 60px rgba(0,0,0,.45);
-      backdrop-filter: blur(12px);
+    .btn:hover{ background: rgba(255,255,255,.10); border-color: rgba(255,255,255,.28); }
+    .btn:active{ transform: translateY(1px); }
+    .btn-primary{
+      background: linear-gradient(135deg, rgba(124,92,255,.95), rgba(45,212,191,.9));
+      border-color: rgba(255,255,255,.22);
+      color: #06101f;
+      box-shadow: 0 18px 40px rgba(124,92,255,.18);
     }
-    h1{font-size:22px; margin:0 0 6px}
-    h2{font-size:16px; margin:0 0 10px}
-    p{margin:8px 0; color:var(--muted); line-height:1.55}
-    code, .mono{font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace}
-    .row{display:flex; gap:10px; flex-wrap:wrap; margin-top:10px}
-    .field{display:flex; flex-direction:column; gap:6px; margin-top:10px}
-    input, select, textarea{
-      width:100%;
-      padding:12px 12px;
-      border-radius:14px;
-      border:1px solid var(--line);
-      background:rgba(0,0,0,.18);
-      color:var(--txt);
-      font-weight:850;
-      outline:none;
+    .btn-primary:hover{ filter: brightness(1.05); }
+    .row{
+      display:flex; gap:12px; flex-wrap:wrap;
     }
-    textarea{min-height:92px; resize:vertical}
-    input:focus, select:focus, textarea:focus{outline:2px solid var(--focus); outline-offset:2px}
-    .hint{font-size:13px; color:var(--muted)}
-    .ok{color:#86efac}
-    .bad{color:#fecaca}
-    .box{padding:10px 12px; border-radius:14px; border:1px dashed rgba(255,255,255,.20); background:rgba(0,0,0,.10)}
-    .sep{height:1px; background:rgba(255,255,255,.10); margin:14px 0}
+    .row .btn{ flex:1 1 240px; }
+    .note{
+      margin-top: 12px;
+      padding: 12px;
+      border-radius: 14px;
+      background: rgba(255,255,255,.05);
+      border: 1px solid rgba(255,255,255,.12);
+    }
+    code{
+      color: #cbd5ff;
+      background: rgba(0,0,0,.25);
+      padding: 2px 6px;
+      border-radius: 8px;
+      border: 1px solid rgba(255,255,255,.12);
+    }
   </style>
 </head>
+
 <body>
-  <div class="wrap">
-    <div class="top">
-      <a class="brand" href="/#top">
-        <img src="/logo.png" alt="UHU" />
-        <div>
-          <strong>UHU Kassel</strong>
-          <small>Кабинет (CRM)</small>
+  <main class="wrap">
+    <section class="card">
+      <div class="top">
+        <div class="brand">
+          <div class="logo">U</div>
+          <div>
+            <h1>Кабинет UHU</h1>
+            <div class="muted">Быстрый доступ к CRM (Google Sheets)</div>
+          </div>
         </div>
-      </a>
-      <div class="row">
-        <a class="btn" href="/#order">К форме</a>
-        <a class="btn" href="/impressum.html" target="_blank" rel="noopener">Impressum</a>
-        <a class="btn" href="/datenschutz.html" target="_blank" rel="noopener">Datenschutz</a>
       </div>
-    </div>
 
-    <div class="grid">
-      <div class="card">
-        <h1>CRM: проверка подключения</h1>
-        <p>Это «кабинет» для быстрой диагностики: работает ли Apps Script Web App и принимает ли он заявки.</p>
+      <div class="grid">
+        <!-- ВАЖНО: вставь сюда ссылку на свою Google таблицу -->
+        <a id="crmLink" class="btn btn-primary" href="PASTE_YOUR_SHEETS_URL_HERE" target="_blank" rel="noopener">
+          📊 Открыть CRM
+        </a>
 
-        <div class="box">
-          <div><strong>1) Вставь URL Web App в</strong> <span class="mono">crm-config.js</span></div>
-          <div class="hint">Файл: <span class="mono">endpoint: "https://script.google.com/macros/s/.../exec"</span></div>
-        </div>
-
-        <div class="sep"></div>
-
-        <h2>Проверка Web App (GET)</h2>
-        <p class="hint">Должно вернуть: <span class="mono">{"ok":true,"msg":"UHU CRM OK"}</span></p>
         <div class="row">
-          <button class="btn" id="btnPing" type="button">Проверить</button>
-          <span id="pingResult" class="hint"></span>
+          <a class="btn" href="/index.html">← Назад на сайт</a>
+          <a class="btn" href="/impressum.html">⚖️ Impressum</a>
         </div>
 
-        <div class="sep"></div>
-
-        <h2>Тестовая заявка (POST)</h2>
-        <p class="hint">Отправит тестовую заявку в Google Sheets (лист <span class="mono">Leads</span>) и, если включено — уведомление в Telegram.</p>
-
-        <form id="testForm">
-          <div class="field">
-            <label>Имя</label>
-            <input id="t_name" value="Test Lead" required />
+        <div class="note">
+          <div class="muted">
+            Если таблица не открывается — проверь доступ в Google Sheets (“Поделиться”).<br>
+            Совет: для своей семьи/команды добавь email’ы в доступ. Для публичного доступа лучше не открывать “для всех”.
           </div>
-          <div class="field">
-            <label>Телефон / Telegram</label>
-            <input id="t_phone" value="+49 000 0000" required />
-          </div>
-          <div class="field">
-            <label>Услуга</label>
-            <select id="t_service">
-              <option>Уборка</option>
-              <option>Переезд</option>
-              <option>Сборка мебели</option>
-              <option>Мелкий ремонт</option>
-            </select>
-          </div>
-          <div class="field">
-            <label>Адрес</label>
-            <input id="t_address" value="Kassel, Test" />
-          </div>
-          <div class="field">
-            <label>Комментарий</label>
-            <textarea id="t_comment">Тест из cabinet.html</textarea>
-          </div>
-
-          <div class="row">
-            <button class="btn primary" id="btnSend" type="submit">Отправить тест</button>
-            <span id="sendResult" class="hint"></span>
-          </div>
-        </form>
-
-        <div class="sep"></div>
-
-        <h2>Где смотреть заявки?</h2>
-        <p>Открой Google Sheets с таблицей CRM (ту, чей <span class="mono">SHEET_ID</span> ты указал в Script Properties).</p>
-        <p class="hint">Подсказка: если заявки не приходят — 99% это либо неправильный URL Web App в <span class="mono">crm-config.js</span>, либо Web App опубликован не с теми правами (см. README.txt).</p>
-      </div>
-
-      <div class="card">
-        <h2>Быстрые ссылки</h2>
-        <div class="row">
-          <a class="btn" href="https://t.me/UHU_help" target="_blank" rel="noopener">Telegram @UHU_help</a>
-          <a class="btn" href="/" target="_blank" rel="noopener">Открыть сайт</a>
         </div>
 
-        <div class="sep"></div>
-
-        <h2>Шаблон правильного crm-config.js</h2>
-        <div class="box mono" style="white-space:pre-wrap">window.UHU_CRM = {
-  endpoint: "https://script.google.com/macros/s/XXXX/exec",
-  site: "UHU.digital",
-  currency: "EUR"
-};</div>
-
-        <div class="sep"></div>
-
-        <h2>Статусы в таблице</h2>
-        <p class="hint">Скрипт создаёт статус в колонке B и добавляет цвета:</p>
-        <div class="box mono" style="white-space:pre-wrap">NEW / IN_WORK / DONE / CANCELLED</div>
-
-        <div class="sep"></div>
-
-        <h2>Безопасность</h2>
-        <p class="hint">Страница помечена <span class="mono">noindex</span>. Если хочешь — можно закрыть доступ полностью (пароль/BasicAuth), но для GitHub Pages это делается иначе.</p>
+        <div class="note">
+          <div class="muted">
+            Подсказка: ссылка обычно выглядит так: <code>https://docs.google.com/spreadsheets/d/…/edit#gid=0</code>
+          </div>
+        </div>
       </div>
-    </div>
-  </div>
+    </section>
+  </main>
 
-  <script src="/crm-config.js"></script>
   <script>
-    function endpoint(){
-      const cfg = window.UHU_CRM || {};
-      return (cfg.endpoint || "").trim();
-    }
-
-    function setText(el, txt, ok){
-      el.textContent = txt;
-      el.className = "hint " + (ok ? "ok" : "bad");
-    }
-
-    document.getElementById("btnPing").addEventListener("click", async () => {
-      const out = document.getElementById("pingResult");
-      const ep = endpoint();
-      if(!ep){ setText(out, "❌ В crm-config.js не указан endpoint", false); return; }
-      setText(out, "Проверяю…", true);
-      try{
-        const r = await fetch(ep, { method:"GET" });
-        const j = await r.json();
-        setText(out, (j && j.ok) ? "✅ OK: Web App отвечает" : ("⚠️ Ответ: " + JSON.stringify(j)), !!(j && j.ok));
-      }catch(e){
-        setText(out, "❌ Ошибка: " + (e && e.message ? e.message : e), false);
-      }
-    });
-
-    document.getElementById("testForm").addEventListener("submit", async (ev) => {
-      ev.preventDefault();
-      const out = document.getElementById("sendResult");
-      const ep = endpoint();
-      if(!ep){ setText(out, "❌ В crm-config.js не указан endpoint", false); return; }
-
-      setText(out, "Отправляю…", true);
-
-      const payload = {
-        name: document.getElementById("t_name").value.trim(),
-        phone: document.getElementById("t_phone").value.trim(),
-        service: document.getElementById("t_service").value,
-        address: document.getElementById("t_address").value.trim(),
-        comment: document.getElementById("t_comment").value.trim(),
-        source: "cabinet_test",
-        page: "/cabinet.html",
-        ts: String(Date.now()),
-        userAgent: navigator.userAgent
-      };
-
-      try{
-        const r = await fetch(ep, {
-          method: "POST",
-          headers: { "Content-Type":"application/json" },
-          body: JSON.stringify(payload)
+    // Мягкая защита от забытых плейсхолдеров
+    (function(){
+      const a = document.getElementById("crmLink");
+      if (!a) return;
+      if (a.getAttribute("href") === "PASTE_YOUR_SHEETS_URL_HERE") {
+        a.addEventListener("click", (e) => {
+          e.preventDefault();
+          alert("Вставь ссылку на Google-таблицу в cabinet.html (вместо PASTE_YOUR_SHEETS_URL_HERE).");
         });
-        const j = await r.json().catch(()=>null);
-        if(j && j.ok){
-          setText(out, "✅ Отправлено. Проверь Google Sheets.", true);
-        }else{
-          setText(out, "❌ Не OK: " + (j ? JSON.stringify(j) : ("HTTP " + r.status)), false);
-        }
-      }catch(e){
-        setText(out, "❌ Ошибка: " + (e && e.message ? e.message : e), false);
       }
-    });
+    })();
   </script>
 </body>
 </html>
