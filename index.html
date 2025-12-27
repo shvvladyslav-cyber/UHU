@@ -593,7 +593,7 @@
           <a class="chip" href="#how" data-i18n="nav_how">Как это работает</a>
           <a class="chip" href="#pay" data-i18n="nav_pay">Оплата</a>
           <a class="chip" href="#order" data-i18n="nav_order">Заявка</a>
-          <a class="chip" href="/cabinet.html" title="CRM / Кабинет">CRM</a>
+          <a id="adminCabinetBtn" class="chip" href="/cabinet.html?admin=1" style="display:none" data-i18n="nav_cabinet">Кабинет</a>
 
           <a class="btn ghost" href="https://t.me/UHU_help" target="_blank" rel="noopener">Telegram</a>
 
@@ -648,7 +648,6 @@
   <a class="btn primary" href="#order" onclick="toggleDrawer(false)" data-i18n="cta_leave">Оставить заявку</a>
   <a class="btn ghost" href="https://t.me/UHU_help" target="_blank" rel="noopener">Telegram</a>
   <a class="btn accent" href="#pay" onclick="toggleDrawer(false)" data-i18n="cta_pay">Оплатить Revolut</a>
-<a class="btn btn-secondary btn-cabinet" href="/cabinet.html">👤 Кабинет</a>
 
   <div style="margin-top:auto; color:rgba(200,210,244,.85); font-weight:800; font-size:12.5px; line-height:1.4">
     Telegram: <b>@UHU_help</b><br/>
@@ -999,6 +998,7 @@
       nav_how:"Как это работает",
       nav_pay:"Оплата",
       nav_order:"Заявка",
+      nav_cabinet:"Кабинет",
       cta_leave:"Оставить заявку",
       install_btn:"Установить",
       kicker:"🇺🇦 + 🇩🇪 Kassel · Быстро и надёжно",
@@ -1074,6 +1074,7 @@
       nav_how:"Як це працює",
       nav_pay:"Оплата",
       nav_order:"Заявка",
+      nav_cabinet:"Кабінет",
       cta_leave:"Залишити заявку",
       install_btn:"Встановити",
       kicker:"🇺🇦 + 🇩🇪 Kassel · Швидко та надійно",
@@ -1149,6 +1150,7 @@
       nav_how:"So funktioniert’s",
       nav_pay:"Zahlung",
       nav_order:"Anfrage",
+      nav_cabinet:"Kabinett",
       cta_leave:"Anfrage senden",
       install_btn:"Installieren",
       kicker:"🇺🇦 + 🇩🇪 Kassel · Schnell & zuverlässig",
@@ -1653,5 +1655,17 @@
   }catch(e){}
 })();
 </script>
+
+<script>
+(function(){
+  try{
+    var p=new URLSearchParams(location.search);
+    var isAdmin = p.get('admin')==='1';
+    var btn = document.getElementById('adminCabinetBtn');
+    if(btn && isAdmin){ btn.style.display='inline-flex'; }
+  }catch(e){}
+})();
+</script>
+
 </body>
 </html>
