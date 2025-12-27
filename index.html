@@ -1,0 +1,378 @@
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>UHU Kassel — услуги рядом</title>
+  <meta name="description" content="UHU Kassel: уборка, переезды, сборка мебели, мелкий ремонт. Заявка в Telegram в 1 клик + оплата Revolut." />
+
+  <!-- Open Graph -->
+  <meta property="og:title" content="UHU Kassel — услуги рядом" />
+  <meta property="og:description" content="Уборка • Переезды • Сборка мебели • Мелкий ремонт. Быстрая заявка + оплата Revolut." />
+  <meta property="og:type" content="website" />
+  <meta property="og:image" content="/og.png" />
+
+  <!-- PWA -->
+  <link rel="manifest" href="/manifest.webmanifest" />
+  <meta name="theme-color" content="#0a0f22" />
+  <link rel="icon" href="/favicon.ico" />
+  <link rel="apple-touch-icon" href="/icons/apple-touch-icon.png" />
+  <meta name="color-scheme" content="dark light" />
+
+  <style>
+    :root{
+      --bg0:#070a14; --bg1:#0a0f22; --bg2:#0b1636;
+      --card:#0c1736cc; --line:#1f2f60; --txt:#f4f7ff; --muted:#b7c6ff;
+      --a:#7aa6ff; --a2:#8cffd8; --danger:#ff6b6b; --ok:#41d17c;
+      --shadow: 0 12px 28px rgba(0,0,0,.35);
+      --r:18px;
+    }
+    *{box-sizing:border-box}
+    html,body{height:100%}
+    body{
+      margin:0;
+      font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+      color:var(--txt);
+      background:
+        radial-gradient(900px 600px at 20% 0%, rgba(122,166,255,.18), transparent 60%),
+        radial-gradient(800px 520px at 80% 20%, rgba(140,255,216,.12), transparent 60%),
+        linear-gradient(180deg, var(--bg0), var(--bg1) 38%, #070a14 100%);
+    }
+    a{color:var(--a); text-decoration:none}
+    a:hover{text-decoration:underline}
+
+    .wrap{max-width:1050px; margin:0 auto; padding:0 16px}
+    .topbar{
+      position:sticky; top:0; z-index:50;
+      backdrop-filter: blur(10px);
+      background: rgba(7,10,20,.72);
+      border-bottom:1px solid rgba(31,47,96,.55);
+    }
+    .topbar .row{
+      display:flex; align-items:center; justify-content:space-between;
+      padding:10px 0; gap:10px;
+    }
+    .brand{display:flex; align-items:center; gap:10px}
+    .brand img{width:34px; height:34px; border-radius:10px; box-shadow: var(--shadow)}
+    .brand strong{letter-spacing:.2px}
+    .nav{display:flex; gap:12px; flex-wrap:wrap}
+    .nav a{
+      padding:8px 10px; border:1px solid rgba(31,47,96,.55);
+      border-radius:999px; background: rgba(12,23,54,.35);
+      font-size:14px;
+    }
+
+    .hero{padding:26px 0 10px}
+    .heroGrid{
+      display:grid; gap:14px;
+      grid-template-columns: 1.35fr .65fr;
+      align-items:stretch;
+    }
+    @media (max-width: 860px){
+      .heroGrid{grid-template-columns:1fr}
+      .nav{display:none}
+    }
+    .card{
+      border:1px solid rgba(31,47,96,.7);
+      background: var(--card);
+      border-radius: var(--r);
+      box-shadow: var(--shadow);
+    }
+    .heroMain{padding:18px}
+    h1{margin:0 0 8px; font-size:32px; line-height:1.1}
+    .sub{color:var(--muted); margin:0 0 14px; font-size:16px; line-height:1.4}
+    .chips{display:flex; gap:8px; flex-wrap:wrap; margin:10px 0 0}
+    .chip{
+      padding:6px 10px; border-radius:999px; font-size:13px;
+      border:1px solid rgba(31,47,96,.65);
+      background: rgba(10,15,34,.45);
+      color: var(--muted);
+    }
+    .heroAside{padding:16px; display:flex; flex-direction:column; gap:10px}
+    .ctaRow{display:flex; gap:10px; flex-wrap:wrap}
+    .btn{
+      display:inline-flex; align-items:center; justify-content:center;
+      padding:10px 12px; border-radius:12px;
+      border:1px solid rgba(31,47,96,.7);
+      background: rgba(10,15,34,.55);
+      color:var(--txt); font-weight:700;
+      cursor:pointer;
+    }
+    .btn.primary{border-color: rgba(140,255,216,.55); box-shadow: 0 0 0 4px rgba(140,255,216,.10) inset}
+    .btn:disabled{opacity:.6; cursor:not-allowed}
+
+    .section{padding:12px 0 0}
+    .section h2{margin:8px 0 8px; font-size:20px}
+    .grid4{
+      display:grid; gap:12px;
+      grid-template-columns: repeat(4, 1fr);
+    }
+    @media (max-width: 980px){ .grid4{grid-template-columns: repeat(2, 1fr);} }
+    @media (max-width: 520px){ .grid4{grid-template-columns: 1fr;} }
+
+    .svc{padding:14px}
+    .svc h3{margin:0 0 6px; font-size:16px}
+    .svc p{margin:0; color:var(--muted); font-size:14px; line-height:1.4}
+
+    .payGrid{
+      display:grid; gap:12px;
+      grid-template-columns: 1fr 1fr;
+      align-items:start;
+    }
+    @media (max-width: 860px){ .payGrid{grid-template-columns:1fr;} }
+
+    .payBox{padding:14px}
+    .qr{
+      display:flex; align-items:center; justify-content:center;
+      padding:14px; gap:10px; flex-direction:column;
+    }
+    .qr img{
+      width:min(280px, 80vw);
+      height:auto;
+      border-radius:14px;
+      border:1px solid rgba(31,47,96,.7);
+      background:#0a0f22;
+      box-shadow: var(--shadow);
+    }
+    .small{font-size:13px; color:var(--muted); line-height:1.35}
+
+    .orderGrid{
+      display:grid; gap:12px;
+      grid-template-columns: 1.05fr .95fr;
+      align-items:start;
+    }
+    @media (max-width: 980px){ .orderGrid{grid-template-columns:1fr;} }
+
+    .formCard{padding:14px}
+    form{display:grid; gap:10px}
+    label{font-size:13px; color:var(--muted)}
+    input, select, textarea{
+      width:100%;
+      padding:12px 12px;
+      border-radius:12px;
+      border:1px solid rgba(31,47,96,.75);
+      background: rgba(7,10,20,.55);
+      color: var(--txt);
+      outline:none;
+    }
+    textarea{min-height:88px; resize:vertical}
+    .consent{
+      display:flex; gap:10px; align-items:flex-start;
+      padding:10px 12px; border-radius:12px;
+      border:1px solid rgba(31,47,96,.55);
+      background: rgba(10,15,34,.35);
+      color:var(--muted);
+      font-size:13px;
+    }
+    .consent input{width:auto; margin-top:2px}
+    .formActions{display:flex; gap:10px; flex-wrap:wrap; align-items:center}
+    .hint{font-size:12px; color:var(--muted)}
+    .note{padding:14px}
+    .note ul{margin:8px 0 0; padding-left:18px; color:var(--muted)}
+    .footer{
+      margin-top:18px;
+      padding:18px 0 26px;
+      border-top:1px solid rgba(31,47,96,.55);
+      color:var(--muted);
+      font-size:13px;
+    }
+
+    .toast{
+      position: fixed; left: 50%; bottom: 18px; transform: translateX(-50%);
+      padding: 10px 12px;
+      border-radius: 999px;
+      border: 1px solid rgba(31,47,96,.7);
+      background: rgba(12,23,54,.85);
+      box-shadow: var(--shadow);
+      display:none;
+      max-width:min(520px, 92vw);
+      text-align:center;
+      z-index:999;
+    }
+    .toast.ok{border-color: rgba(65,209,124,.65)}
+    .toast.err{border-color: rgba(255,107,107,.65)}
+  </style>
+</head>
+
+<body>
+<header class="topbar">
+  <div class="wrap">
+    <div class="row">
+      <div class="brand">
+        <img src="/logo.png" alt="UHU" />
+        <div>
+          <strong>UHU Kassel</strong><div class="small">услуги рядом • быстро • аккуратно</div>
+        </div>
+      </div>
+      <nav class="nav" aria-label="Навигация">
+        <a href="#services">Услуги</a>
+        <a href="#pay">Оплата</a>
+        <a href="#order">Заявка</a>
+        <a href="/impressum.html">Impressum</a>
+      </nav>
+    </div>
+  </div>
+</header>
+
+<main class="wrap">
+  <section class="hero">
+    <div class="heroGrid">
+      <div class="card heroMain">
+        <h1>Уборка, переезды, сборка мебели и мелкий ремонт — в Касселе</h1>
+        <p class="sub">Оставь заявку — и мы уточним детали в Telegram/по телефону. Работаем аккуратно и без лишних разговоров.</p>
+        <div class="ctaRow">
+          <a class="btn primary" href="#order">Оставить заявку</a>
+          <a class="btn" href="#pay">Оплата</a>
+        </div>
+        <div class="chips" aria-label="Ключевые преимущества">
+          <span class="chip">✅ Быстрый ответ</span>
+          <span class="chip">✅ Понятная цена</span>
+          <span class="chip">✅ Kassel + рядом</span>
+          <span class="chip">✅ RU / UA / DE</span>
+        </div>
+      </div>
+
+      <div class="card heroAside">
+        <div>
+          <div class="small">Контакт</div>
+          <div style="font-weight:800; font-size:16px; margin-top:2px">Telegram: <a href="https://t.me/uhu_help" target="_blank" rel="noopener">@uhu_help</a></div>
+          <div class="small" style="margin-top:6px">Если Telegram недоступен — напиши номер телефона в заявке.</div>
+        </div>
+        <div class="card" style="padding:12px; background:rgba(10,15,34,.35)">
+          <div style="font-weight:800">Время</div>
+          <div class="small">Ответ обычно в течение дня</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="services" class="section">
+    <h2>Услуги</h2>
+    <div class="grid4">
+      <div class="card svc">
+        <h3>Уборка</h3>
+        <p>Квартира, дом, уборка после переезда, базовая/генеральная.</p>
+      </div>
+      <div class="card svc">
+        <h3>Переезд</h3>
+        <p>Перенос, упаковка, помощь с погрузкой/разгрузкой.</p>
+      </div>
+      <div class="card svc">
+        <h3>Сборка мебели</h3>
+        <p>IKEA, шкафы, кровати, столы, крепления и регулировка.</p>
+      </div>
+      <div class="card svc">
+        <h3>Мелкий ремонт</h3>
+        <p>Полки, карнизы, герметик, замена мелочей по дому.</p>
+      </div>
+    </div>
+  </section>
+
+  <section id="pay" class="section">
+    <h2>Оплата</h2>
+    <div class="payGrid">
+      <div class="card payBox">
+        <div style="font-weight:800; margin-bottom:6px">Revolut</div>
+        <div class="small">
+          Отсканируй QR-код и оплати в Revolut. После оплаты пришли скрин в Telegram или укажи в комментарии, что уже оплатил.
+        </div>
+        <div class="small" style="margin-top:10px">
+          Ссылка (если QR не сканируется):<br/>
+          <a href="https://revolut.me/vladshvachko" target="_blank" rel="noopener">revolut.me/vladshvachko</a>
+        </div>
+      </div>
+
+      <div class="card qr">
+        <img src="/revolut-qr.png" alt="Revolut QR" />
+        <div class="small">QR работает в приложении Revolut или через камеру телефона.</div>
+      </div>
+    </div>
+  </section>
+
+  <section id="order" class="section">
+    <h2>Заявка</h2>
+    <div class="orderGrid">
+      <div class="card formCard">
+        <form id="leadForm" novalidate>
+          <div>
+            <label for="name">Имя *</label>
+            <input id="name" name="name" placeholder="Например: Влад" required autocomplete="name" />
+          </div>
+
+          <div>
+            <label for="phone">Телефон / Telegram *</label>
+            <input id="phone" name="phone" placeholder="+49… или @username" required autocomplete="tel" />
+          </div>
+
+          <div>
+            <label for="service">Услуга</label>
+            <select id="service" name="service">
+              <option value="Уборка">Уборка</option>
+              <option value="Переезд">Переезд</option>
+              <option value="Сборка мебели">Сборка мебели</option>
+              <option value="Мелкий ремонт">Мелкий ремонт</option>
+            </select>
+          </div>
+
+          <div>
+            <label for="address">Район / адрес</label>
+            <input id="address" name="address" placeholder="Kassel, Nord-Holland…" autocomplete="street-address" />
+          </div>
+
+          <div>
+            <label for="comment">Комментарий</label>
+            <textarea id="comment" name="comment" placeholder="Что нужно сделать? Когда удобно?"></textarea>
+          </div>
+
+          <label class="consent">
+            <input id="consent" name="consent" type="checkbox" required />
+            <span>Я согласен с <a href="/datenschutz.html" target="_blank" rel="noopener">Datenschutz</a> и понимаю, что мои данные будут использованы для связи по заявке.</span>
+          </label>
+
+          <div class="formActions">
+            <button id="submitBtn" class="btn primary" type="submit">Отправить заявку</button>
+            <span class="hint" id="crmHint">Если заявка не отправляется — проверь <b>crm-config.js</b> (endpoint) и перезагрузи сайт.</span>
+          </div>
+        </form>
+      </div>
+
+      <div class="card note">
+        <div style="font-weight:800">Как это работает</div>
+        <ul>
+          <li>Заявка улетает в Google Sheets (CRM).</li>
+          <li>Статус ставится <b>NEW</b>, строки подсвечиваются цветом.</li>
+          <li>Опционально: бот шлёт уведомление в Telegram.</li>
+        </ul>
+        <div class="small" style="margin-top:10px">
+          Юр.страницы: <a href="/impressum.html">Impressum</a> • <a href="/datenschutz.html">Datenschutz</a> • <a href="/agb.html">AGB</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="footer">
+    <div class="wrap" style="padding:0">
+      © <span id="y"></span> UHU.digital • Kassel<br/>
+      <span class="small">Это шаблон. Обязательно заполни реальные данные в Impressum/Datenschutz/AGB.</span>
+    </div>
+  </section>
+</main>
+
+<div id="toast" class="toast" role="status" aria-live="polite"></div>
+
+<!-- CRM config + logic -->
+<script src="/crm-config.js"></script>
+<script src="/crm.js"></script>
+
+<!-- PWA -->
+<script>
+  document.getElementById("y").textContent = new Date().getFullYear();
+  (function(){
+    if(!("serviceWorker" in navigator)) return;
+    window.addEventListener("load", () => {
+      navigator.serviceWorker.register("/sw.js").catch(console.error);
+    });
+  })();
+</script>
+</body>
+</html>
