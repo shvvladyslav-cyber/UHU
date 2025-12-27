@@ -1,8 +1,7 @@
 // crm-config.js
-// ВАЖНО: сюда вставь URL Web App из Apps Script (Deploy → Web app → Copy URL)
-// Пример: https://script.google.com/macros/s/AKfycbxxxxxxx/exec
+// 1) Вставь сюда URL твоего Google Apps Script Web App (после Deploy → Web app)
 window.UHU_CRM = {
-  endpoint: "PASTE_YOUR_APPS_SCRIPT_WEB_APP_URL_HERE",
+  endpoint: "PASTE_YOUR_APPS_SCRIPT_WEB_APP_URL_HERE", // например: https://script.google.com/macros/s/XXXXX/exec
   site: "UHU.digital",
   currency: "EUR"
 };

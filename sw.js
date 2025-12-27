@@ -1,15 +1,8 @@
-/* sw.js — безопасный Service Worker (без падений)
-   Стратегия:
-   - Навигация (HTML): network-first, fallback -> /offline.html
-   - Статика (иконки/картинки/css/js): stale-while-revalidate
-   - POST/другие методы НЕ кешируем
-*/
-const CACHE_VERSION = "uhu-v7";
-const STATIC_CACHE = `static-${CACHE_VERSION}`;
-const RUNTIME_CACHE = `runtime-${CACHE_VERSION}`;
+// sw.js — safe Service Worker (без падений на 404/invalid URL)
+const CACHE = "uhu-v3";
 const OFFLINE_URL = "/offline.html";
 
-const PRECACHE = [
+const ASSETS = [
   "/",
   "/index.html",
   "/offline.html",
@@ -17,10 +10,9 @@ const PRECACHE = [
   "/favicon.ico",
   "/logo.png",
   "/og.png",
-  "/revolut-qr.png",
-  "/icons/apple-touch-icon.png",
   "/icons/icon-192.png",
   "/icons/icon-512.png",
+  "/icons/apple-touch-icon.png",
   "/crm-config.js",
   "/crm.js",
   "/impressum.html",
@@ -28,50 +20,53 @@ const PRECACHE = [
   "/agb.html"
 ];
 
+// Кладём в кеш то, что доступно. Если что-то 404 — не валим install.
+async function safeCacheAddAll(cache, urls){
+  const results = await Promise.allSettled(urls.map(async (u) => {
+    try { await cache.add(u); } catch(e) { /* ignore */ }
+  }));
+  return results;
+}
+
 self.addEventListener("install", (event) => {
   event.waitUntil((async () => {
-    const cache = await caches.open(STATIC_CACHE);
-    await cache.addAll(PRECACHE);
-    await self.skipWaiting();
+    const cache = await caches.open(CACHE);
+    await safeCacheAddAll(cache, ASSETS);
+    self.skipWaiting();
   })());
 });
 
 self.addEventListener("activate", (event) => {
   event.waitUntil((async () => {
     const keys = await caches.keys();
-    await Promise.all(keys.map((k) => {
-      if (![STATIC_CACHE, RUNTIME_CACHE].includes(k)) return caches.delete(k);
-      return null;
-    }));
+    await Promise.all(keys.map((k) => (k === CACHE ? null : caches.delete(k))));
+    // гарантируем offline страницу в кеше
+    const cache = await caches.open(CACHE);
+    await safeCacheAddAll(cache, [OFFLINE_URL]);
     await self.clients.claim();
   })());
 });
 
-async function cachePut(cacheName, request, response) {
-  const cache = await caches.open(cacheName);
-  await cache.put(request, response);
-}
-
 self.addEventListener("fetch", (event) => {
   const req = event.request;
 
-  // кешируем только GET
+  // Кешируем только GET
   if (req.method !== "GET") return;
 
-  const url = new URL(req.url);
+  // Не трогаем нестандартные протоколы (data:, chrome-extension:, etc.)
+  let url;
+  try { url = new URL(req.url); } catch(e) { return; }
+  if (url.protocol !== "http:" && url.protocol !== "https:") return;
 
-  // только свой origin
-  if (url.origin !== self.location.origin) return;
-
-  // Навигация: network-first
-  if (req.mode === "navigate" || (req.headers.get("accept") || "").includes("text/html")) {
+  // Навигация: сначала сеть, затем кеш, затем offline
+  if (req.mode === "navigate") {
     event.respondWith((async () => {
       try {
-        const fresh = await fetch(req, { cache: "no-store" });
-        const copy = fresh.clone();
-        cachePut(RUNTIME_CACHE, req, copy).catch(() => {});
-        return fresh;
-      } catch (_) {
+        const res = await fetch(req);
+        const cache = await caches.open(CACHE);
+        cache.put(req, res.clone());
+        return res;
+      } catch(e) {
         const cached = await caches.match(req);
         return cached || (await caches.match(OFFLINE_URL)) || new Response("Offline", { status: 503 });
       }
@@ -79,14 +74,20 @@ self.addEventListener("fetch", (event) => {
     return;
   }
 
-  // Статика: stale-while-revalidate
+  // Остальные запросы: cache-first
   event.respondWith((async () => {
     const cached = await caches.match(req);
-    const fetchPromise = fetch(req).then((res) => {
-      if (res && res.ok) cachePut(RUNTIME_CACHE, req, res.clone()).catch(() => {});
+    if (cached) return cached;
+    try {
+      const res = await fetch(req);
+      // кешируем только удачные ответы
+      if (res && res.ok) {
+        const cache = await caches.open(CACHE);
+        cache.put(req, res.clone());
+      }
       return res;
-    }).catch(() => null);
-
-    return cached || (await fetchPromise) || new Response("", { status: 504 });
+    } catch(e) {
+      return cached || new Response("", { status: 504 });
+    }
   })());
 });
