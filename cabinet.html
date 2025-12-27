@@ -1,1 +1,57 @@
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>UHU CRM — Кабинет</title>
+  <meta name="theme-color" content="#0a0f22" />
+  <style>
+    :root{color-scheme:dark}
+    body{margin:0;font-family:system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif;background:#0a0f22;color:#eaf2ff}
+    .wrap{max-width:860px;margin:0 auto;padding:28px 16px}
+    .card{background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.10);border-radius:18px;padding:18px}
+    h1{margin:0 0 10px;font-size:22px}
+    p{margin:10px 0;opacity:.9;line-height:1.45}
+    .btns{display:flex;gap:10px;flex-wrap:wrap;margin-top:14px}
+    a.btn{display:inline-flex;align-items:center;justify-content:center;padding:12px 14px;border-radius:14px;
+      text-decoration:none;color:#0a0f22;background:#ffd54a;font-weight:700}
+    a.btn.secondary{background:rgba(255,255,255,.10);color:#eaf2ff;border:1px solid rgba(255,255,255,.14)}
+    code{background:rgba(0,0,0,.25);padding:2px 6px;border-radius:8px}
+    .note{margin-top:12px;font-size:13px;opacity:.75}
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <div class="card">
+      <h1>UHU CRM — Кабинет</h1>
+      <p>Эта страница сделана безопасно: заявки и статусы хранятся в <b>Google Sheets</b>.
+      Чтобы никто посторонний не видел ваши заявки, мы <b>не показываем таблицу публично</b>.</p>
+
+      <p><b>Как работать:</b></p>
+      <p>1) Открой таблицу Leads в Google Sheets<br>
+         2) Меняй статус в колонке <code>status</code> (NEW / IN_WORK / DONE / CANCELLED)<br>
+         3) Цвета выставляются автоматически правилами</p>
+
+      <div class="btns">
+        <!-- ВСТАВЬ СЮДА ССЫЛКУ НА ТВОЮ ТАБЛИЦУ GOOGLE SHEETS -->
+        <a class="btn" id="openSheet" href="#" target="_blank" rel="noopener">Открыть Google Sheets (CRM)</a>
+        <a class="btn secondary" href="/index.html">← На сайт</a>
+      </div>
+
+      <p class="note">
+        Чтобы кнопка “Открыть Google Sheets” работала — вставь ссылку на свою таблицу в коде ниже
+        (в этом файле) вместо <b>PASTE_SHEET_URL_HERE</b>.
+      </p>
+
+      <script>
+        // 1) Открой свою таблицу Google Sheets
+        // 2) Скопируй URL из адресной строки
+        // 3) Вставь сюда:
+        const SHEET_URL = "PASTE_SHEET_URL_HERE";
+        document.getElementById("openSheet").href = SHEET_URL;
+      </script>
+    </div>
+  </div>
+</body>
+</html>
 
