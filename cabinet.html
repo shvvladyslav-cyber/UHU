@@ -1,0 +1,371 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1"/>
+<title>UHU — Кабинет</title>
+<meta name="theme-color" content="#0a0f22"/>
+<link rel="icon" href="/favicon.ico"/>
+<style>
+:root{
+  --bg:#0a0f22; --text:#eef2ff; --muted:rgba(238,242,255,.68);
+  --line:rgba(255,255,255,.12); --card:rgba(255,255,255,.06);
+  --card2:rgba(255,255,255,.04); --shadow:0 18px 40px rgba(0,0,0,.45);
+  --r:22px;
+}
+*{box-sizing:border-box}
+html,body{height:100%}
+body{
+  margin:0; font-family:system-ui,-apple-system,Segoe UI,Roboto,Ubuntu,Cantarell,Noto Sans,sans-serif;
+  background:radial-gradient(1200px 500px at 18% 12%, rgba(255,212,0,.14), transparent 60%),
+             radial-gradient(900px 480px at 85% 10%, rgba(74,163,255,.16), transparent 55%),
+             var(--bg);
+  color:var(--text);
+}
+a{color:inherit}
+.container{max-width:1100px;margin:0 auto;padding:18px 16px 48px}
+.top{
+  display:flex; align-items:center; justify-content:space-between; gap:12px; flex-wrap:wrap;
+  padding:14px 0 10px;
+}
+.brand{display:flex; align-items:center; gap:10px; font-weight:900}
+.badge{
+  display:inline-flex; align-items:center; gap:8px; padding:8px 10px; border-radius:999px;
+  background:rgba(255,255,255,.05); border:1px solid var(--line); color:var(--muted);
+  font-weight:850; font-size:13px;
+}
+.btn{
+  display:inline-flex; align-items:center; justify-content:center; gap:10px;
+  padding:12px 14px; border-radius:16px; font-weight:900; border:1px solid var(--line);
+  background:rgba(255,255,255,.06); cursor:pointer; transition:.15s ease;
+  text-decoration:none; line-height:1;
+}
+.btn:hover{transform:translateY(-1px); border-color:rgba(255,255,255,.22)}
+.btn.primary{background:linear-gradient(135deg, rgba(255,212,0,.18), rgba(74,163,255,.18));}
+.btn.ghost{background:rgba(255,255,255,.03)}
+.grid{display:grid; gap:14px; grid-template-columns:1.15fr .85fr}
+@media (max-width:940px){.grid{grid-template-columns:1fr}}
+.card{
+  background:linear-gradient(180deg, rgba(255,255,255,.06), rgba(255,255,255,.03));
+  border:1px solid var(--line); border-radius:var(--r); box-shadow:var(--shadow);
+  padding:16px;
+}
+.card h2{margin:0 0 8px; font-size:18px}
+.muted{color:var(--muted)}
+.field{display:flex; flex-direction:column; gap:6px; margin:10px 0}
+.field label{font-weight:800; font-size:13px; color:var(--muted)}
+.inp{
+  width:100%; padding:12px 12px; border-radius:14px;
+  border:1px solid var(--line); background:rgba(0,0,0,.16); color:var(--text);
+}
+.row{display:flex; gap:10px; flex-wrap:wrap; align-items:center}
+.sep{height:1px; background:var(--line); margin:14px 0}
+.pills{display:flex; gap:8px; flex-wrap:wrap}
+.pill{
+  display:inline-flex; align-items:center; padding:6px 10px; border-radius:999px;
+  border:1px solid var(--line); background:rgba(0,0,0,.14); font-weight:900; font-size:12px;
+}
+.pill--new{border-color:rgba(255,212,0,.28)}
+.pill--in_work{border-color:rgba(74,163,255,.35)}
+.pill--done{border-color:rgba(93,245,171,.25)}
+.pill--cancelled{border-color:rgba(255,120,120,.28)}
+.tbl{width:100%; border-collapse:collapse}
+.tbl th,.tbl td{padding:10px 12px; border-top:1px solid rgba(255,255,255,.08); text-align:left; font-size:13px}
+.tbl th{color:var(--muted); font-weight:900}
+.actions{display:flex; gap:6px; flex-wrap:wrap}
+.small{padding:8px 10px; border-radius:12px; font-size:12px}
+.toast{margin-top:10px; color:var(--muted); font-size:13px}
+</style>
+<script src="/crm-config.js"></script>
+</head>
+<body>
+  <div class="container">
+    <div class="top">
+      <div class="brand">
+        <span class="badge">UHU • Admin</span>
+        <span class="muted">/cabinet.html</span>
+      </div>
+      <div class="row">
+        <a class="btn ghost" href="/">← На сайт</a>
+      </div>
+    </div>
+
+    <div class="grid">
+      <div class="card">
+        <h2>Быстрые ссылки</h2>
+        <p class="muted">Это просто удобные ссылки (без авторизации). Сначала вставь ссылку на Google‑таблицу и endpoint Web App.</p>
+
+        <div class="field">
+          <label>Ссылка на Google Sheets (таблица CRM)</label>
+          <input class="inp" id="sheetUrl" placeholder="https://docs.google.com/spreadsheets/d/..." />
+        </div>
+
+        <div class="row">
+          <a class="btn primary" id="btnOpenCRM" href="#" target="_blank" rel="noopener">Открыть CRM</a>
+          <a class="btn" id="btnOpenLeads" href="#" target="_blank" rel="noopener">Открыть лист Leads</a>
+          <a class="btn" id="btnOpenNEW" href="#" target="_blank" rel="noopener">Открыть заявки NEW</a>
+        </div>
+
+        <div class="sep"></div>
+
+        <h2>Мини‑таблица заявок</h2>
+        <p class="muted">Показывает последние 10 заявок из Apps Script JSON. Переключай статус — таблица обновится.</p>
+
+        <div class="row" style="justify-content:space-between">
+          <div class="pills" id="statusPills">
+            <button class="btn small primary" data-status="NEW" type="button">NEW</button>
+            <button class="btn small" data-status="IN_WORK" type="button">IN_WORK</button>
+            <button class="btn small" data-status="DONE" type="button">DONE</button>
+            <button class="btn small" data-status="CANCELLED" type="button">CANCELLED</button>
+          </div>
+          <button class="btn small ghost" id="btnRefresh" type="button">Обновить</button>
+        </div>
+
+        <div class="toast" id="miniInfo">—</div>
+
+        <div style="overflow:auto; border-radius:16px; border:1px solid var(--line); margin-top:10px">
+          <table class="tbl">
+            <thead>
+              <tr>
+                <th>Дата</th><th>Статус</th><th>Имя</th><th>Контакт</th><th>Услуга</th><th>Действия</th>
+              </tr>
+            </thead>
+            <tbody id="miniTbody">
+              <tr><td colspan="6" class="muted">Загрузка…</td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="sep"></div>
+
+        <h2>Настройки кабинета</h2>
+        <div class="field">
+          <label>URL Web App (endpoint) из Apps Script</label>
+          <input class="inp" id="endpoint" placeholder="https://script.google.com/macros/s/.../exec" />
+        </div>
+
+        <div class="field">
+          <label>ADMIN_KEY (секрет для смены статусов)</label>
+          <input class="inp" id="adminKey" placeholder="любой длинный ключ (должен совпадать в Script Properties)" />
+        </div>
+
+        <div class="row">
+          <button class="btn primary" id="btnSave" type="button">Сохранить</button>
+          <button class="btn" id="btnTest" type="button">Проверить endpoint</button>
+        </div>
+
+        <div class="toast" id="saveInfo"></div>
+      </div>
+
+      <div class="card">
+        <h2>Как это работает</h2>
+        <ol class="muted" style="margin:0; padding-left:18px; line-height:1.55">
+          <li>Сайт отправляет заявки в Apps Script → он пишет в Google Sheets.</li>
+          <li>Кабинет читает JSON: <span class="badge">?action=leads&amp;status=NEW&amp;limit=10</span>.</li>
+          <li>Кнопки IN_WORK / DONE / CANCELLED отправляют POST: <span class="badge">?action=updateStatus&amp;key=...</span>.</li>
+        </ol>
+        <div class="sep"></div>
+        <p class="muted" style="margin:0">Совет: не публикуй ссылку на кабинет. Он появляется только при <b>?admin=1</b> на главной странице.</p>
+      </div>
+    </div>
+  </div>
+
+<script>
+(function(){
+  // --- Admin gate ---
+  const qs = new URLSearchParams(location.search);
+  if(!qs.has('admin') && !localStorage.getItem('uhu_admin_enabled')){
+    // allow direct open; but keep simple
+  }
+
+  const cfg = window.UHU_CRM || {};
+  const elSheet = document.getElementById('sheetUrl');
+  const elEndpoint = document.getElementById('endpoint');
+  const elKey = document.getElementById('adminKey');
+  const saveInfo = document.getElementById('saveInfo');
+
+  const btnOpenCRM = document.getElementById('btnOpenCRM');
+  const btnOpenLeads = document.getElementById('btnOpenLeads');
+  const btnOpenNEW = document.getElementById('btnOpenNEW');
+
+  const btnSave = document.getElementById('btnSave');
+  const btnTest = document.getElementById('btnTest');
+  const btnRefresh = document.getElementById('btnRefresh');
+
+  const miniTbody = document.getElementById('miniTbody');
+  const miniInfo = document.getElementById('miniInfo');
+
+  const pills = Array.from(document.querySelectorAll('button[data-status]'));
+  let activeStatus = 'NEW';
+
+  function getLS(k, fallback){
+    const v = (localStorage.getItem(k)||'').trim();
+    return v || (fallback||'');
+  }
+
+  function setLinks(){
+    const sheet = (elSheet.value||'').trim();
+    btnOpenCRM.href = sheet || '#';
+    btnOpenLeads.href = sheet ? sheet : '#';
+    btnOpenNEW.href = sheet ? sheet : '#';
+    // if user pasted a GID URL, keep as-is; else ok.
+  }
+
+  function getEndpoint(){
+    return (elEndpoint.value||'').trim() || (cfg.endpoint||'').trim();
+  }
+
+  function getKey(){
+    return (elKey.value||'').trim();
+  }
+
+  function escHtml(s){
+    return String(s==null?'':s).replace(/[&<>"']/g, c=>({ '&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;' }[c]));
+  }
+  function escCss(s){
+    return String(s==null?'':s).toLowerCase().replace(/[^a-z0-9_]+/g,'_');
+  }
+
+  async function loadLeads(){
+    const endpoint = getEndpoint();
+    if(!endpoint || endpoint.includes('PASTE_YOUR_')){
+      miniTbody.innerHTML = '<tr><td colspan="6" class="muted">Сначала вставь endpoint и нажми “Сохранить”.</td></tr>';
+      miniInfo.textContent = 'endpoint не задан';
+      return;
+    }
+    miniInfo.textContent = 'Загружаю…';
+    miniTbody.innerHTML = '<tr><td colspan="6" class="muted">Загрузка…</td></tr>';
+
+    const url = endpoint + (endpoint.includes('?') ? '&' : '?') + 'action=leads&status=' + encodeURIComponent(activeStatus) + '&limit=10';
+    const res = await fetch(url, { method:'GET', cache:'no-store' });
+    const js = await res.json().catch(()=>null);
+    if(!res.ok || !js || !js.ok) throw new Error((js && (js.error||js.message)) ? (js.error||js.message) : ('HTTP '+res.status));
+    const items = Array.isArray(js.items) ? js.items : [];
+    if(items.length === 0){
+      miniTbody.innerHTML = '<tr><td colspan="6" class="muted">Нет заявок со статусом ' + escHtml(activeStatus) + '.</td></tr>';
+      miniInfo.textContent = 'Готово (0)';
+      return;
+    }
+
+    miniTbody.innerHTML = items.map(it=>{
+      const dt = it.created_at ? new Date(it.created_at) : null;
+      const nice = dt && !isNaN(dt) ? dt.toLocaleString() : (it.created_at || '');
+      const status = (it.status||'').toString();
+      const name = (it.name||'').toString();
+      const phone = (it.phone||'').toString();
+      const service = (it.service||'').toString();
+      const row = it.row;
+
+      return '<tr>' +
+        '<td>'+escHtml(nice)+'</td>' +
+        '<td><span class="pill pill--'+escCss(status)+'">'+escHtml(status)+'</span></td>' +
+        '<td>'+escHtml(name)+'</td>' +
+        '<td>'+escHtml(phone)+'</td>' +
+        '<td>'+escHtml(service)+'</td>' +
+        '<td>' +
+          '<div class="actions">' +
+            '<button class="btn small" data-act="set" data-row="'+row+'" data-to="IN_WORK" type="button">✅ IN_WORK</button>' +
+            '<button class="btn small" data-act="set" data-row="'+row+'" data-to="DONE" type="button">✅ DONE</button>' +
+            '<button class="btn small" data-act="set" data-row="'+row+'" data-to="CANCELLED" type="button">⛔ CANCEL</button>' +
+            '<button class="btn small ghost" data-act="plus" data-row="'+row+'" type="button">+1</button>' +
+          '</div>' +
+        '</td>' +
+      '</tr>';
+    }).join('');
+
+    miniInfo.textContent = 'Готово ('+items.length+').';
+  }
+
+  async function postUpdate(row, status){
+    const endpoint = getEndpoint();
+    const key = getKey();
+    if(!endpoint) throw new Error('Missing endpoint');
+    if(!key) throw new Error('Missing ADMIN_KEY (в кабинете и в Script Properties)');
+
+    const url = endpoint + (endpoint.includes('?') ? '&' : '?') + 'action=updateStatus&key=' + encodeURIComponent(key);
+
+    // text/plain => обычно без CORS preflight
+    const payload = status ? { row: row, status: status } : { row: row };
+    const res = await fetch(url, {
+      method:'POST',
+      headers:{ 'Content-Type':'text/plain;charset=utf-8' },
+      body: JSON.stringify(payload)
+    });
+    const js = await res.json().catch(()=>null);
+    if(!res.ok || !js || !js.ok) throw new Error((js && (js.error||js.message)) ? (js.error||js.message) : ('HTTP '+res.status));
+    return js;
+  }
+
+  // events
+  pills.forEach(b=>{
+    b.addEventListener('click', ()=>{
+      activeStatus = b.getAttribute('data-status') || 'NEW';
+      pills.forEach(x=>x.classList.toggle('primary', x===b));
+      loadLeads().catch(err=>{ miniInfo.textContent='Ошибка: '+String(err); });
+    });
+  });
+
+  if(btnRefresh) btnRefresh.addEventListener('click', ()=>loadLeads().catch(err=>{ miniInfo.textContent='Ошибка: '+String(err); }));
+
+  document.addEventListener('click', async (ev)=>{
+    const t = ev.target;
+    if(!(t instanceof HTMLElement)) return;
+    const act = t.getAttribute('data-act');
+    if(!act) return;
+
+    const row = parseInt(t.getAttribute('data-row')||'0',10);
+    if(!row) return;
+
+    t.setAttribute('disabled','disabled');
+    try{
+      if(act === 'plus'){
+        await postUpdate(row, null);
+      }else if(act === 'set'){
+        const to = (t.getAttribute('data-to')||'').toString();
+        await postUpdate(row, to);
+      }
+      await loadLeads();
+    }catch(err){
+      miniInfo.textContent = 'Ошибка: ' + String(err);
+    }finally{
+      t.removeAttribute('disabled');
+    }
+  });
+
+  if(btnSave) btnSave.addEventListener('click', ()=>{
+    localStorage.setItem('uhu_sheet_url', (elSheet.value||'').trim());
+    localStorage.setItem('uhu_endpoint', (elEndpoint.value||'').trim());
+    localStorage.setItem('uhu_admin_key', (elKey.value||'').trim());
+    localStorage.setItem('uhu_admin_enabled','1');
+    setLinks();
+    saveInfo.textContent = 'Сохранено.';
+    loadLeads().catch(err=>{ miniInfo.textContent='Ошибка: '+String(err); });
+  });
+
+  if(btnTest) btnTest.addEventListener('click', async ()=>{
+    const endpoint = getEndpoint();
+    if(!endpoint) { saveInfo.textContent = 'Вставь endpoint.'; return; }
+    saveInfo.textContent = 'Проверяю…';
+    try{
+      const res = await fetch(endpoint, { method:'GET', cache:'no-store' });
+      const js = await res.json().catch(()=>null);
+      if(res.ok && js && js.ok){
+        saveInfo.textContent = 'OK: ' + (js.msg || 'endpoint работает');
+      }else{
+        saveInfo.textContent = 'Ошибка: ' + (js && (js.error||js.message) ? (js.error||js.message) : ('HTTP '+res.status));
+      }
+    }catch(err){
+      saveInfo.textContent = 'Ошибка: ' + String(err);
+    }
+  });
+
+  // init
+  elSheet.value = getLS('uhu_sheet_url', cfg.sheetUrl || '');
+  elEndpoint.value = getLS('uhu_endpoint', cfg.endpoint || '');
+  elKey.value = getLS('uhu_admin_key', '');
+  setLinks();
+  loadLeads().catch(err=>{ miniInfo.textContent='Ошибка: '+String(err); });
+})();
+</script>
+</body>
+</html>
