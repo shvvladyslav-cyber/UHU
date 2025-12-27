@@ -1,57 +1,268 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="ru">
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>UHU CRM — Кабинет</title>
+  <title>UHU Kassel — Кабинет (CRM)</title>
+  <meta name="robots" content="noindex,nofollow" />
   <meta name="theme-color" content="#0a0f22" />
+  <link rel="icon" href="/favicon.ico" />
   <style>
-    :root{color-scheme:dark}
-    body{margin:0;font-family:system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif;background:#0a0f22;color:#eaf2ff}
-    .wrap{max-width:860px;margin:0 auto;padding:28px 16px}
-    .card{background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.10);border-radius:18px;padding:18px}
-    h1{margin:0 0 10px;font-size:22px}
-    p{margin:10px 0;opacity:.9;line-height:1.45}
-    .btns{display:flex;gap:10px;flex-wrap:wrap;margin-top:14px}
-    a.btn{display:inline-flex;align-items:center;justify-content:center;padding:12px 14px;border-radius:14px;
-      text-decoration:none;color:#0a0f22;background:#ffd54a;font-weight:700}
-    a.btn.secondary{background:rgba(255,255,255,.10);color:#eaf2ff;border:1px solid rgba(255,255,255,.14)}
-    code{background:rgba(0,0,0,.25);padding:2px 6px;border-radius:8px}
-    .note{margin-top:12px;font-size:13px;opacity:.75}
+    :root{
+      --bg:#0a0f22;
+      --card:rgba(255,255,255,.06);
+      --line:rgba(255,255,255,.12);
+      --txt:#e9eef7;
+      --muted:rgba(233,238,247,.75);
+      --focus:rgba(99,102,241,.55);
+      --r:22px;
+    }
+    *{box-sizing:border-box}
+    body{
+      margin:0;
+      font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, "Apple Color Emoji","Segoe UI Emoji";
+      color:var(--txt);
+      background:
+        radial-gradient(900px 500px at 20% 10%, rgba(56,189,248,.26), transparent 60%),
+        radial-gradient(900px 500px at 85% 20%, rgba(234,179,8,.22), transparent 55%),
+        radial-gradient(900px 500px at 65% 95%, rgba(236,72,153,.18), transparent 55%),
+        var(--bg);
+      min-height:100vh;
+    }
+    a{color:inherit}
+    .wrap{max-width:980px; margin:0 auto; padding:18px 14px 70px}
+    .top{
+      display:flex; align-items:center; justify-content:space-between; gap:14px;
+      padding:12px 14px;
+      border:1px solid var(--line);
+      border-radius:18px;
+      background:rgba(255,255,255,.04);
+      backdrop-filter: blur(10px);
+      position:sticky; top:10px; z-index:10;
+    }
+    .brand{display:flex; align-items:center; gap:12px; text-decoration:none}
+    .brand img{width:42px; height:42px; border-radius:14px; border:1px solid var(--line); background:#fff}
+    .brand small{display:block; color:var(--muted); font-weight:800}
+    .btn{
+      display:inline-flex; align-items:center; justify-content:center; gap:10px;
+      padding:10px 14px; border-radius:14px; font-weight:950;
+      border:1px solid var(--line);
+      background:rgba(255,255,255,.06);
+      cursor:pointer; text-decoration:none;
+      transition:.2s ease;
+      user-select:none;
+    }
+    .btn:hover{transform:translateY(-1px); border-color:rgba(255,255,255,.22)}
+    .btn:focus{outline:2px solid var(--focus); outline-offset:2px}
+    .btn.primary{background:linear-gradient(135deg, rgba(59,130,246,.9), rgba(99,102,241,.85)); border-color:rgba(255,255,255,.10)}
+    .grid{display:grid; grid-template-columns:1.2fr .8fr; gap:14px; margin-top:14px}
+    @media (max-width: 860px){ .grid{grid-template-columns:1fr} }
+    .card{
+      border:1px solid var(--line);
+      background:var(--card);
+      border-radius:var(--r);
+      padding:14px;
+      box-shadow:0 18px 60px rgba(0,0,0,.45);
+      backdrop-filter: blur(12px);
+    }
+    h1{font-size:22px; margin:0 0 6px}
+    h2{font-size:16px; margin:0 0 10px}
+    p{margin:8px 0; color:var(--muted); line-height:1.55}
+    code, .mono{font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace}
+    .row{display:flex; gap:10px; flex-wrap:wrap; margin-top:10px}
+    .field{display:flex; flex-direction:column; gap:6px; margin-top:10px}
+    input, select, textarea{
+      width:100%;
+      padding:12px 12px;
+      border-radius:14px;
+      border:1px solid var(--line);
+      background:rgba(0,0,0,.18);
+      color:var(--txt);
+      font-weight:850;
+      outline:none;
+    }
+    textarea{min-height:92px; resize:vertical}
+    input:focus, select:focus, textarea:focus{outline:2px solid var(--focus); outline-offset:2px}
+    .hint{font-size:13px; color:var(--muted)}
+    .ok{color:#86efac}
+    .bad{color:#fecaca}
+    .box{padding:10px 12px; border-radius:14px; border:1px dashed rgba(255,255,255,.20); background:rgba(0,0,0,.10)}
+    .sep{height:1px; background:rgba(255,255,255,.10); margin:14px 0}
   </style>
 </head>
 <body>
   <div class="wrap">
-    <div class="card">
-      <h1>UHU CRM — Кабинет</h1>
-      <p>Эта страница сделана безопасно: заявки и статусы хранятся в <b>Google Sheets</b>.
-      Чтобы никто посторонний не видел ваши заявки, мы <b>не показываем таблицу публично</b>.</p>
+    <div class="top">
+      <a class="brand" href="/#top">
+        <img src="/logo.png" alt="UHU" />
+        <div>
+          <strong>UHU Kassel</strong>
+          <small>Кабинет (CRM)</small>
+        </div>
+      </a>
+      <div class="row">
+        <a class="btn" href="/#order">К форме</a>
+        <a class="btn" href="/impressum.html" target="_blank" rel="noopener">Impressum</a>
+        <a class="btn" href="/datenschutz.html" target="_blank" rel="noopener">Datenschutz</a>
+      </div>
+    </div>
 
-      <p><b>Как работать:</b></p>
-      <p>1) Открой таблицу Leads в Google Sheets<br>
-         2) Меняй статус в колонке <code>status</code> (NEW / IN_WORK / DONE / CANCELLED)<br>
-         3) Цвета выставляются автоматически правилами</p>
+    <div class="grid">
+      <div class="card">
+        <h1>CRM: проверка подключения</h1>
+        <p>Это «кабинет» для быстрой диагностики: работает ли Apps Script Web App и принимает ли он заявки.</p>
 
-      <div class="btns">
-        <!-- ВСТАВЬ СЮДА ССЫЛКУ НА ТВОЮ ТАБЛИЦУ GOOGLE SHEETS -->
-        <a class="btn" id="openSheet" href="#" target="_blank" rel="noopener">Открыть Google Sheets (CRM)</a>
-        <a class="btn secondary" href="/index.html">← На сайт</a>
+        <div class="box">
+          <div><strong>1) Вставь URL Web App в</strong> <span class="mono">crm-config.js</span></div>
+          <div class="hint">Файл: <span class="mono">endpoint: "https://script.google.com/macros/s/.../exec"</span></div>
+        </div>
+
+        <div class="sep"></div>
+
+        <h2>Проверка Web App (GET)</h2>
+        <p class="hint">Должно вернуть: <span class="mono">{"ok":true,"msg":"UHU CRM OK"}</span></p>
+        <div class="row">
+          <button class="btn" id="btnPing" type="button">Проверить</button>
+          <span id="pingResult" class="hint"></span>
+        </div>
+
+        <div class="sep"></div>
+
+        <h2>Тестовая заявка (POST)</h2>
+        <p class="hint">Отправит тестовую заявку в Google Sheets (лист <span class="mono">Leads</span>) и, если включено — уведомление в Telegram.</p>
+
+        <form id="testForm">
+          <div class="field">
+            <label>Имя</label>
+            <input id="t_name" value="Test Lead" required />
+          </div>
+          <div class="field">
+            <label>Телефон / Telegram</label>
+            <input id="t_phone" value="+49 000 0000" required />
+          </div>
+          <div class="field">
+            <label>Услуга</label>
+            <select id="t_service">
+              <option>Уборка</option>
+              <option>Переезд</option>
+              <option>Сборка мебели</option>
+              <option>Мелкий ремонт</option>
+            </select>
+          </div>
+          <div class="field">
+            <label>Адрес</label>
+            <input id="t_address" value="Kassel, Test" />
+          </div>
+          <div class="field">
+            <label>Комментарий</label>
+            <textarea id="t_comment">Тест из cabinet.html</textarea>
+          </div>
+
+          <div class="row">
+            <button class="btn primary" id="btnSend" type="submit">Отправить тест</button>
+            <span id="sendResult" class="hint"></span>
+          </div>
+        </form>
+
+        <div class="sep"></div>
+
+        <h2>Где смотреть заявки?</h2>
+        <p>Открой Google Sheets с таблицей CRM (ту, чей <span class="mono">SHEET_ID</span> ты указал в Script Properties).</p>
+        <p class="hint">Подсказка: если заявки не приходят — 99% это либо неправильный URL Web App в <span class="mono">crm-config.js</span>, либо Web App опубликован не с теми правами (см. README.txt).</p>
       </div>
 
-      <p class="note">
-        Чтобы кнопка “Открыть Google Sheets” работала — вставь ссылку на свою таблицу в коде ниже
-        (в этом файле) вместо <b>PASTE_SHEET_URL_HERE</b>.
-      </p>
+      <div class="card">
+        <h2>Быстрые ссылки</h2>
+        <div class="row">
+          <a class="btn" href="https://t.me/UHU_help" target="_blank" rel="noopener">Telegram @UHU_help</a>
+          <a class="btn" href="/" target="_blank" rel="noopener">Открыть сайт</a>
+        </div>
 
-      <script>
-        // 1) Открой свою таблицу Google Sheets
-        // 2) Скопируй URL из адресной строки
-        // 3) Вставь сюда:
-        const SHEET_URL = "PASTE_SHEET_URL_HERE";
-        document.getElementById("openSheet").href = SHEET_URL;
-      </script>
+        <div class="sep"></div>
+
+        <h2>Шаблон правильного crm-config.js</h2>
+        <div class="box mono" style="white-space:pre-wrap">window.UHU_CRM = {
+  endpoint: "https://script.google.com/macros/s/XXXX/exec",
+  site: "UHU.digital",
+  currency: "EUR"
+};</div>
+
+        <div class="sep"></div>
+
+        <h2>Статусы в таблице</h2>
+        <p class="hint">Скрипт создаёт статус в колонке B и добавляет цвета:</p>
+        <div class="box mono" style="white-space:pre-wrap">NEW / IN_WORK / DONE / CANCELLED</div>
+
+        <div class="sep"></div>
+
+        <h2>Безопасность</h2>
+        <p class="hint">Страница помечена <span class="mono">noindex</span>. Если хочешь — можно закрыть доступ полностью (пароль/BasicAuth), но для GitHub Pages это делается иначе.</p>
+      </div>
     </div>
   </div>
+
+  <script src="/crm-config.js"></script>
+  <script>
+    function endpoint(){
+      const cfg = window.UHU_CRM || {};
+      return (cfg.endpoint || "").trim();
+    }
+
+    function setText(el, txt, ok){
+      el.textContent = txt;
+      el.className = "hint " + (ok ? "ok" : "bad");
+    }
+
+    document.getElementById("btnPing").addEventListener("click", async () => {
+      const out = document.getElementById("pingResult");
+      const ep = endpoint();
+      if(!ep){ setText(out, "❌ В crm-config.js не указан endpoint", false); return; }
+      setText(out, "Проверяю…", true);
+      try{
+        const r = await fetch(ep, { method:"GET" });
+        const j = await r.json();
+        setText(out, (j && j.ok) ? "✅ OK: Web App отвечает" : ("⚠️ Ответ: " + JSON.stringify(j)), !!(j && j.ok));
+      }catch(e){
+        setText(out, "❌ Ошибка: " + (e && e.message ? e.message : e), false);
+      }
+    });
+
+    document.getElementById("testForm").addEventListener("submit", async (ev) => {
+      ev.preventDefault();
+      const out = document.getElementById("sendResult");
+      const ep = endpoint();
+      if(!ep){ setText(out, "❌ В crm-config.js не указан endpoint", false); return; }
+
+      setText(out, "Отправляю…", true);
+
+      const payload = {
+        name: document.getElementById("t_name").value.trim(),
+        phone: document.getElementById("t_phone").value.trim(),
+        service: document.getElementById("t_service").value,
+        address: document.getElementById("t_address").value.trim(),
+        comment: document.getElementById("t_comment").value.trim(),
+        source: "cabinet_test",
+        page: "/cabinet.html",
+        ts: String(Date.now()),
+        userAgent: navigator.userAgent
+      };
+
+      try{
+        const r = await fetch(ep, {
+          method: "POST",
+          headers: { "Content-Type":"application/json" },
+          body: JSON.stringify(payload)
+        });
+        const j = await r.json().catch(()=>null);
+        if(j && j.ok){
+          setText(out, "✅ Отправлено. Проверь Google Sheets.", true);
+        }else{
+          setText(out, "❌ Не OK: " + (j ? JSON.stringify(j) : ("HTTP " + r.status)), false);
+        }
+      }catch(e){
+        setText(out, "❌ Ошибка: " + (e && e.message ? e.message : e), false);
+      }
+    });
+  </script>
 </body>
 </html>
-
